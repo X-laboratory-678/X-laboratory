@@ -38,7 +38,7 @@ Do not use a title or display name as a long-term relationship key. Titles and n
 
 ## Content Rules
 
-People, Publications, Projects, and News will each be stored as independent Hugo Leaf Page Bundles. A bundle will contain YAML Front Matter, a Markdown body, and related images or documents when needed.
+People, Publications, Projects, and News are stored as independent Hugo Leaf Page Bundles. A bundle contains YAML Front Matter, a Markdown body, and related images or documents when needed.
 
 Do not duplicate the same item in a template, homepage list, or central YAML file. Homepage summaries and related-content lists must come from the authoritative Page Bundle.
 
@@ -86,7 +86,7 @@ Add the stable ID, English/Chinese labels, and weight to `data/research_areas.ya
 ### Add news
 
 ```bash
-hugo new content --kind news news/2026-07-example-news/index.en.md
+hugo new content --kind news news/2026-07-20-example-news/index.en.md
 ```
 
 Use a day-precise ISO date and a controlled news category. News relationships contain Publication or Project IDs, not titles.
@@ -235,3 +235,15 @@ python scripts/audit-site.py public
 ```
 
 The audit uses only the Python standard library and exits non-zero for critical metadata, language, link, accessibility-structure, placeholder, XML, or robots failures. Before changing the production domain or deploying, also complete `docs/launch-checklist.md`.
+
+## Deployment
+
+Routine deployment is automatic after an approved change reaches `main`:
+
+```text
+push or merge to main
+→ GitHub Actions strict build and audit
+→ GitHub Pages artifact deployment
+```
+
+Do not commit or manually upload `public/`. Confirm the Actions run succeeds and perform a live smoke test after deployment. See `docs/maintenance.md` for routine procedures and `docs/handover.md` for the current production architecture and known limitations.

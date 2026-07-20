@@ -1,179 +1,107 @@
 # X-Laboratory Website
 
-## Project Overview
+Official website source for **X-Laboratory** at Shanghai University of Electric Power / 上海电力大学.
 
-This repository contains the source for the official website of **X-Laboratory** at Shanghai University of Electric Power. The site is deployed as a GitHub Project Pages site at <https://x-laboratory-678.github.io/X-laboratory/>. The reserved `example.invalid` URL remains only as a safe local production-build default; CI replaces it with the Pages-provided URL.
+- Live site: <https://x-laboratory-678.github.io/X-laboratory/>
+- Repository: <https://github.com/X-laboratory-678/X-laboratory>
+- Production branch: `main`
+- Status: Milestone 10 — Testing, Polish & Handover completed
 
-The project prioritizes long-term content maintenance, performance, accessibility, and static deployment without a database or backend server.
-
-## Architecture
-
-```text
-Markdown / YAML content
-          ↓
-         Hugo
-          ↓
-      Static site
-          ↓
-    GitHub Pages
-```
-
-The primary content entities will use Markdown Page Bundles. Custom Hugo layouts will render the content without a third-party full theme.
+The site is a bilingual, content-driven Hugo website deployed automatically to GitHub Project Pages. It has no database, backend server, CMS, or Node frontend toolchain.
 
 ## Technology
 
-- Hugo Extended
+- Hugo Extended `0.164.0`, pinned in `.hugo-version`
 - Custom Hugo layouts
-- Markdown Page Bundles
-- YAML for controlled shared data
+- Markdown Leaf Page Bundles
+- YAML controlled vocabularies
 - Native CSS
 - Minimal native JavaScript ES Modules
-- GitHub Actions
-- GitHub Pages
+- GitHub Actions and GitHub Pages
 
-No Node.js or npm toolchain is assumed.
+English is published at `/`; Simplified Chinese is published at `/zh/`. The live Project Pages base path is `/X-laboratory/`, and templates derive it dynamically rather than hard-coding it.
 
-## Repository Status
+## Content Architecture
 
-Current phase: **Milestone 9 — GitHub Actions and deployment completed**.
+```text
+content/people/        People profiles
+content/research/      Research area pages
+content/publications/  Publication records and BibTeX
+content/projects/      Project records
+content/news/          Source-backed News
+content/join/          Join Us guidance
+data/                  Controlled IDs, labels, categories, and ordering
+i18n/                  Shared interface translations
+```
 
-The repository now contains a professional shared shell, a responsive bilingual homepage, and production-ready People, Research, Publications, Projects, News, and Join Us sections. It also provides reciprocal language metadata, canonical and Open Graph metadata, factual JSON-LD, sitemap/robots/RSS output, bilingual 404 handling, an automated generated-site audit, and a GitHub Pages artifact workflow. The workflow builds and deploys from `main` in the authorized `X-laboratory-678/X-laboratory` repository. Search is not implemented.
+People, Publications, Projects, Research, and News are authoritative in their Page Bundles. Stable IDs—not display names—connect related content. Homepage and related-content summaries are generated from these sources.
 
-The People section now provides a production-quality, content-driven directory; localized category grouping; reusable member cards and portrait fallbacks; stable Alumni handling; formal person profiles; and reverse aggregation of related Publication and Project bundles.
-
-The Publications section provides five verified representative papers, year grouping, accessible year/type/research-area filters, bilingual detail pages, DOI and BibTeX access, lab-author links, homepage selection, and reverse aggregation on the PI profile.
-
-The Research and Projects sections provide three formal research areas, three verified projects, build-time cross-content aggregation, and bilingual directory/detail routes. The News system publishes only source-backed, day-precise updates and feeds the homepage automatically. Join Us provides research-fit guidance, People-resolved PI contact, and a stable official university admissions link without claiming laboratory openings, quotas, or funding.
-
-> **Fixture note:** Example Student, Example Alumnus, Publication, Project, and News bundles remain development-only fixtures with `draft: true`; production output contains only reviewed real content.
-
-## Project Identity
-
-- Laboratory: X-Laboratory
-- Institution: Shanghai University of Electric Power / 上海电力大学
-- Unit: Division of Electrical Engineering / 电气工程学部
-- Principal Investigator: Jiangjiao Xu / 许江蛟
-
-The PI profile is sourced from the university's official faculty page. Provenance and review information are recorded in `docs/content-sources.md`. Other People, Publication, Project, and News records whose names begin with “Example” or “示例” remain development fixtures and must not be presented as real X-Laboratory activity.
+Draft Example bundles remain development fixtures for validation and are excluded from production. Factual provenance is recorded in `docs/content-sources.md`.
 
 ## Prerequisites
 
 - Git
-- Hugo Extended `0.164.0`, matching `.hugo-version` exactly
+- Hugo Extended matching `.hugo-version` exactly
+- Python 3 for the zero-dependency generated-site audit
 
-The pinned Hugo version is the single source of truth for local development and future GitHub Actions. Version upgrades must be deliberate, tested in a focused change, and applied to local and CI instructions together. Milestone 1 installs the pinned Extended build at user level; the Hugo executable is not stored in this repository.
-
-Confirm the installed edition and version before development:
+Verify Hugo before development:
 
 ```bash
 hugo version
 ```
 
-The output must include both `v0.164.0` and `extended`.
+The output must contain `v0.164.0` and `extended`.
 
 ## Local Development
 
-Start the local development server with:
+Preview production content:
 
 ```bash
 hugo server
 ```
 
-To include draft content during content work, use `hugo server -D`. Draft bundles are excluded from production builds.
-
-## Build
-
-Run a production build with:
+Include draft fixtures or new draft content:
 
 ```bash
-hugo --minify --environment production
+hugo server -D
 ```
 
-The generated site is written to `public/`. Generated output and `resources/_gen/` are ignored and must not be committed. The production configuration uses the reserved `https://example.invalid/lab-site/` URL with a subpath; CI overrides `baseURL` with the URL supplied by GitHub Pages. This reserved URL is an intentional local configuration placeholder and is exempt from the visible-content placeholder check.
+## Strict Build and Audit
 
-Run the complete production verification with:
+Run both quality gates after content, template, CSS, JavaScript, configuration, or deployment changes:
 
 ```bash
 hugo --gc --minify --cleanDestinationDir --environment production --panicOnWarning --printPathWarnings
 python scripts/audit-site.py public
 ```
 
-## Content Architecture
+The strict build must have zero warnings, and the audit must report zero critical errors. Generated `public/` and `resources/_gen/` output must not be committed.
 
-The implemented authoritative content model is:
-
-```text
-People       → Hugo Leaf Page Bundles
-Publications → Hugo Leaf Page Bundles
-Projects     → Hugo Leaf Page Bundles
-News         → Hugo Leaf Page Bundles
-```
-
-Each primary entity combines YAML Front Matter, a Markdown body, and related bundle resources where needed. Hugo validates required fields, controlled values, duplicate IDs, translation consistency, resources, and cross-content references at build time. See `docs/content-models.md`.
-
-## Multilingual
-
-The planned URL convention is:
-
-```text
-English: /
-Chinese: /zh/
-```
-
-The Hugo language keys are `en` and `zh`, because the key determines the public URL prefix. Document locales are exactly `en` and `zh-CN`. English builds at `/`, Simplified Chinese at `/zh/`, and the generated `/en/` page is only Hugo's redirect alias to the English root.
-
-Every indexable translated page emits a self-referential canonical plus reciprocal `en` and `zh-CN` alternates. Open Graph and JSON-LD metadata are generated server-side from page data; templates do not hard-code the deployment domain. The current favicon is an original provisional site mark, not an approved laboratory or university logo.
-
-## Shared UI
-
-The shared visual system is implemented with native CSS design tokens and focused component styles. It provides containers, spacing primitives, buttons, section headers, editorial lists, cards, responsive navigation, language switching, and a restrained footer. Production builds concatenate, minify, and fingerprint one site stylesheet.
-
-The only site JavaScript is `assets/js/navigation.js`, a small ES module that progressively enhances the mobile navigation. Without JavaScript, the navigation remains visible and may wrap; after JavaScript initializes, it becomes a collapsible menu with `aria-expanded`, Escape-key closing, and focus return.
-
-## Homepage Aggregation
-
-Homepage copy lives in the language-specific home page front matter. Business entities are never duplicated there. The homepage dynamically reads:
-
-- featured projects from `content/projects/`
-- selected publications from `content/publications/`
-- latest news from `content/news/`
-- current PI and faculty previews from `content/people/`
-- ordered Research Page Bundles backed by `data/research_areas.yaml`
-
-Empty business collections are omitted from the public homepage rather than showing development-oriented empty messages.
+The local production configuration intentionally uses a reserved `example.invalid` base URL. GitHub Actions replaces it with the URL supplied by GitHub Pages; do not hard-code the live domain or repository path in layouts or content.
 
 ## Deployment
 
-The deployment flow in `.github/workflows/pages.yml` is:
+The supported deployment flow is:
 
 ```text
-git push
-→ read and install the Hugo Extended version from .hugo-version
-→ obtain the repository or custom-domain URL from GitHub Pages
-→ strict Hugo production build using that base URL
-→ python scripts/audit-site.py public
-→ upload the public/ Pages artifact
-→ deploy to the github-pages environment
+push or merge to main
+→ GitHub Actions installs the pinned Hugo Extended release
+→ strict production build with the Pages-provided base URL
+→ scripts/audit-site.py
+→ Pages artifact upload
+→ automatic GitHub Pages deployment
 ```
 
-The workflow runs on pushes to `main` and manual dispatch. It uses no Node/npm site build and never commits `public/`. Build or audit failure prevents deployment. The authorized repository is <https://github.com/X-laboratory-678/X-laboratory>, and GitHub Pages publishes the validated artifact at <https://x-laboratory-678.github.io/X-laboratory/>. No custom domain or `CNAME` is configured.
+Do not create a `gh-pages` branch or manually upload `public/`. The current site has no custom domain or `CNAME`.
 
-The repository uses **Settings → Pages → Source → GitHub Actions**. The workflow derives the Project Pages subpath URL from `actions/configure-pages`; do not replace this with a guessed URL or hard-code a domain in Hugo templates. A future approved custom domain can use the same mechanism after its Pages configuration and DNS are reviewed.
+## Documentation
 
-## Project Milestones
+- [Routine maintenance](docs/maintenance.md)
+- [Project handover](docs/handover.md)
+- [Contribution guide](CONTRIBUTING.md)
+- [Content models](docs/content-models.md)
+- [Content provenance](docs/content-sources.md)
+- [Architecture decisions](docs/architecture.md)
+- [Launch and domain-change checklist](docs/launch-checklist.md)
 
-0. Architecture and repository rules
-1. Hugo foundation
-2. Content models
-3. Shared UI and homepage
-4. People
-5. Publications
-6. Research and Projects
-7. News and Join Us
-8. Multilingual, SEO, and site quality
-9. GitHub Actions and deployment
-10. Testing, polish, and handover
-
-## Contribution
-
-Read [CONTRIBUTING.md](CONTRIBUTING.md) before changing content or code. Architecture decisions are recorded in [docs/architecture.md](docs/architecture.md). Before any public launch or domain change, complete [docs/launch-checklist.md](docs/launch-checklist.md).
+The current favicon is an original provisional mark, not an approved official X-Laboratory or university logo. See the handover document for known limitations and optional future work.

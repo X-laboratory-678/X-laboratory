@@ -21,11 +21,11 @@ Use this checklist before a GitHub Pages release, after binding a custom domain,
 - [x] Pass the Pages-provided `baseURL` through the deployment build; do not hard-code it in layouts or content.
 - [x] Confirm that no `CNAME` is required for the current Project Pages deployment.
 - [ ] Replace the provisional `static/favicon.svg` only with an approved, original or rights-cleared laboratory identity; do not reuse the university logo without permission.
-- [ ] Review the laboratory name, institution, unit, PI name, role, public email, official admissions link, and all source provenance.
-- [ ] Reconfirm that News dates and claims remain source-backed and that Join Us does not imply unconfirmed openings, quotas, funding, scholarships, eligibility, or admission outcomes.
-- [ ] Confirm publication titles, author order, venue, DOI, date precision, local PDF rights, and BibTeX against authoritative records.
-- [ ] Confirm image publication rights, meaningful alt text, and explicit generated dimensions for every production image.
-- [ ] Confirm every English production page has a reviewed Chinese counterpart with the same stable ID and `translationKey`.
+- [x] Review the laboratory name, institution, unit, PI name, role, public email, official admissions link, and all source provenance.
+- [x] Reconfirm that News dates and claims remain source-backed and that Join Us does not imply unconfirmed openings, quotas, funding, scholarships, eligibility, or admission outcomes.
+- [x] Confirm publication titles, author order, venue, DOI, date precision, local PDF rights, and BibTeX against authoritative records.
+- [x] Confirm that production contains no content images or local PDFs requiring rights review; future assets still require approval, alt text, and explicit dimensions.
+- [x] Confirm every English production page has a reviewed Chinese counterpart with the same stable ID and `translationKey`.
 - [x] Run the pinned Hugo Extended version recorded in `.hugo-version`.
 - [x] Run the strict production build and require zero Hugo errors and zero warnings.
 - [x] Run `python scripts/audit-site.py public` and require zero critical errors.
@@ -49,3 +49,22 @@ Use this checklist before a GitHub Pages release, after binding a custom domain,
 - [x] Repeat keyboard and mobile-navigation checks on the deployed site.
 - [x] Record the deployment URL, release commit, verification date, and deviations.
 - [x] Keep the previous known-good Pages commit available for rollback if post-launch checks fail.
+
+## Milestone 10 Final Audit
+
+- [x] Test the live site in the installed Microsoft Edge and Google Chrome browsers.
+- [x] Test 1280, 768, 600, 375, and 320 CSS-pixel widths without horizontal page overflow.
+- [x] Verify keyboard navigation, mobile focus handling, publication filters, BibTeX view/copy/raw access, Join links, and no-JavaScript fallback.
+- [x] Recheck live canonical, reciprocal `hreflang`, Open Graph, JSON-LD, sitemap, robots, RSS, and custom 404 behavior.
+- [x] Audit the complete Git history for common PAT, password, private-key, and token patterns.
+- [x] Confirm workflow permissions, Pages environment, HTTPS enforcement, repository hygiene, and zero runtime third-party dependencies.
+- [x] Complete `docs/maintenance.md` and `docs/handover.md`.
+
+## Open Approval and Environment Items
+
+- [ ] Approve and replace the provisional favicon with a final official, rights-cleared laboratory identity.
+- [ ] Add a PI portrait only if an approved image and publication permission become available.
+- [ ] Configure a custom domain only if the laboratory chooses one and the DNS/Pages change is reviewed.
+- [ ] Register Search Console only if maintainers want the optional external service.
+- [ ] Restore Git HTTPS certificate verification in the workstation's system-level Git configuration and investigate Windows certificate-revocation connectivity. This is not a repository setting.
+- [ ] Perform direct Firefox, WebKit, and Safari testing when those engines or appropriate devices are available.
