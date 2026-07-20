@@ -182,8 +182,11 @@ Public laboratory contact data has one authoritative configuration under `params
 | `address.addressLocality` | Yes | Confirmed locality for structured data. |
 | `address.addressRegion` | Yes | Confirmed region for structured data. |
 | `address.addressCountry` | Yes | Confirmed country code for structured data. |
+| `location.campusName.en` / `.zh` | Yes | Confirmed localized campus name. |
+| `location.latitude` / `.longitude` | Yes | Verified map-marker coordinates stored as decimal strings. |
+| `location.embedBoundingBox` | Yes | Verified OpenStreetMap viewport in west,south,east,north order. |
 
-The PI's `People.email` remains the institutional address. `contact.publicEmail` is the general public contact address and does not overwrite Person metadata. The English and Chinese Contact pages live in `content/contact/` and use a focused layout. Map links are derived from the confirmed address at build time; no coordinates, iframe, API key, or runtime map dependency is stored.
+The PI's `People.email` remains the institutional address. `contact.publicEmail` is the general public contact address and does not overwrite Person metadata. The English and Chinese Contact pages live in `content/contact/` and use a focused layout. `contact.location` stores the verified bilingual campus name, marker coordinates, and embed bounding box. Templates generate a lazy-loaded OpenStreetMap iframe plus address-based Amap and Google Maps links; no API key, map SDK, or JavaScript dependency is used.
 
 Organization JSON-LD may use the public email, telephone, `ContactPoint`, and `PostalAddress`. Person JSON-LD continues to use the institutional People email.
 

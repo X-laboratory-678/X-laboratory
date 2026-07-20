@@ -17,6 +17,8 @@
         </div>
         <div class="stack">
           <h3>{{ i18n "home_contact_location" }}</h3>
+          <iframe class="contact-map contact-map--preview" src="{{ $contact.mapEmbedURL }}" title="{{ i18n "home_contact_map_title" }}" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+          <p><strong>{{ $contact.campusName }}</strong></p>
           <address>{{ $contact.address }}</address>
           <a class="text-link" href="{{ $contact.amapURL }}" rel="external">{{ i18n "contact_open_amap" }}</a>
         </div>

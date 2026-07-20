@@ -12,10 +12,10 @@
       </div>
     </header>
 
-    <section class="section" aria-labelledby="contact-pi-heading">
+    <section class="section" aria-label="{{ i18n "contact_details_and_location" }}">
       <div class="container contact-page__grid">
-        <div class="stack">
-          <h2 id="contact-pi-heading">{{ i18n "contact_principal_investigator" }}</h2>
+        <div class="contact-page__contact stack">
+          <h2>{{ i18n "contact_details" }}</h2>
           {{- with $pi -}}
             <div class="contact-person stack">
               <h3><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
@@ -23,11 +23,7 @@
               <p>{{ site.Params.labName }}<br>{{ site.Params.departmentName }}<br>{{ site.Params.universityName }}</p>
             </div>
           {{- end -}}
-        </div>
-
-        <div class="contact-details">
-          <h2>{{ i18n "contact_details" }}</h2>
-          <address>
+          <address class="contact-details">
             <dl>
               <div>
                 <dt>{{ i18n "contact_public_email" }}</dt>
@@ -50,20 +46,17 @@
             </dl>
           </address>
         </div>
-      </div>
-    </section>
 
-    <section class="section section--tinted" aria-labelledby="contact-location-heading">
-      <div class="container contact-location stack">
-        <header class="section__header">
+        <div class="contact-location stack">
           <h2 id="contact-location-heading">{{ i18n "contact_location" }}</h2>
           <p>{{ i18n "contact_location_intro" }}</p>
-        </header>
-        <div class="contact-location__details stack">
-          <p><strong>{{ site.Params.universityName }}</strong><br>{{ site.Params.departmentName }}<br>{{ $contact.address }}</p>
-          <div class="cluster contact-map-links">
-            <a class="button" href="{{ $contact.amapURL }}" rel="external">{{ i18n "contact_open_amap" }}</a>
-            <a class="button button--secondary" href="{{ $contact.googleMapsURL }}" rel="external">{{ i18n "contact_open_google_maps" }}</a>
+          <iframe class="contact-map" src="{{ $contact.mapEmbedURL }}" title="{{ i18n "contact_map_title" }}" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+          <div class="contact-location__details stack">
+            <p><strong>{{ $contact.campusName }}</strong><br>{{ $contact.address }}</p>
+            <div class="cluster contact-map-links">
+              <a class="button" href="{{ $contact.amapURL }}" rel="external">{{ i18n "contact_open_amap" }}</a>
+              <a class="button button--secondary" href="{{ $contact.googleMapsURL }}" rel="external">{{ i18n "contact_open_google_maps" }}</a>
+            </div>
           </div>
         </div>
       </div>

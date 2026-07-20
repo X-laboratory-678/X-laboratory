@@ -52,7 +52,9 @@ They are marked `draft: true`, so they remain available to `hugo server -D` for 
 
 The public Outlook address and phone are maintained under `params.contact` for research inquiries. The institutional address remains the PI's `People.email` and is not replaced by the public contact address. Home, Contact, Join Us, Footer, and Organization structured data resolve these values from their authoritative configuration or People entity instead of maintaining copies.
 
-Map links are generated from the confirmed street address. No coordinate, map API key, embedded map, or third-party runtime map request is used.
+The visible map marker uses `31.2744, 121.5430525`, converted from the Shanghai Yangpu District government report coordinates `N31°16′27.840″ E121°32′34.989″`: <https://www.shyp.gov.cn/shypq/yqyw-wb-hbjzl-wryhjjgxx-spjdgg/20250328/477132/677da4db8d3241a7b3e567a05c210e9a.pdf>. The result aligns with the OpenStreetMap Yangpu Campus feature, way `1068915935`: <https://www.openstreetmap.org/way/1068915935>. The school confirms the campus/address relationship at <https://www.shiep.edu.cn/campus/>.
+
+Contact and Home use a lazy-loaded OpenStreetMap iframe centered on that marker. The address and Amap navigation link remain visible if third-party content is blocked. No map API key, SDK, external JavaScript library, or unverified building/room detail is used.
 
 ## Representative Publications
 

@@ -25,6 +25,20 @@
       {{- errorf "site validation: contact.address.%s is required" . -}}
     {{- end -}}
   {{- end -}}
+  {{- range slice "en" "zh" -}}
+    {{- if not (index $contact.location.campusName .) -}}
+      {{- errorf "site validation: contact.location.campusName.%s is required" . -}}
+    {{- end -}}
+  {{- end -}}
+  {{- if not (findRE `^-?[0-9]+\.[0-9]+$` $contact.location.latitude) -}}
+    {{- errorf "site validation: contact.location.latitude %q is missing or malformed" $contact.location.latitude -}}
+  {{- end -}}
+  {{- if not (findRE `^-?[0-9]+\.[0-9]+$` $contact.location.longitude) -}}
+    {{- errorf "site validation: contact.location.longitude %q is missing or malformed" $contact.location.longitude -}}
+  {{- end -}}
+  {{- if not (findRE `^-?[0-9]+\.[0-9]+,-?[0-9]+\.[0-9]+,-?[0-9]+\.[0-9]+,-?[0-9]+\.[0-9]+$` $contact.location.embedBoundingBox) -}}
+    {{- errorf "site validation: contact.location.embedBoundingBox %q is missing or malformed" $contact.location.embedBoundingBox -}}
+  {{- end -}}
 {{- end -}}
 
 {{- range $site.RegularPages -}}

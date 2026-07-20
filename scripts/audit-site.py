@@ -42,6 +42,10 @@ BLOCKED_ROUTE_PARTS = (
 
 URL_KEYS = {"url", "@id", "sameAs", "contentUrl", "mainEntityOfPage"}
 
+APPROVED_EXTERNAL_IFRAMES = {
+    ("https", "www.openstreetmap.org", "/export/embed.html"),
+}
+
 
 @dataclass
 class Document:
@@ -406,7 +410,9 @@ class Audit:
                 parsed_direct = urlparse(value)
                 if parsed_direct.scheme in {"http", "https"} and f"{parsed_direct.scheme}://{parsed_direct.netloc}" != self.site_origin:
                     if tag in {"script", "img", "source", "iframe"} or (tag == "link" and "stylesheet" in next((link.get("rel", "") for link in document.links if link.get("href") == value), "")):
-                        self.error(f"{document.relative}: third-party runtime asset: {value}")
+                        approved_iframe = tag == "iframe" and (parsed_direct.scheme, parsed_direct.netloc, parsed_direct.path) in APPROVED_EXTERNAL_IFRAMES
+                        if not approved_iframe:
+                            self.error(f"{document.relative}: third-party runtime asset: {value}")
                     continue
                 if value.startswith("/") and self.base_path != "/" and not value.startswith(self.base_path):
                     self.error(f"{document.relative}: root-relative URL breaks configured subpath: {value}")

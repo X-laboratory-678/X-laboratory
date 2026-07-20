@@ -99,7 +99,9 @@ The single source of truth is `params.contact` in `config/_default/params.yaml`.
 - The PI bundle's `email` remains the institutional address and continues to appear on the PI profile and as a secondary Contact/Join link.
 - Keep the phone display value in readable international form and the `tel` value compact with a leading `+`.
 - Update localized and structured-address fields together after confirmation.
-- Map links are generated from the confirmed Chinese address. Do not add guessed coordinates, API keys, a map SDK, or an automatically loaded iframe.
+- The visible map uses a lazy-loaded OpenStreetMap embed centered on the verified Yangpu Campus coordinates, with the address and Amap link as the failure fallback. Do not change the coordinates or bounding box without reviewing an authoritative location source.
+- The audit permits only the exact OpenStreetMap embed endpoint. Do not broaden its third-party runtime allowlist.
+- A future interactive Amap upgrade may be considered after the laboratory obtains an Amap Web JS API key. Do not commit keys or placeholder secrets; document the key-management and privacy design before adding the SDK, marker controls, or route planning.
 - Update `docs/content-sources.md` with the authorization/source and review date after a factual change.
 
 ## Assets and Branding

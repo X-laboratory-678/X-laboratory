@@ -239,7 +239,13 @@
 - id: contact_location
   translation: Location & Directions
 - id: contact_location_intro
-  translation: Use the confirmed street address below when planning a visit. Map services open in a new site and may apply their own privacy policies.
+  translation: The map marks the confirmed Yangpu Campus location. The address and external directions remain available if the embedded map cannot load.
+- id: contact_details_and_location
+  translation: Contact details and laboratory location
+- id: contact_map_title
+  translation: Map showing X-Laboratory at Shanghai University of Electric Power Yangpu Campus
+- id: home_contact_map_title
+  translation: Location map preview for X-Laboratory at Shanghai University of Electric Power Yangpu Campus
 - id: contact_open_amap
   translation: Open in Amap
 - id: contact_open_google_maps

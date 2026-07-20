@@ -13,5 +13,12 @@ contact:
     addressLocality: Shanghai
     addressRegion: Shanghai
     addressCountry: CN
+  location:
+    campusName:
+      en: Shanghai University of Electric Power Yangpu Campus
+      zh: 上海电力大学杨浦校区
+    latitude: "31.2744"
+    longitude: "121.5430525"
+    embedBoundingBox: "121.5385,31.2715,121.5476,31.2774"
 admissions:
   officialUrl: https://xxgk.shiep.edu.cn/525/list1.htm

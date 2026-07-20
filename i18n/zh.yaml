@@ -239,7 +239,13 @@
 - id: contact_location
   translation: 实验室位置与导航
 - id: contact_location_intro
-  translation: 到访时请使用下方已确认地址。地图服务将在外部网站打开，并适用其各自的隐私政策。
+  translation: 地图标注已确认的杨浦校区位置。如嵌入地图无法加载，地址和外部导航入口仍可正常使用。
+- id: contact_details_and_location
+  translation: 联系信息与实验室位置
+- id: contact_map_title
+  translation: X-Laboratory 上海电力大学杨浦校区位置地图
+- id: home_contact_map_title
+  translation: X-Laboratory 上海电力大学杨浦校区位置地图预览
 - id: contact_open_amap
   translation: 在高德地图中打开
 - id: contact_open_google_maps

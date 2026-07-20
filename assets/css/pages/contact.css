@@ -47,7 +47,7 @@
   background: var(--color-surface);
 }
 
-.contact-details address,
+.contact-details,
 .home-contact address {
   font-style: normal;
 }
@@ -74,8 +74,9 @@
   margin: 0;
 }
 
+.contact-page__contact,
 .contact-location {
-  max-width: var(--content-narrow);
+  min-width: 0;
 }
 
 .contact-location__details {
@@ -84,6 +85,18 @@
 
 .contact-map-links a {
   max-width: 100%;
+}
+
+.contact-map {
+  display: block;
+  width: 100%;
+  height: clamp(17.5rem, 52vw, 23rem);
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+}
+
+.contact-map--preview {
+  height: clamp(16rem, 45vw, 19rem);
 }
 
 .home-contact {
@@ -101,8 +114,9 @@
 
 @media (min-width: 48rem) {
   .contact-page__grid {
-    grid-template-columns: minmax(0, 0.8fr) minmax(20rem, 1fr);
+    grid-template-columns: minmax(18rem, 0.8fr) minmax(24rem, 1.2fr);
     align-items: start;
+    gap: var(--space-12);
   }
 
   .home-contact__grid {

@@ -2,15 +2,20 @@
 {{- $pi := partial "content/resolve-by-id.html" (dict "site" site "section" "people" "id" $config.principalInvestigatorId) -}}
 {{- $address := $config.address.en -}}
 {{- if eq site.Language.Lang "zh" -}}{{- $address = $config.address.zh -}}{{- end -}}
-{{- $addressQuery := urlquery $config.address.zh -}}
+{{- $campusName := $config.location.campusName.en -}}
+{{- if eq site.Language.Lang "zh" -}}{{- $campusName = $config.location.campusName.zh -}}{{- end -}}
+{{- $mapQuery := printf "%s %s" $config.location.campusName.zh $config.address.zh | urlquery -}}
 {{- $cityQuery := urlquery "上海" -}}
-{{- $amapURL := printf "https://uri.amap.com/search?keyword=%s&city=%s&view=map&callnative=0" $addressQuery $cityQuery -}}
-{{- $googleMapsURL := printf "https://www.google.com/maps/search/?api=1&query=%s" $addressQuery -}}
+{{- $amapURL := printf "https://uri.amap.com/search?keyword=%s&city=%s&view=map&callnative=0" $mapQuery $cityQuery -}}
+{{- $googleMapsURL := printf "https://www.google.com/maps/search/?api=1&query=%s" $mapQuery -}}
+{{- $mapEmbedURL := printf "https://www.openstreetmap.org/export/embed.html?bbox=%s&layer=mapnik&marker=%s%%2C%s" ($config.location.embedBoundingBox | urlquery) $config.location.latitude $config.location.longitude -}}
 {{- return (dict
   "config" $config
   "pi" $pi
   "address" $address
+  "campusName" $campusName
   "amapURL" $amapURL
   "googleMapsURL" $googleMapsURL
+  "mapEmbedURL" $mapEmbedURL
   "page" (site.GetPage "/contact")
 ) -}}
