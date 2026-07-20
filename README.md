@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-This repository contains the source for the official website of **X-Laboratory** at Shanghai University of Electric Power. The reserved `example.invalid` production base URL stands in for the future approved GitHub Pages or custom-domain URL.
+This repository contains the source for the official website of **X-Laboratory** at Shanghai University of Electric Power. The site is deployed as a GitHub Project Pages site at <https://x-laboratory-678.github.io/X-laboratory/>. The reserved `example.invalid` URL remains only as a safe local production-build default; CI replaces it with the Pages-provided URL.
 
 The project prioritizes long-term content maintenance, performance, accessibility, and static deployment without a database or backend server.
 
@@ -35,9 +35,9 @@ No Node.js or npm toolchain is assumed.
 
 ## Repository Status
 
-Current phase: **Milestone 9 — GitHub Actions deployment preparation completed; first deployment pending an authorized GitHub repository**.
+Current phase: **Milestone 9 — GitHub Actions and deployment completed**.
 
-The repository now contains a professional shared shell, a responsive bilingual homepage, and production-ready People, Research, Publications, Projects, News, and Join Us sections. It also provides reciprocal language metadata, canonical and Open Graph metadata, factual JSON-LD, sitemap/robots/RSS output, bilingual 404 handling, an automated generated-site audit, and a GitHub Pages artifact workflow. The workflow has not run because no authorized GitHub remote is configured. Search is not implemented.
+The repository now contains a professional shared shell, a responsive bilingual homepage, and production-ready People, Research, Publications, Projects, News, and Join Us sections. It also provides reciprocal language metadata, canonical and Open Graph metadata, factual JSON-LD, sitemap/robots/RSS output, bilingual 404 handling, an automated generated-site audit, and a GitHub Pages artifact workflow. The workflow builds and deploys from `main` in the authorized `X-laboratory-678/X-laboratory` repository. Search is not implemented.
 
 The People section now provides a production-quality, content-driven directory; localized category grouping; reusable member cards and portrait fallbacks; stable Alumni handling; formal person profiles; and reverse aggregation of related Publication and Project bundles.
 
@@ -89,7 +89,7 @@ Run a production build with:
 hugo --minify --environment production
 ```
 
-The generated site is written to `public/`. Generated output and `resources/_gen/` are ignored and must not be committed. The production configuration uses the reserved `https://example.invalid/lab-site/` URL with a subpath; future CI must override `baseURL` with the actual GitHub Pages or custom-domain URL. This reserved URL is an intentional configuration placeholder and is exempt from the visible-content placeholder check.
+The generated site is written to `public/`. Generated output and `resources/_gen/` are ignored and must not be committed. The production configuration uses the reserved `https://example.invalid/lab-site/` URL with a subpath; CI overrides `baseURL` with the URL supplied by GitHub Pages. This reserved URL is an intentional local configuration placeholder and is exempt from the visible-content placeholder check.
 
 Run the complete production verification with:
 
@@ -156,9 +156,9 @@ git push
 → deploy to the github-pages environment
 ```
 
-The workflow runs on pushes to `main` and manual dispatch. It uses no Node/npm site build and never commits `public/`. Build or audit failure prevents deployment. No remote repository, custom domain, or live Pages deployment is currently configured, so there is no deployment URL to publish here.
+The workflow runs on pushes to `main` and manual dispatch. It uses no Node/npm site build and never commits `public/`. Build or audit failure prevents deployment. The authorized repository is <https://github.com/X-laboratory-678/X-laboratory>, and GitHub Pages publishes the validated artifact at <https://x-laboratory-678.github.io/X-laboratory/>. No custom domain or `CNAME` is configured.
 
-After an authorized repository is connected, an administrator must confirm **Settings → Pages → Source → GitHub Actions**. The workflow then derives either a Project Pages subpath URL or a configured custom-domain URL from `actions/configure-pages`; do not replace this with a guessed URL or hard-code a domain in Hugo templates.
+The repository uses **Settings → Pages → Source → GitHub Actions**. The workflow derives the Project Pages subpath URL from `actions/configure-pages`; do not replace this with a guessed URL or hard-code a domain in Hugo templates. A future approved custom domain can use the same mechanism after its Pages configuration and DNS are reviewed.
 
 ## Project Milestones
 
