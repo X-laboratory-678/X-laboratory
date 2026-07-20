@@ -187,7 +187,7 @@
 - id: latest_news
   translation: 最新动态
 - id: no_news
-  translation: 暂无经过来源核验的动态。
+  translation: 暂无动态。
 - id: back_to_news
   translation: 动态列表
 - id: news_related_publication
@@ -207,7 +207,7 @@
 - id: join_contact
   translation: 联系方式
 - id: join_contact_intro
-  translation: 如需进行科研相关咨询，请联系实验室负责人。科研咨询不等同于正式申请，也不表示当前存在开放职位。
+  translation: 如需进行科研相关咨询，请联系实验室负责人。正式申请请遵循学校招生流程。
 - id: join_pi_contact
   translation: 实验室负责人联系方式
 - id: join_contact_pi
@@ -219,7 +219,7 @@
 - id: join_admissions
   translation: 官方招生信息
 - id: join_admissions_notice
-  translation: 正式招生条件、名额、申请时间及资格要求以上海电力大学发布的官方政策和通知为准。学校招生信息不代表 X-Laboratory 已确认存在开放名额或职位。
+  translation: 招生计划、名额、申请时间及资格要求以上海电力大学发布的正式政策和通知为准。
 - id: join_admissions_link
   translation: 查看官方招生信息
 - id: contact_intro_label
@@ -239,7 +239,7 @@
 - id: contact_location
   translation: 实验室位置与导航
 - id: contact_location_intro
-  translation: 地图标注已确认的杨浦校区位置。如嵌入地图无法加载，地址和外部导航入口仍可正常使用。
+  translation: 上海电力大学杨浦校区位于下方所示地址。
 - id: contact_details_and_location
   translation: 联系信息与实验室位置
 - id: contact_map_title

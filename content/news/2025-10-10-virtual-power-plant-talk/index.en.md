@@ -15,4 +15,4 @@ draft: false
 
 X-Laboratory principal investigator Jiangjiao Xu presented the thematic talk “Distribution Grid–Virtual Power Plant Coordinated Scheduling for Regional Autonomous Balancing” at the Second International Summit Forum on the New Ecology of Source–Grid–Load–Storage–Hydrogen Power Systems.
 
-The forum took place on 10 October 2025 at the Shanghai New International Expo Centre. This entry records the presentation without making claims about a keynote designation, project output, or publication relationship.
+The forum took place on 10 October 2025 at the Shanghai New International Expo Centre.

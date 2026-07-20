@@ -16,13 +16,13 @@ sections:
   research:
     eyebrow: 研究
     title: 研究方向
-    description: 根据实验室负责人的公开教师资料，将当前研究方向归纳为三个相互关联的领域。
+    description: 围绕人工智能与现代电力系统，形成三个相互关联的研究方向。
     actionLabel: 探索研究方向
     pageRef: /research
   projects:
     eyebrow: 项目
     title: 代表项目
-    description: 自动汇总标记为重点展示的研究项目。
+    description: 展示在研与已完成科研项目中的代表性工作。
     actionLabel: 查看全部项目
     pageRef: /projects
   publications:
@@ -46,7 +46,7 @@ sections:
   join:
     eyebrow: 加入我们
     title: 与实验室共同研究
-    description: 欢迎对我们的研究感兴趣的学生和研究人员。具体机会将在确认后发布。
+    description: 欢迎感兴趣的学生和研究人员了解实验室研究方向及联系方式。
     actionLabel: 了解更多
     pageRef: /join
 ---

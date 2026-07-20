@@ -22,6 +22,6 @@ weight: 30
 draft: false
 ---
 
-Commissioned by the East China Branch of State Grid Corporation of China, this technical-service project concerns statistical characterization and application analysis of renewable-energy output in the East China power grid.
+Commissioned by the East China Branch of State Grid Corporation of China, this technical-service project focuses on statistical characterization and application analysis of renewable-energy output in the East China power grid.
 
-Jiangjiao Xu leads the project. The official source lists 2024 as its project period; no publication, dataset, code repository, demonstration, or outcome is attributed to it here without direct evidence.
+Jiangjiao Xu leads the project. The project period is 2024.

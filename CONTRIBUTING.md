@@ -42,6 +42,8 @@ People, Publications, Projects, and News are stored as independent Hugo Leaf Pag
 
 Do not duplicate the same item in a template, homepage list, or central YAML file. Homepage summaries and related-content lists must come from the authoritative Page Bundle.
 
+Public-facing content must not contain internal editorial, provenance, validation, schema, implementation, or data-governance commentary. If optional verified information is unavailable, omit the section rather than explaining the omission to visitors. Keep source decisions and relationship rules in `docs/`, `CONTRIBUTING.md`, and build-time validation.
+
 New content is created as a leaf bundle with the pinned Hugo version. The following commands were verified with Hugo Extended 0.164.0. Run them from the repository root, then complete the required fields and keep `draft: true` until review.
 
 ### Add a person

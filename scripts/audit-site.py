@@ -34,6 +34,29 @@ PLACEHOLDERS = (
     "示例动态",
 )
 
+EDITORIAL_LEAKAGE_PHRASES = (
+    "缺少直接证据时",
+    "本页面不为项目归属",
+    "未导入",
+    "开发 fixture",
+    "稳定 ID",
+    "构建验证",
+    "反向聚合",
+    "编辑性翻译",
+    "不据此推断",
+    "依据内容中明确填写的研究方向 ID 自动汇总",
+    "in the absence of direct evidence",
+    "without direct evidence",
+    "not imported",
+    "development fixture",
+    "stable ID",
+    "Front Matter",
+    "reverse aggregation",
+    "editorial translation",
+    "are maintained on the related publication page",
+    "aggregated by their explicit research-area IDs",
+)
+
 BLOCKED_ROUTE_PARTS = (
     "/example-",
     "/people/lab-director/",
@@ -458,6 +481,15 @@ class Audit:
             if "/example-" in relative:
                 self.error(f"fixture route exists in production output: {relative}")
 
+    def audit_editorial_leakage(self) -> None:
+        for document in self.documents.values():
+            if document.is_alias:
+                continue
+            visible = " ".join(document.visible_text).casefold()
+            for phrase in EDITORIAL_LEAKAGE_PHRASES:
+                if phrase.casefold() in visible:
+                    self.error(f"{document.relative}: public editorial leakage: {phrase}")
+
     def audit_xml_and_robots(self) -> None:
         xml_files = sorted(self.root.rglob("*.xml"))
         if not xml_files:
@@ -513,6 +545,7 @@ class Audit:
             self.audit_html_quality()
             self.audit_links()
             self.audit_placeholders()
+            self.audit_editorial_leakage()
             self.audit_xml_and_robots()
 
         js_bytes = sum((self.root / path).stat().st_size for path in self.runtime_js if (self.root / path).is_file())

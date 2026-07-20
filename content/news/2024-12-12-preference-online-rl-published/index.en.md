@@ -15,4 +15,4 @@ draft: false
 
 The study, co-authored by Jiangjiao Xu, was first published online on 12 December 2024 in *IEEE Transactions on Industrial Informatics*. The final issue record appears in volume 21, issue 3, in 2025.
 
-Publication metadata and links are maintained on the related publication page below.
+See the related publication below for bibliographic details and access links.

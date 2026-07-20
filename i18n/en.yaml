@@ -187,7 +187,7 @@
 - id: latest_news
   translation: Latest News
 - id: no_news
-  translation: No verified news is available yet.
+  translation: No news is available yet.
 - id: back_to_news
   translation: News
 - id: news_related_publication
@@ -207,7 +207,7 @@
 - id: join_contact
   translation: How to Get in Touch
 - id: join_contact_intro
-  translation: Please contact the principal investigator for research-related inquiries. An inquiry is not a formal application and does not imply an available position.
+  translation: Please contact the principal investigator for research-related inquiries. Formal applications follow the university's admissions procedures.
 - id: join_pi_contact
   translation: Principal investigator contact
 - id: join_contact_pi
@@ -219,7 +219,7 @@
 - id: join_admissions
   translation: Official Admissions Information
 - id: join_admissions_notice
-  translation: Formal admissions requirements, availability, application timelines, and eligibility are subject to the official policies and announcements of Shanghai University of Electric Power. University admissions information does not indicate a confirmed X-Laboratory opening or quota.
+  translation: Admissions plans, available places, application timelines, and eligibility requirements are governed by the official policies and announcements of Shanghai University of Electric Power.
 - id: join_admissions_link
   translation: View official admissions information
 - id: contact_intro_label
@@ -239,7 +239,7 @@
 - id: contact_location
   translation: Location & Directions
 - id: contact_location_intro
-  translation: The map marks the confirmed Yangpu Campus location. The address and external directions remain available if the embedded map cannot load.
+  translation: Find the Yangpu Campus at the address shown below.
 - id: contact_details_and_location
   translation: Contact details and laboratory location
 - id: contact_map_title

@@ -1,7 +1,7 @@
 ---
 title: News
-description: Verified publications, presentations, and academic updates connected to X-Laboratory.
+description: Publications, presentations, and academic updates from X-Laboratory.
 translationKey: section-news
 ---
 
-News entries are published only when a reliable source provides a specific date and a clear connection to X-Laboratory or its principal investigator.
+Follow recent publications, presentations, and other laboratory activity.

@@ -16,13 +16,13 @@ sections:
   research:
     eyebrow: Research
     title: Areas of inquiry
-    description: Three areas summarize the laboratory's current research direction based on its principal investigator's public faculty profile.
+    description: Three connected areas frame the laboratory's work on artificial intelligence and modern power systems.
     actionLabel: Explore research
     pageRef: /research
   projects:
     eyebrow: Projects
     title: Featured work
-    description: A selection generated from projects marked as featured.
+    description: A selection of current and completed research projects.
     actionLabel: View all projects
     pageRef: /projects
   publications:
@@ -46,7 +46,7 @@ sections:
   join:
     eyebrow: Join Us
     title: Work with the laboratory
-    description: We welcome students and researchers interested in our work. Detailed opportunities will be published when confirmed.
+    description: Students and researchers interested in our work can explore our research areas and ways to get in touch.
     actionLabel: Learn more
     pageRef: /join
 ---

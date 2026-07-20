@@ -4,4 +4,4 @@ description: Current and completed research projects led by the laboratory's pri
 translationKey: section-projects
 ---
 
-This directory presents verified project titles, periods, research areas, and people. It does not infer project outcomes or publication relationships that are not stated by an authoritative source.
+Explore current and completed projects across the laboratory's research areas.
