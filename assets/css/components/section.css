@@ -1,0 +1,39 @@
+.section--tinted {
+  background: var(--color-surface);
+}
+
+.section__header {
+  display: grid;
+  gap: var(--space-3);
+  max-width: var(--content-narrow);
+  margin-bottom: var(--space-10);
+}
+
+.section__eyebrow,
+.eyebrow {
+  margin: 0;
+  color: var(--color-accent);
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.section__header h2,
+.section__header p {
+  margin: 0;
+}
+
+.section__header p {
+  color: var(--color-muted);
+  font-size: var(--font-size-lg);
+}
+
+.section__action {
+  margin-top: var(--space-2);
+}
+
+html[lang="zh-CN"] .section__eyebrow,
+html[lang="zh-CN"] .eyebrow {
+  letter-spacing: 0.04em;
+}

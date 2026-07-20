@@ -1,0 +1,9 @@
+{{- $start := .Params.startYear -}}
+{{- $end := .Params.endYear -}}
+{{- if $start -}}
+  {{- if and $end (ne (printf "%v" $start) (printf "%v" $end)) -}}
+    {{- printf "%v–%v" $start $end -}}
+  {{- else -}}
+    {{- printf "%v" $start -}}
+  {{- end -}}
+{{- end -}}

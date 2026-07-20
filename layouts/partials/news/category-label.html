@@ -1,0 +1,8 @@
+{{- $categoryID := . -}}
+{{- $label := $categoryID -}}
+{{- range hugo.Data.news_categories -}}
+  {{- if eq .id $categoryID -}}
+    {{- $label = cond (eq site.Language.Lang "zh") .labelZh .label -}}
+  {{- end -}}
+{{- end -}}
+{{- return $label -}}

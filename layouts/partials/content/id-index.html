@@ -1,0 +1,15 @@
+{{- $site := .site -}}
+{{- $section := .section -}}
+{{- $index := dict -}}
+{{- range where $site.RegularPages "Section" $section -}}
+  {{- $currentPage := . -}}
+  {{- $id := .Params.id | default "" -}}
+  {{- if $id -}}
+    {{- with index $index $id -}}
+      {{- errorf "content validation: duplicate %s id %q in %s and %s" $section $id .File.Path $currentPage.File.Path -}}
+    {{- else -}}
+      {{- $index = merge $index (dict $id .) -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- return $index -}}

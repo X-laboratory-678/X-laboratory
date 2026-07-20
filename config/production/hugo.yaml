@@ -1,0 +1,6 @@
+# CI will override this reserved placeholder with the GitHub Pages or custom
+# domain URL. Keeping a subpath here continuously exercises base-path safety.
+baseURL: https://example.invalid/lab-site/
+buildDrafts: false
+buildExpired: false
+buildFuture: false

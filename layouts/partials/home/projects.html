@@ -1,0 +1,15 @@
+{{- $pages := where site.RegularPages "Section" "projects" -}}
+{{- $pages = where $pages "Draft" false -}}
+{{- $pages = where $pages "Params.featured" true -}}
+{{- $pages = sort $pages "Title" "asc" -}}
+{{- $pages = sort $pages "Params.weight" "asc" -}}
+{{- with first 3 $pages }}
+  <section class="section" aria-labelledby="projects-heading">
+    <div class="container">
+      {{ partial "section-header.html" (dict "config" $.Params.sections.projects "id" "projects-heading") }}
+      <div class="grid card-grid">
+        {{- range . }}{{ partial "cards/project.html" . }}{{ end }}
+      </div>
+    </div>
+  </section>
+{{- end }}

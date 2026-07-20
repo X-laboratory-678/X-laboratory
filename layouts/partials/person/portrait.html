@@ -1,0 +1,18 @@
+{{- $page := .page -}}
+{{- $variant := .variant | default "standard" -}}
+{{- $photo := false -}}
+{{- with $page.Params.photo -}}
+  {{- $photo = $page.Resources.GetMatch . -}}
+{{- end -}}
+<div class="person-portrait person-portrait--{{ $variant }}">
+  {{- with $photo -}}
+    {{- if eq .MediaType.SubType "svg" -}}
+      <img src="{{ .RelPermalink }}" width="480" height="600" loading="lazy" alt="{{ $page.Params.photoAlt }}">
+    {{- else -}}
+      {{- $portrait := .Fill "480x600 Center webp q82" -}}
+      <img src="{{ $portrait.RelPermalink }}" width="{{ $portrait.Width }}" height="{{ $portrait.Height }}" loading="lazy" alt="{{ $page.Params.photoAlt }}">
+    {{- end -}}
+  {{- else -}}
+    <div class="person-portrait__fallback" aria-hidden="true"><span>X</span></div>
+  {{- end -}}
+</div>

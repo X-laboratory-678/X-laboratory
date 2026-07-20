@@ -1,0 +1,36 @@
+# Hugo generated output
+/public/
+/resources/_gen/
+/.hugo_build.lock
+
+# Operating system files
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Visual Studio Code
+# Ignore local editor state while allowing selected shared settings later.
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+
+# JetBrains IDEs
+.idea/
+*.iml
+
+# Local environment and secrets
+.env
+.env.*
+!.env.example
+*.local
+
+# Temporary and backup files
+*.tmp
+*.temp
+*.bak
+*.swp
+*~

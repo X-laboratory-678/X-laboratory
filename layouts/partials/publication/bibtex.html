@@ -1,0 +1,19 @@
+{{- $page := . -}}
+{{- with $page.Params.bibtex -}}
+  {{- with $page.Resources.GetMatch . -}}
+    <section class="publication-bibtex" id="bibtex" aria-labelledby="bibtex-heading">
+      <h2 id="bibtex-heading">{{ i18n "bibtex" }}</h2>
+      <details data-bibtex>
+        <summary>{{ i18n "view_bibtex" }}</summary>
+        <div class="publication-bibtex__body">
+          <pre><code>{{ .Content }}</code></pre>
+          <div class="publication-bibtex__actions">
+            <a href="{{ .RelPermalink }}">{{ i18n "raw_bibtex" }}</a>
+            <button class="publication-bibtex__copy" type="button" hidden data-bibtex-copy data-copy-label="{{ i18n "copy_bibtex" }}" data-copied-label="{{ i18n "bibtex_copied" }}" data-copy-error-label="{{ i18n "bibtex_copy_failed" }}">{{ i18n "copy_bibtex" }}</button>
+            <span class="publication-bibtex__status" aria-live="polite" data-bibtex-status></span>
+          </div>
+        </div>
+      </details>
+    </section>
+  {{- end -}}
+{{- end -}}

@@ -1,0 +1,16 @@
+{{- $pages := where site.RegularPages "Section" "publications" -}}
+{{- $pages = where $pages "Draft" false -}}
+{{- $pages = where $pages "Params.selected" true -}}
+{{- $pages = sort $pages "Title" "asc" -}}
+{{- $pages = sort $pages "Date" "desc" -}}
+{{- $pages = sort $pages "Params.year" "desc" -}}
+{{- with first 5 $pages }}
+  <section class="section section--tinted" aria-labelledby="publications-heading">
+    <div class="container">
+      {{ partial "section-header.html" (dict "config" $.Params.sections.publications "id" "publications-heading") }}
+      <ol class="editorial-list">
+        {{- range . }}<li>{{ partial "publication/item.html" . }}</li>{{ end }}
+      </ol>
+    </div>
+  </section>
+{{- end }}

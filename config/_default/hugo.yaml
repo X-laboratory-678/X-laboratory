@@ -1,0 +1,14 @@
+title: X-Laboratory
+locale: en
+defaultContentLanguage: en
+defaultContentLanguageInSubdir: false
+enableRobotsTXT: true
+timeout: 30s
+disableKinds:
+  - taxonomy
+  - term
+
+markup:
+  goldmark:
+    renderer:
+      unsafe: false

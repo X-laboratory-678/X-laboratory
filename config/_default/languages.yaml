@@ -1,0 +1,21 @@
+en:
+  locale: en
+  label: English
+  weight: 1
+  params:
+    openGraphLocale: en_US
+    universityName: Shanghai University of Electric Power
+    departmentName: Division of Electrical Engineering
+    description: Research at the intersection of artificial intelligence and modern power systems.
+
+# The language key controls the public /zh/ path. The locale controls standards-
+# based document metadata and deliberately uses the canonical BCP 47 casing.
+zh:
+  locale: zh-CN
+  label: 中文
+  weight: 2
+  params:
+    openGraphLocale: zh_CN
+    universityName: 上海电力大学
+    departmentName: 电气工程学部
+    description: 聚焦人工智能与新型电力系统交叉研究。

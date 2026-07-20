@@ -1,0 +1,40 @@
+{{ define "main" }}
+  {{- $people := where .Pages "Draft" false -}}
+  {{- $categories := sort hugo.Data.people_categories "weight" "asc" -}}
+  <div class="people-directory">
+    <header class="people-directory__intro container stack">
+      <p class="eyebrow">{{ site.Params.labName }}</p>
+      <h1>{{ .Title }}</h1>
+      <div class="prose">{{ .Content }}</div>
+    </header>
+
+    {{- range $categories -}}
+      {{- $category := . -}}
+      {{- $members := where $people "Params.category" $category.id -}}
+      {{- $members = sort $members "Title" "asc" -}}
+      {{- $members = sort $members "Params.weight" "asc" -}}
+      {{- with $members }}
+        <section class="people-group section" aria-labelledby="people-group-{{ $category.id }}">
+          <div class="container">
+            <header class="people-group__header">
+              <h2 id="people-group-{{ $category.id }}">{{ i18n (printf "people_category_%s" $category.id) | default $category.label }}</h2>
+              <span aria-hidden="true">{{ len . }}</span>
+            </header>
+            {{- if eq $category.id "alumni" }}
+              <div class="alumni-list">
+                {{- range . }}{{ partial "person/alumni-row.html" . }}{{ end }}
+              </div>
+            {{- else }}
+              <div class="people-grid{{ if eq $category.id "pi" }} people-grid--featured{{ end }}">
+                {{- range . }}
+                  {{- $variant := cond (eq $category.id "pi") "featured" "standard" -}}
+                  {{ partial "person/card.html" (dict "page" . "variant" $variant) }}
+                {{- end }}
+              </div>
+            {{- end }}
+          </div>
+        </section>
+      {{- end }}
+    {{- end }}
+  </div>
+{{ end }}

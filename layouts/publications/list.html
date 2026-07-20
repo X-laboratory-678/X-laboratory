@@ -1,0 +1,77 @@
+{{ define "main" }}
+  {{- $publications := where .Pages "Draft" false -}}
+  {{- $publications = sort $publications "Title" "asc" -}}
+  {{- $publications = sort $publications "Date" "desc" -}}
+  {{- $publications = sort $publications "Params.year" "desc" -}}
+  {{- $years := slice -}}
+  {{- range $publications -}}
+    {{- if not (in $years .Params.year) -}}{{- $years = $years | append .Params.year -}}{{- end -}}
+  {{- end -}}
+
+  <header class="publication-directory__header section">
+    <div class="container stack">
+      <p class="eyebrow">{{ site.Params.labName }}</p>
+      <h1>{{ .Title }}</h1>
+      <div class="prose">{{ .Content }}</div>
+    </div>
+  </header>
+
+  <div class="publication-directory container" data-publication-directory data-count-one="{{ i18n "publication_count_one" }}" data-count-many="{{ i18n "publication_count_many" }}">
+    {{- with $publications -}}
+      <form class="publication-filters" data-publication-filters hidden>
+        <div class="publication-filters__field">
+          <label for="publication-year">{{ i18n "filter_year" }}</label>
+          <select id="publication-year" name="year" data-publication-filter="year">
+            <option value="">{{ i18n "filter_all_years" }}</option>
+            {{- range $years }}<option value="{{ . }}">{{ . }}</option>{{ end -}}
+          </select>
+        </div>
+        <div class="publication-filters__field">
+          <label for="publication-type">{{ i18n "filter_type" }}</label>
+          <select id="publication-type" name="type" data-publication-filter="type">
+            <option value="">{{ i18n "filter_all_types" }}</option>
+            {{- range sort hugo.Data.publication_types "weight" -}}
+              {{- $typeID := .id -}}
+              {{- if where $publications "Params.publicationType" $typeID -}}
+                <option value="{{ $typeID }}">{{ partial "publication/type-label.html" $typeID }}</option>
+              {{- end -}}
+            {{- end }}
+          </select>
+        </div>
+        <div class="publication-filters__field">
+          <label for="publication-research-area">{{ i18n "filter_research_area" }}</label>
+          <select id="publication-research-area" name="research" data-publication-filter="research">
+            <option value="">{{ i18n "filter_all_research_areas" }}</option>
+            {{- range sort hugo.Data.research_areas "weight" -}}
+              {{- $areaID := .id -}}
+              {{- if where $publications "Params.researchAreas" "intersect" (slice $areaID) -}}
+                <option value="{{ $areaID }}">{{ partial "publication/research-area-label.html" $areaID }}</option>
+              {{- end -}}
+            {{- end }}
+          </select>
+        </div>
+        <button class="publication-filters__reset" type="button" data-publication-reset>{{ i18n "reset_filters" }}</button>
+        <p class="publication-filters__count" aria-live="polite" data-publication-count></p>
+      </form>
+
+      <div class="publication-years">
+        {{- range $years -}}
+          {{- $year := . -}}
+          <section class="publication-year" data-publication-year="{{ $year }}" aria-labelledby="year-{{ $year }}">
+            <h2 id="year-{{ $year }}">{{ $year }}</h2>
+            <ol class="publication-list">
+              {{- range where $publications "Params.year" $year -}}
+                <li data-publication-item data-year="{{ .Params.year }}" data-type="{{ .Params.publicationType }}" data-research-areas="{{ delimit .Params.researchAreas " " }}">
+                  {{ partial "publication/item.html" . }}
+                </li>
+              {{- end -}}
+            </ol>
+          </section>
+        {{- end -}}
+      </div>
+      <p class="publication-directory__empty" hidden data-publication-empty>{{ i18n "no_publications_match" }}</p>
+    {{- else -}}
+      <p>{{ i18n "no_publications" }}</p>
+    {{- end -}}
+  </div>
+{{ end }}

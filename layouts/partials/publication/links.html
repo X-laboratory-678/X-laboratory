@@ -1,0 +1,25 @@
+{{- $page := . -}}
+{{- $hasLinks := or $page.Params.paperUrl $page.Params.doi $page.Params.pdf $page.Params.code $page.Params.projectPage $page.Params.dataset $page.Params.video $page.Params.bibtex $page.Params.links -}}
+{{- if $hasLinks }}
+  <nav class="publication-links" aria-label="{{ i18n "publication_links" }}">
+    {{- with $page.Params.paperUrl }}<a href="{{ . }}" rel="external">{{ i18n "paper" }}</a>{{ end -}}
+    {{- with $page.Params.doi }}<a href="https://doi.org/{{ . }}" rel="external">{{ i18n "doi" }}</a>{{ end -}}
+    {{- with $page.Params.pdf -}}
+      {{- $href := . -}}
+      {{- $external := or (hasPrefix . "https://") (hasPrefix . "http://") -}}
+      {{- if not $external -}}{{- with $page.Resources.GetMatch . -}}{{- $href = .RelPermalink -}}{{- end -}}{{- end -}}
+      <a href="{{ $href }}"{{ if $external }} rel="external"{{ end }}>{{ i18n "pdf" }}</a>
+    {{- end -}}
+    {{- with $page.Params.code }}<a href="{{ . }}" rel="external">{{ i18n "code" }}</a>{{ end -}}
+    {{- with $page.Params.projectPage -}}
+      {{- $href := . -}}
+      {{- $external := or (hasPrefix . "https://") (hasPrefix . "http://") -}}
+      {{- if not $external -}}{{- with partial "content/resolve-by-id.html" (dict "site" $page.Site "section" "projects" "id" .) -}}{{- $href = .RelPermalink -}}{{- end -}}{{- end -}}
+      <a href="{{ $href }}"{{ if $external }} rel="external"{{ end }}>{{ i18n "project_page" }}</a>
+    {{- end -}}
+    {{- with $page.Params.dataset }}<a href="{{ . }}" rel="external">{{ i18n "dataset" }}</a>{{ end -}}
+    {{- with $page.Params.video }}<a href="{{ . }}" rel="external">{{ i18n "video" }}</a>{{ end -}}
+    {{- with $page.Params.bibtex -}}{{- with $page.Resources.GetMatch . -}}<a href="{{ $page.RelPermalink }}#bibtex">{{ i18n "bibtex" }}</a>{{- end -}}{{- end -}}
+    {{- range $page.Params.links }}<a href="{{ .url }}" rel="external">{{ .label }}</a>{{ end -}}
+  </nav>
+{{- end -}}

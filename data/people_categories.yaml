@@ -1,0 +1,27 @@
+- id: pi
+  label: Principal Investigator
+  weight: 10
+- id: faculty
+  label: Faculty
+  weight: 20
+- id: postdoc
+  label: Postdoctoral Researchers
+  weight: 30
+- id: phd
+  label: PhD Students
+  weight: 40
+- id: master
+  label: Master Students
+  weight: 50
+- id: ra
+  label: Research Assistants
+  weight: 60
+- id: undergraduate
+  label: Undergraduate Students
+  weight: 70
+- id: visitor
+  label: Visitors
+  weight: 80
+- id: alumni
+  label: Alumni
+  weight: 90

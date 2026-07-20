@@ -1,0 +1,12 @@
+- id: ai-large-models
+  label: Artificial Intelligence & Large Models
+  labelZh: 人工智能与大模型
+  weight: 10
+- id: power-forecasting-optimization
+  label: Power Forecasting & Collaborative Optimization
+  labelZh: 源荷预测与协同优化
+  weight: 20
+- id: grid-monitoring-diagnosis
+  label: Grid Monitoring & Fault Diagnosis
+  labelZh: 电网监测与故障诊断
+  weight: 30

@@ -1,0 +1,13 @@
+{{- $pages := where site.RegularPages "Section" "news" -}}
+{{- $pages = where $pages "Draft" false -}}
+{{- $pages = $pages.ByDate.Reverse -}}
+{{- with first 5 $pages }}
+  <section class="section" aria-labelledby="news-heading">
+    <div class="container">
+      {{ partial "section-header.html" (dict "config" $.Params.sections.news "id" "news-heading") }}
+      <ol class="editorial-list">
+        {{- range . }}<li>{{ partial "news/item.html" (dict "page" . "headingLevel" 3) }}</li>{{ end }}
+      </ol>
+    </div>
+  </section>
+{{- end }}

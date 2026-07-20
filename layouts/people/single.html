@@ -1,0 +1,68 @@
+{{ define "main" }}
+  {{- $personID := .Params.id -}}
+  {{- $publications := where site.RegularPages "Section" "publications" -}}
+  {{- $publications = where $publications "Draft" false -}}
+  {{- $publications = where $publications "Params.labMembers" "intersect" (slice $personID) -}}
+  {{- $publications = sort $publications "Title" "asc" -}}
+  {{- $publications = sort $publications "Date" "desc" -}}
+  {{- $publications = sort $publications "Params.year" "desc" -}}
+  {{- $projects := where site.RegularPages "Section" "projects" -}}
+  {{- $projects = where $projects "Draft" false -}}
+  {{- $projects = where $projects "Params.people" "intersect" (slice $personID) -}}
+  {{- $projects = sort $projects "Title" "asc" -}}
+  {{- $projects = sort $projects "Params.weight" "asc" -}}
+  {{- $peopleRoot := site.GetPage "/people" -}}
+
+  <article class="person-profile">
+    <div class="container">
+      {{- with $peopleRoot }}<a class="person-profile__back text-link text-link--back" href="{{ .RelPermalink }}">{{ i18n "back_to_people" }}</a>{{ end }}
+
+      <header class="person-profile__header">
+        {{ partial "person/portrait.html" (dict "page" . "variant" "profile") }}
+        <div class="person-profile__identity stack">
+          <div>
+            <h1>{{ .Title }}</h1>
+            <p class="person-profile__role">{{ .Params.role }}</p>
+          </div>
+          {{ partial "person/links.html" (dict "page" .) }}
+        </div>
+      </header>
+
+      <div class="person-profile__body">
+        {{- with .Content }}
+          <section class="person-profile__section" aria-labelledby="biography-heading">
+            <h2 id="biography-heading">{{ i18n "person_biography" }}</h2>
+            <div class="prose">{{ . }}</div>
+          </section>
+        {{- end }}
+
+        {{- with .Params.researchInterests }}
+          <section class="person-profile__section" aria-labelledby="interests-heading">
+            <h2 id="interests-heading">{{ i18n "person_research_interests" }}</h2>
+            <ul class="person-interests person-interests--profile">
+              {{- range . }}<li>{{ . }}</li>{{ end }}
+            </ul>
+          </section>
+        {{- end }}
+
+        {{- with $publications }}
+          <section class="person-profile__section" aria-labelledby="related-publications-heading">
+            <h2 id="related-publications-heading">{{ i18n "person_publications" }}</h2>
+            <ol class="editorial-list">
+              {{- range . }}<li>{{ partial "publication/item.html" . }}</li>{{ end }}
+            </ol>
+          </section>
+        {{- end }}
+
+        {{- with $projects }}
+          <section class="person-profile__section" aria-labelledby="related-projects-heading">
+            <h2 id="related-projects-heading">{{ i18n "person_projects" }}</h2>
+            <div class="grid card-grid">
+              {{- range . }}{{ partial "cards/project.html" . }}{{ end }}
+            </div>
+          </section>
+        {{- end }}
+      </div>
+    </div>
+  </article>
+{{ end }}

@@ -1,0 +1,10 @@
+{{- $page := .page -}}
+{{- $field := lower .field -}}
+{{- if not (isset $page.Params $field) -}}
+  {{- errorf "content validation: %s is missing required field %q" $page.File.Path .field -}}
+{{- else -}}
+  {{- $value := index $page.Params $field -}}
+  {{- if not $value -}}
+    {{- errorf "content validation: %s has an empty required field %q" $page.File.Path .field -}}
+  {{- end -}}
+{{- end -}}

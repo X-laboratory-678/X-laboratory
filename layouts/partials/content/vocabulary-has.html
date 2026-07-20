@@ -1,0 +1,8 @@
+{{- $id := .id -}}
+{{- $found := false -}}
+{{- range .entries -}}
+  {{- if eq .id $id -}}
+    {{- $found = true -}}
+  {{- end -}}
+{{- end -}}
+{{- return $found -}}

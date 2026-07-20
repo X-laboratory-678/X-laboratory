@@ -1,0 +1,17 @@
+{{- $page := .page -}}
+{{- $compact := .compact | default false -}}
+{{- $hasLinks := or $page.Params.email $page.Params.homepage $page.Params.googleScholar -}}
+{{- if not $compact -}}
+  {{- $hasLinks = or $hasLinks $page.Params.github $page.Params.orcid -}}
+{{- end -}}
+{{- if $hasLinks }}
+  <ul class="person-links" aria-label="{{ i18n "person_links" }}">
+    {{- with $page.Params.email }}<li><a href="mailto:{{ . }}">{{ i18n "person_email" }}</a></li>{{ end }}
+    {{- with $page.Params.homepage }}<li><a href="{{ . }}" rel="me external">{{ i18n "person_website" }}</a></li>{{ end }}
+    {{- with $page.Params.googleScholar }}<li><a href="{{ . }}" rel="me external">{{ i18n "person_google_scholar" }}</a></li>{{ end }}
+    {{- if not $compact }}
+      {{- with $page.Params.github }}<li><a href="{{ . }}" rel="me external">{{ i18n "person_github" }}</a></li>{{ end }}
+      {{- with $page.Params.orcid }}<li><a href="{{ . }}" rel="me external">{{ i18n "person_orcid" }}</a></li>{{ end }}
+    {{- end }}
+  </ul>
+{{- end }}

@@ -1,0 +1,3 @@
+{{- $id := . -}}
+{{- $key := printf "publication_type_%s" (replace $id "-" "_") -}}
+{{- i18n $key -}}

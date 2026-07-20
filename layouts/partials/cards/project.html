@@ -1,0 +1,11 @@
+<article class="project-card">
+  {{- with partial "project/period.html" . }}<p class="project-card__meta">{{ i18n "project_period" }} · {{ . }}</p>{{ end }}
+  <h3><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
+  {{- with .Params.summary }}<p class="project-card__summary">{{ . }}</p>{{ end }}
+  {{- with .Params.researchAreas }}
+    <ul class="project-card__areas" aria-label="{{ i18n "research_areas" }}">
+      {{- range . }}<li>{{ partial "research/area-link.html" (dict "site" site "id" .) }}</li>{{ end -}}
+    </ul>
+  {{- end }}
+  <a class="project-card__link text-link" href="{{ .RelPermalink }}">{{ i18n "view_project" }}</a>
+</article>

@@ -1,0 +1,109 @@
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  {{- $pageTitle := site.Title -}}
+  {{- if not .IsHome -}}
+    {{- $pageTitle = printf "%s | %s" .Title site.Title -}}
+  {{- end -}}
+  {{- $description := .Description | default site.Params.description -}}
+  {{- if and (eq .Section "people") (not .Description) .Params.role -}}
+    {{- $description = printf "%s — %s, %s" .Params.role site.Params.labName site.Params.universityName -}}
+  {{- end -}}
+  {{- if and (eq .Section "publications") (not .Description) .Params.year -}}
+    {{- $description = printf "%s · %v — %s" (.Params.venue | default (i18n "publication")) .Params.year site.Params.labName -}}
+  {{- end -}}
+  {{- if and (eq .Section "projects") (not .Description) .Params.summary -}}
+    {{- $description = .Params.summary -}}
+  {{- end -}}
+  {{- if and (eq .Section "news") (not .Description) .Params.summary -}}
+    {{- $description = .Params.summary -}}
+  {{- end -}}
+
+  <title>{{ $pageTitle }}</title>
+  <meta name="description" content="{{ $description | plainify }}">
+  <link rel="icon" href="{{ "favicon.svg" | relURL }}" type="image/svg+xml">
+  {{- if eq .Kind "404" }}
+    <meta name="robots" content="noindex, follow">
+  {{- else }}
+    <link rel="canonical" href="{{ .Permalink }}">
+    {{- range .AllTranslations }}
+      <link rel="alternate" hreflang="{{ .Language.Locale }}" href="{{ .Permalink }}">
+    {{- end }}
+
+    {{- $openGraphType := "website" -}}
+    {{- if and .IsPage (or (eq .Section "news") (eq .Section "publications")) -}}
+      {{- $openGraphType = "article" -}}
+    {{- end }}
+    <meta property="og:title" content="{{ $pageTitle }}">
+    <meta property="og:description" content="{{ $description | plainify }}">
+    <meta property="og:url" content="{{ .Permalink }}">
+    <meta property="og:type" content="{{ $openGraphType }}">
+    <meta property="og:site_name" content="{{ site.Params.labName }}">
+    <meta property="og:locale" content="{{ site.Params.openGraphLocale }}">
+    {{- range .Translations }}
+      <meta property="og:locale:alternate" content="{{ .Site.Params.openGraphLocale }}">
+    {{- end }}
+    {{- if and (eq .Section "news") .IsPage -}}
+      <meta property="article:published_time" content="{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}">
+    {{- end }}
+    {{ partial "seo/json-ld.html" (dict "page" . "title" $pageTitle "description" ($description | plainify)) }}
+  {{- end }}
+
+  {{- $styles := slice
+    (resources.Get "css/tokens.css")
+    (resources.Get "css/reset.css")
+    (resources.Get "css/base.css")
+    (resources.Get "css/layout.css")
+    (resources.Get "css/components/buttons.css")
+    (resources.Get "css/components/navigation.css")
+    (resources.Get "css/components/section.css")
+    (resources.Get "css/components/cards.css")
+    (resources.Get "css/components/person.css")
+    (resources.Get "css/components/publication.css")
+    (resources.Get "css/components/footer.css")
+    (resources.Get "css/pages/home.css")
+    (resources.Get "css/pages/people.css")
+    (resources.Get "css/pages/publications.css")
+    (resources.Get "css/pages/research-projects.css")
+    (resources.Get "css/pages/news.css")
+    (resources.Get "css/pages/join.css")
+  -}}
+  {{- $css := $styles | resources.Concat "css/site.css" -}}
+  {{- if hugo.IsProduction -}}
+    {{- $css = $css | resources.Minify | resources.Fingerprint "sha384" -}}
+    <link rel="stylesheet" href="{{ $css.RelPermalink }}" integrity="{{ $css.Data.Integrity }}" crossorigin="anonymous">
+  {{- else -}}
+    <link rel="stylesheet" href="{{ $css.RelPermalink }}">
+  {{- end }}
+
+  {{- if ne .Kind "404" -}}
+    {{- $navigation := resources.Get "js/navigation.js" -}}
+    {{- if hugo.IsProduction -}}
+      {{- $navigation = $navigation | resources.Minify | resources.Fingerprint "sha384" -}}
+      <script type="module" src="{{ $navigation.RelPermalink }}" integrity="{{ $navigation.Data.Integrity }}" crossorigin="anonymous"></script>
+    {{- else -}}
+      <script type="module" src="{{ $navigation.RelPermalink }}"></script>
+    {{- end }}
+  {{- end }}
+
+  {{- if and (eq .Section "publications") .IsSection -}}
+    {{- $publicationsJS := resources.Get "js/publications.js" -}}
+    {{- if hugo.IsProduction -}}
+      {{- $publicationsJS = $publicationsJS | resources.Minify | resources.Fingerprint "sha384" -}}
+      <script type="module" src="{{ $publicationsJS.RelPermalink }}" integrity="{{ $publicationsJS.Data.Integrity }}" crossorigin="anonymous"></script>
+    {{- else -}}
+      <script type="module" src="{{ $publicationsJS.RelPermalink }}"></script>
+    {{- end -}}
+  {{- end -}}
+
+  {{- if and (eq .Section "publications") .IsPage .Params.bibtex -}}
+    {{- $bibtexJS := resources.Get "js/bibtex.js" -}}
+    {{- if hugo.IsProduction -}}
+      {{- $bibtexJS = $bibtexJS | resources.Minify | resources.Fingerprint "sha384" -}}
+      <script type="module" src="{{ $bibtexJS.RelPermalink }}" integrity="{{ $bibtexJS.Data.Integrity }}" crossorigin="anonymous"></script>
+    {{- else -}}
+      <script type="module" src="{{ $bibtexJS.RelPermalink }}"></script>
+    {{- end -}}
+  {{- end -}}
+</head>

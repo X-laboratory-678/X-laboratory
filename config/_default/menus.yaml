@@ -1,0 +1,43 @@
+main:
+  - identifier: home
+    name: Home
+    pageRef: /
+    weight: 10
+    params:
+      enabled: true
+  - identifier: people
+    name: People
+    pageRef: /people
+    weight: 20
+    params:
+      enabled: true
+  - identifier: research
+    name: Research
+    pageRef: /research
+    weight: 30
+    params:
+      enabled: true
+  - identifier: publications
+    name: Publications
+    pageRef: /publications
+    weight: 40
+    params:
+      enabled: true
+  - identifier: projects
+    name: Projects
+    pageRef: /projects
+    weight: 50
+    params:
+      enabled: true
+  - identifier: news
+    name: News
+    pageRef: /news
+    weight: 60
+    params:
+      enabled: true
+  - identifier: join
+    name: Join Us
+    pageRef: /join
+    weight: 70
+    params:
+      enabled: true

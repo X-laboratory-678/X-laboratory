@@ -1,0 +1,218 @@
+- id: skip_to_content
+  translation: Skip to content
+- id: primary_navigation
+  translation: Primary navigation
+- id: nav_home
+  translation: Home
+- id: nav_people
+  translation: People
+- id: nav_research
+  translation: Research
+- id: nav_publications
+  translation: Publications
+- id: nav_projects
+  translation: Projects
+- id: nav_news
+  translation: News
+- id: nav_join
+  translation: Join Us
+- id: coming_soon
+  translation: Coming soon
+- id: open_menu
+  translation: Menu
+- id: close_menu
+  translation: Close menu
+- id: footer_navigation
+  translation: Footer navigation
+- id: language_switch_label
+  translation: 中文
+- id: publication_links
+  translation: Publication links
+- id: paper
+  translation: Paper
+- id: pdf
+  translation: PDF
+- id: code
+  translation: Code
+- id: project_page
+  translation: Project page
+- id: dataset
+  translation: Dataset
+- id: video
+  translation: Video
+- id: doi
+  translation: DOI
+- id: bibtex
+  translation: BibTeX
+- id: publication
+  translation: Publication
+- id: back_to_publications
+  translation: Publications
+- id: abstract
+  translation: Abstract
+- id: research_areas
+  translation: Research Areas
+- id: publication_researchers
+  translation: X-Laboratory Researchers
+- id: publication_related_projects
+  translation: Related Projects
+- id: view_bibtex
+  translation: View BibTeX
+- id: raw_bibtex
+  translation: Open raw BibTeX
+- id: copy_bibtex
+  translation: Copy BibTeX
+- id: bibtex_copied
+  translation: Copied
+- id: bibtex_copy_failed
+  translation: Copy failed. Select the text manually.
+- id: filter_year
+  translation: Year
+- id: filter_type
+  translation: Publication type
+- id: filter_research_area
+  translation: Research area
+- id: filter_all_years
+  translation: All years
+- id: filter_all_types
+  translation: All types
+- id: filter_all_research_areas
+  translation: All research areas
+- id: reset_filters
+  translation: Reset filters
+- id: publication_count_one
+  translation: "{count} publication"
+- id: publication_count_many
+  translation: "{count} publications"
+- id: no_publications_match
+  translation: No publications match these filters.
+- id: no_publications
+  translation: No publications are available yet.
+- id: publication_type_conference
+  translation: Conference paper
+- id: publication_type_journal
+  translation: Journal article
+- id: publication_type_preprint
+  translation: Preprint
+- id: publication_type_workshop
+  translation: Workshop paper
+- id: publication_type_book_chapter
+  translation: Book chapter
+- id: publication_type_thesis
+  translation: Thesis
+- id: publication_type_other
+  translation: Other
+- id: back_to_people
+  translation: People
+- id: person_research_interests
+  translation: Research Interests
+- id: person_biography
+  translation: Biography
+- id: person_publications
+  translation: Publications
+- id: person_projects
+  translation: Projects
+- id: person_links
+  translation: Profile links
+- id: person_website
+  translation: Website
+- id: person_email
+  translation: Email
+- id: person_github
+  translation: GitHub
+- id: person_google_scholar
+  translation: Google Scholar
+- id: person_orcid
+  translation: ORCID
+- id: people_category_pi
+  translation: Principal Investigator
+- id: people_category_faculty
+  translation: Faculty
+- id: people_category_postdoc
+  translation: Postdoctoral Researchers
+- id: people_category_phd
+  translation: PhD Students
+- id: people_category_master
+  translation: Master Students
+- id: people_category_ra
+  translation: Research Assistants
+- id: people_category_undergraduate
+  translation: Undergraduate Students
+- id: people_category_visitor
+  translation: Visitors
+- id: people_category_alumni
+  translation: Alumni
+- id: project
+  translation: Project
+- id: project_period
+  translation: Period
+- id: project_people
+  translation: People
+- id: project_overview
+  translation: Overview
+- id: project_publications
+  translation: Related Publications
+- id: project_resources
+  translation: External Resources
+- id: project_directory
+  translation: Project directory
+- id: back_to_projects
+  translation: Projects
+- id: view_project
+  translation: View project
+- id: demo
+  translation: Demo
+- id: research_area
+  translation: Research Area
+- id: research_directory
+  translation: Research area directory
+- id: back_to_research
+  translation: Research
+- id: explore_area
+  translation: Explore area
+- id: related_projects
+  translation: Related Projects
+- id: related_publications
+  translation: Related Publications
+- id: project_count_one_label
+  translation: project
+- id: project_count_many_label
+  translation: projects
+- id: publication_count_one_label
+  translation: publication
+- id: publication_count_many_label
+  translation: publications
+- id: latest_news
+  translation: Latest News
+- id: no_news
+  translation: No verified news is available yet.
+- id: back_to_news
+  translation: News
+- id: news_related_publication
+  translation: Related Publication
+- id: news_related_project
+  translation: Related Project
+- id: join_research_fit
+  translation: Research Fit
+- id: join_research_fit_intro
+  translation: Explore the laboratory's current areas before making a research inquiry.
+- id: join_explore_work
+  translation: Explore Our Work
+- id: join_view_publications
+  translation: Read our publications
+- id: join_view_projects
+  translation: Explore current projects
+- id: join_contact
+  translation: How to Get in Touch
+- id: join_contact_intro
+  translation: Please contact the principal investigator for research-related inquiries. An inquiry is not a formal application and does not imply an available position.
+- id: join_pi_contact
+  translation: Principal investigator contact
+- id: join_contact_pi
+  translation: Contact the PI
+- id: join_admissions
+  translation: Official Admissions Information
+- id: join_admissions_notice
+  translation: Formal admissions requirements, availability, application timelines, and eligibility are subject to the official policies and announcements of Shanghai University of Electric Power. University admissions information does not indicate a confirmed X-Laboratory opening or quota.
+- id: join_admissions_link
+  translation: View official admissions information

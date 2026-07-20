@@ -1,0 +1,90 @@
+{{- $page := .page -}}
+{{- $description := .description -}}
+{{- $websiteID := printf "%s#website" site.Home.Permalink -}}
+{{- $organizationID := printf "%s#organization" site.Home.Permalink -}}
+{{- $website := dict
+  "@type" "WebSite"
+  "@id" $websiteID
+  "url" site.Home.Permalink
+  "name" site.Params.labName
+  "description" site.Params.description
+  "inLanguage" site.Language.Locale
+-}}
+{{- $organization := dict
+  "@type" "Organization"
+  "@id" $organizationID
+  "url" site.Home.Permalink
+  "name" site.Params.labName
+  "description" site.Params.description
+  "parentOrganization" (dict "@type" "CollegeOrUniversity" "name" site.Params.universityName)
+-}}
+{{- $schema := dict -}}
+
+{{- if $page.IsHome -}}
+  {{- $schema = dict
+    "@context" "https://schema.org"
+    "@graph" (slice $website $organization)
+  -}}
+{{- else if and $page.IsPage (eq $page.Section "people") -}}
+  {{- $person := dict
+    "@context" "https://schema.org"
+    "@type" "Person"
+    "name" $page.Title
+    "url" $page.Permalink
+    "jobTitle" $page.Params.role
+    "affiliation" (dict "@type" "Organization" "name" site.Params.labName "url" site.Home.Permalink "parentOrganization" (dict "@type" "CollegeOrUniversity" "name" site.Params.universityName))
+  -}}
+  {{- with $page.Params.email -}}
+    {{- $person = merge $person (dict "email" .) -}}
+  {{- end -}}
+  {{- $schema = $person -}}
+{{- else if and $page.IsPage (eq $page.Section "publications") -}}
+  {{- $authors := slice -}}
+  {{- range $page.Params.authors -}}
+    {{- $authors = $authors | append (dict "@type" "Person" "name" .name) -}}
+  {{- end -}}
+  {{- $article := dict
+    "@context" "https://schema.org"
+    "@type" "ScholarlyArticle"
+    "name" $page.Title
+    "headline" $page.Title
+    "url" $page.Permalink
+    "description" $description
+    "author" $authors
+    "datePublished" (printf "%v" $page.Params.year)
+    "inLanguage" site.Language.Locale
+  -}}
+  {{- with $page.Params.venue -}}
+    {{- $article = merge $article (dict "isPartOf" (dict "@type" "Periodical" "name" .)) -}}
+  {{- end -}}
+  {{- with $page.Params.doi -}}
+    {{- $doiURL := printf "https://doi.org/%s" . -}}
+    {{- $article = merge $article (dict "identifier" (dict "@type" "PropertyValue" "propertyID" "DOI" "value" . "url" $doiURL) "sameAs" $doiURL) -}}
+  {{- end -}}
+  {{- with $page.Params.date -}}
+    {{- $article = merge $article (dict "datePublished" (time.Format "2006-01-02" .)) -}}
+  {{- end -}}
+  {{- $schema = $article -}}
+{{- else if and $page.IsPage (eq $page.Section "news") -}}
+  {{- $schema = dict
+    "@context" "https://schema.org"
+    "@type" "NewsArticle"
+    "headline" $page.Title
+    "description" $description
+    "url" $page.Permalink
+    "datePublished" ($page.Date.Format "2006-01-02")
+    "inLanguage" site.Language.Locale
+    "publisher" (dict "@type" "Organization" "@id" $organizationID "name" site.Params.labName "url" site.Home.Permalink)
+  -}}
+{{- else -}}
+  {{- $schema = dict
+    "@context" "https://schema.org"
+    "@type" "WebPage"
+    "name" $page.Title
+    "description" $description
+    "url" $page.Permalink
+    "inLanguage" site.Language.Locale
+    "isPartOf" (dict "@type" "WebSite" "@id" $websiteID "name" site.Params.labName "url" site.Home.Permalink)
+  -}}
+{{- end -}}
+<script type="application/ld+json">{{ $schema | jsonify | safeJS }}</script>

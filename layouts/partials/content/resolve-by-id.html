@@ -1,0 +1,11 @@
+{{- $site := .site -}}
+{{- $section := .section -}}
+{{- $id := .id -}}
+{{- $index := partialCached "content/id-index.html" (dict "site" $site "section" $section) $site.Language.Locale $section -}}
+{{- $page := index $index $id -}}
+{{- if and (not $page) (ne $site.Language.Locale hugo.Sites.Default.Language.Locale) -}}
+  {{- $defaultSite := hugo.Sites.Default -}}
+  {{- $defaultIndex := partialCached "content/id-index.html" (dict "site" $defaultSite "section" $section) $defaultSite.Language.Locale $section -}}
+  {{- $page = index $defaultIndex $id -}}
+{{- end -}}
+{{- return $page -}}

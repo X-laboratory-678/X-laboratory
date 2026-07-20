@@ -1,0 +1,21 @@
+{{ define "main" }}
+  {{- $pages := where .Pages "Draft" false -}}
+  {{- $pages = sort $pages "Title" "asc" -}}
+  {{- $pages = sort $pages "Params.endYear" "desc" -}}
+  {{- $pages = sort $pages "Params.startYear" "desc" -}}
+  <header class="directory-header section">
+    <div class="container stack">
+      <p class="eyebrow">{{ i18n "nav_projects" }}</p>
+      <h1>{{ .Title }}</h1>
+      <div class="prose">{{ .Content }}</div>
+    </div>
+  </header>
+  <section class="project-directory section" aria-labelledby="project-directory-heading">
+    <div class="container">
+      <h2 id="project-directory-heading" class="visually-hidden">{{ i18n "project_directory" }}</h2>
+      <div class="grid project-directory__grid">
+        {{- range $pages }}{{ partial "cards/project.html" . }}{{ end -}}
+      </div>
+    </div>
+  </section>
+{{ end }}

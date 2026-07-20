@@ -1,0 +1,34 @@
+{{ define "main" }}
+  {{- $directory := site.GetPage "/news" -}}
+  <article class="news-profile section">
+    <div class="container stack">
+      {{- with $directory }}<a class="text-link text-link--back" href="{{ .RelPermalink }}">{{ i18n "back_to_news" }}</a>{{ end -}}
+      <header class="news-profile__header stack">
+        <p class="news-profile__meta">
+          {{- partial "news/date.html" . }}
+          <span aria-hidden="true"> · </span>
+          <span>{{ partial "news/category-label.html" .Params.category }}</span>
+        </p>
+        <h1>{{ .Title }}</h1>
+        {{- with .Params.summary }}<p class="news-profile__summary">{{ . }}</p>{{ end }}
+      </header>
+      <div class="prose news-profile__body">{{ .Content }}</div>
+      {{- with .Params.relatedPublication -}}
+        {{- with partial "content/resolve-by-id.html" (dict "site" site "section" "publications" "id" .) -}}
+          <section class="news-profile__section" aria-labelledby="news-publication-heading">
+            <h2 id="news-publication-heading">{{ i18n "news_related_publication" }}</h2>
+            {{ partial "publication/item.html" . }}
+          </section>
+        {{- end -}}
+      {{- end -}}
+      {{- with .Params.relatedProject -}}
+        {{- with partial "content/resolve-by-id.html" (dict "site" site "section" "projects" "id" .) -}}
+          <section class="news-profile__section" aria-labelledby="news-project-heading">
+            <h2 id="news-project-heading">{{ i18n "news_related_project" }}</h2>
+            {{ partial "cards/project.html" . }}
+          </section>
+        {{- end -}}
+      {{- end -}}
+    </div>
+  </article>
+{{ end }}

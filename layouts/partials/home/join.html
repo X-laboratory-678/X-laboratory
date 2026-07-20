@@ -1,0 +1,15 @@
+{{- $config := .Params.sections.join -}}
+{{- with site.GetPage $config.pageref }}
+  <section class="section" aria-labelledby="join-heading">
+    <div class="container">
+      <div class="join-callout">
+        <div class="stack" style="--stack-space: var(--space-3)">
+          <p class="eyebrow">{{ $config.eyebrow }}</p>
+          <h2 id="join-heading">{{ $config.title }}</h2>
+          <p>{{ $config.description }}</p>
+        </div>
+        <div><a class="button" href="{{ .RelPermalink }}">{{ $config.actionlabel }}</a></div>
+      </div>
+    </div>
+  </section>
+{{- end }}

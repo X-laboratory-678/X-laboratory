@@ -1,0 +1,72 @@
+{{ define "main" }}
+  {{- $pi := partial "content/resolve-by-id.html" (dict "site" site "section" "people" "id" site.Params.principalInvestigatorId) -}}
+  {{- $researchRoot := site.GetPage "/research" -}}
+  {{- $publicationsRoot := site.GetPage "/publications" -}}
+  {{- $projectsRoot := site.GetPage "/projects" -}}
+  <article class="join-page">
+    <header class="join-page__header section">
+      <div class="container stack">
+        <p class="eyebrow">{{ i18n "nav_join" }}</p>
+        <h1>{{ .Title }}</h1>
+        <p>{{ .Description }}</p>
+      </div>
+    </header>
+
+    <section class="section" aria-labelledby="join-research-heading">
+      <div class="container">
+        <header class="section__header">
+          <h2 id="join-research-heading">{{ i18n "join_research_fit" }}</h2>
+          <p>{{ i18n "join_research_fit_intro" }}</p>
+        </header>
+        <div class="grid join-research-grid">
+          {{- range $researchRoot.Pages.ByWeight -}}
+            <article class="join-research-card stack">
+              <h3><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
+              <p>{{ .Description }}</p>
+            </article>
+          {{- end -}}
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--tinted">
+      <div class="container join-page__content prose">{{ .Content }}</div>
+    </section>
+
+    <section class="section" aria-labelledby="join-explore-heading">
+      <div class="container">
+        <h2 id="join-explore-heading">{{ i18n "join_explore_work" }}</h2>
+        <div class="cluster join-actions">
+          {{- with $publicationsRoot }}<a class="button button--secondary" href="{{ .RelPermalink }}">{{ i18n "join_view_publications" }}</a>{{ end -}}
+          {{- with $projectsRoot }}<a class="button button--secondary" href="{{ .RelPermalink }}">{{ i18n "join_view_projects" }}</a>{{ end -}}
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--tinted" aria-labelledby="join-contact-heading">
+      <div class="container join-contact-grid">
+        <div class="stack">
+          <h2 id="join-contact-heading">{{ i18n "join_contact" }}</h2>
+          <p>{{ i18n "join_contact_intro" }}</p>
+        </div>
+        {{- with $pi -}}
+          <aside class="join-contact-card stack" aria-label="{{ i18n "join_pi_contact" }}">
+            <div>
+              <h3><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
+              <p>{{ i18n "people_category_pi" }}</p>
+            </div>
+            {{- with .Params.email }}<a class="button" href="mailto:{{ . }}">{{ i18n "join_contact_pi" }}</a>{{ end -}}
+          </aside>
+        {{- end -}}
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="join-admissions-heading">
+      <div class="container admissions-callout stack">
+        <h2 id="join-admissions-heading">{{ i18n "join_admissions" }}</h2>
+        <p>{{ i18n "join_admissions_notice" }}</p>
+        <a class="text-link" href="{{ site.Params.admissions.officialUrl }}" rel="external">{{ i18n "join_admissions_link" }}</a>
+      </div>
+    </section>
+  </article>
+{{ end }}

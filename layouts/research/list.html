@@ -1,0 +1,35 @@
+{{ define "main" }}
+  <header class="directory-header section">
+    <div class="container stack">
+      <p class="eyebrow">{{ i18n "nav_research" }}</p>
+      <h1>{{ .Title }}</h1>
+      <div class="prose">{{ .Content }}</div>
+    </div>
+  </header>
+  <section class="research-directory section" aria-labelledby="research-directory-heading">
+    <div class="container">
+      <h2 id="research-directory-heading" class="visually-hidden">{{ i18n "research_directory" }}</h2>
+      <div class="grid research-directory__grid">
+        {{- range .Pages.ByWeight -}}
+          {{- $areaID := .Params.id -}}
+          {{- $projects := where site.RegularPages "Section" "projects" -}}
+          {{- $projects = where $projects "Draft" false -}}
+          {{- $projects = where $projects "Params.researchAreas" "intersect" (slice $areaID) -}}
+          {{- $publications := where site.RegularPages "Section" "publications" -}}
+          {{- $publications = where $publications "Draft" false -}}
+          {{- $publications = where $publications "Params.researchAreas" "intersect" (slice $areaID) -}}
+          <article class="research-card stack">
+            <h2><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
+            <p>{{ .Description }}</p>
+            <p class="research-card__count">
+              {{- len $projects }} {{ if eq (len $projects) 1 }}{{ i18n "project_count_one_label" }}{{ else }}{{ i18n "project_count_many_label" }}{{ end }}
+              <span aria-hidden="true"> · </span>
+              {{- len $publications }} {{ if eq (len $publications) 1 }}{{ i18n "publication_count_one_label" }}{{ else }}{{ i18n "publication_count_many_label" }}{{ end -}}
+            </p>
+            <a class="text-link" href="{{ .RelPermalink }}">{{ i18n "explore_area" }}</a>
+          </article>
+        {{- end }}
+      </div>
+    </div>
+  </section>
+{{ end }}

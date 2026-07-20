@@ -1,0 +1,25 @@
+{{ define "main" }}
+  {{- $pages := where .Pages "Draft" false -}}
+  {{- if not hugo.IsProduction }}{{- $pages = .Pages -}}{{- end -}}
+  {{- $pages = sort $pages "Title" "asc" -}}
+  {{- $pages = sort $pages "Date" "desc" -}}
+  <header class="directory-header section">
+    <div class="container stack">
+      <p class="eyebrow">{{ i18n "nav_news" }}</p>
+      <h1>{{ .Title }}</h1>
+      <div class="prose">{{ .Content }}</div>
+    </div>
+  </header>
+  <section class="news-directory section" aria-labelledby="latest-news-heading">
+    <div class="container">
+      <h2 id="latest-news-heading">{{ i18n "latest_news" }}</h2>
+      {{- with $pages -}}
+        <ol class="news-timeline">
+          {{- range . }}<li>{{ partial "news/item.html" (dict "page" . "headingLevel" 3) }}</li>{{ end -}}
+        </ol>
+      {{- else -}}
+        <p>{{ i18n "no_news" }}</p>
+      {{- end -}}
+    </div>
+  </section>
+{{ end }}

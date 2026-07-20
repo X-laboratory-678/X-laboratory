@@ -1,0 +1,21 @@
+- id: conference
+  label: Conference Paper
+  weight: 10
+- id: journal
+  label: Journal Article
+  weight: 20
+- id: preprint
+  label: Preprint
+  weight: 30
+- id: workshop
+  label: Workshop Paper
+  weight: 40
+- id: book-chapter
+  label: Book Chapter
+  weight: 50
+- id: thesis
+  label: Thesis
+  weight: 60
+- id: other
+  label: Other
+  weight: 70

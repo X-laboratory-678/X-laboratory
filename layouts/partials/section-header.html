@@ -1,0 +1,9 @@
+{{- $config := .config -}}
+<header class="section__header">
+  {{- with $config.eyebrow }}<p class="section__eyebrow">{{ . }}</p>{{ end }}
+  <h2 id="{{ .id }}">{{ $config.title }}</h2>
+  {{- with $config.description }}<p>{{ . }}</p>{{ end }}
+  {{- with site.GetPage $config.pageref }}
+    <div class="section__action"><a class="text-link" href="{{ .RelPermalink }}">{{ $config.actionlabel }}</a></div>
+  {{- end }}
+</header>

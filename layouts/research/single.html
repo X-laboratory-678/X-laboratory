@@ -1,0 +1,30 @@
+{{ define "main" }}
+  {{- $areaID := .Params.id -}}
+  {{- $projects := where site.RegularPages "Section" "projects" -}}
+  {{- $projects = where $projects "Draft" false -}}
+  {{- $projects = where $projects "Params.researchAreas" "intersect" (slice $areaID) -}}
+  {{- $projects = sort $projects "Params.startYear" "desc" -}}
+  {{- $publications := where site.RegularPages "Section" "publications" -}}
+  {{- $publications = where $publications "Draft" false -}}
+  {{- $publications = where $publications "Params.researchAreas" "intersect" (slice $areaID) -}}
+  {{- $publications = sort $publications "Title" "asc" -}}
+  {{- $publications = sort $publications "Params.year" "desc" -}}
+  {{- $directory := site.GetPage "/research" -}}
+  <article class="research-profile section">
+    <div class="container stack">
+      {{- with $directory }}<a class="text-link text-link--back" href="{{ .RelPermalink }}">{{ i18n "back_to_research" }}</a>{{ end -}}
+      <header class="research-profile__header stack">
+        <p class="eyebrow">{{ i18n "research_area" }}</p>
+        <h1>{{ .Title }}</h1>
+        <p class="research-profile__description">{{ .Description }}</p>
+      </header>
+      <div class="prose research-profile__body">{{ .Content }}</div>
+      {{- with $projects }}
+        <section class="research-profile__section" aria-labelledby="area-projects-heading"><h2 id="area-projects-heading">{{ i18n "related_projects" }}</h2><div class="grid card-grid">{{ range . }}{{ partial "cards/project.html" . }}{{ end }}</div></section>
+      {{- end }}
+      {{- with $publications }}
+        <section class="research-profile__section" aria-labelledby="area-publications-heading"><h2 id="area-publications-heading">{{ i18n "related_publications" }}</h2><ol class="editorial-list">{{ range . }}<li>{{ partial "publication/item.html" . }}</li>{{ end }}</ol></section>
+      {{- end }}
+    </div>
+  </article>
+{{ end }}

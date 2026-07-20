@@ -1,0 +1,15 @@
+{{- $page := .page | default . -}}
+{{- $headingLevel := .headingLevel | default 3 -}}
+<article class="news-item">
+  <p class="news-item__meta">
+    {{- partial "news/date.html" $page }}
+    <span aria-hidden="true"> · </span>
+    <span>{{ partial "news/category-label.html" $page.Params.category }}</span>
+  </p>
+  {{- if eq $headingLevel 2 -}}
+    <h2><a href="{{ $page.RelPermalink }}">{{ $page.Title }}</a></h2>
+  {{- else -}}
+    <h3><a href="{{ $page.RelPermalink }}">{{ $page.Title }}</a></h3>
+  {{- end -}}
+  {{- with $page.Params.summary }}<p class="news-item__summary">{{ . }}</p>{{ end }}
+</article>

@@ -1,0 +1,19 @@
+{{- $hero := .Params.hero -}}
+<section class="home-hero" aria-labelledby="home-title">
+  <div class="container--wide home-hero__layout">
+    <div class="home-hero__copy stack">
+      {{- with $hero.eyebrow }}<p class="eyebrow">{{ site.Params.universityName }} · {{ . }}</p>{{ end }}
+      <h1 id="home-title">{{ $hero.title }}</h1>
+      <p class="home-hero__description">{{ $hero.description }}</p>
+      <div class="cluster">
+        {{- with site.GetPage $hero.primarycta.pageref }}
+          <a class="button" href="{{ .RelPermalink }}">{{ $hero.primarycta.label }}</a>
+        {{- end }}
+        {{- with site.GetPage $hero.secondarycta.pageref }}
+          <a class="button button--secondary" href="{{ .RelPermalink }}">{{ $hero.secondarycta.label }}</a>
+        {{- end }}
+      </div>
+    </div>
+    <div class="home-hero__visual" aria-hidden="true"><span></span><span></span><span></span></div>
+  </div>
+</section>

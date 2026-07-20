@@ -1,0 +1,9 @@
+{{- $page := . -}}
+{{- if or .Params.code .Params.dataset .Params.demo .Params.links -}}
+  <ul class="project-resources">
+    {{- with .Params.code }}<li><a href="{{ . }}">{{ i18n "code" }}</a></li>{{ end -}}
+    {{- with .Params.dataset }}<li><a href="{{ . }}">{{ i18n "dataset" }}</a></li>{{ end -}}
+    {{- with .Params.demo }}<li><a href="{{ . }}">{{ i18n "demo" }}</a></li>{{ end -}}
+    {{- range .Params.links }}<li><a href="{{ .url }}">{{ .label }}</a></li>{{ end -}}
+  </ul>
+{{- end -}}

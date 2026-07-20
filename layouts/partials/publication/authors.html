@@ -1,0 +1,15 @@
+{{- $page := . -}}
+<span class="publication-authors">
+  {{- range $index, $author := $page.Params.authors -}}
+    {{- if $index }}, {{ end -}}
+    {{- $personID := $author.person | default "" -}}
+    {{- $isLabMember := and $personID (in $page.Params.labMembers $personID) -}}
+    {{- if $isLabMember -}}
+      {{- with partial "content/resolve-by-id.html" (dict "site" $page.Site "section" "people" "id" $personID) -}}
+        <strong class="publication-authors__lab-member"><a href="{{ .RelPermalink }}">{{ $author.name }}</a></strong>
+      {{- end -}}
+    {{- else -}}
+      <span>{{ $author.name }}</span>
+    {{- end -}}
+  {{- end -}}
+</span>

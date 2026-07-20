@@ -1,0 +1,284 @@
+{{- $site := . -}}
+{{- $peopleIndex := partialCached "content/id-index.html" (dict "site" $site "section" "people") $site.Language.Locale "people" -}}
+{{- $publicationIndex := partialCached "content/id-index.html" (dict "site" $site "section" "publications") $site.Language.Locale "publications" -}}
+{{- $projectIndex := partialCached "content/id-index.html" (dict "site" $site "section" "projects") $site.Language.Locale "projects" -}}
+{{- $researchIndex := partialCached "content/id-index.html" (dict "site" $site "section" "research") $site.Language.Locale "research" -}}
+
+{{- range $site.RegularPages -}}
+  {{- $page := . -}}
+  {{- $section := .Section -}}
+
+  {{- if eq $section "people" -}}
+    {{- range slice "title" "id" "role" "category" "status" -}}
+      {{- partial "content/require-param.html" (dict "page" $page "field" .) -}}
+    {{- end -}}
+    {{- $id := $page.Params.id -}}
+    {{- if not (findRE `^[a-z0-9]+(-[a-z0-9]+)*$` $id) -}}
+      {{- errorf "content validation: %s has invalid stable id %q" $page.File.Path $id -}}
+    {{- end -}}
+    {{- if ne $id (path.Base $page.File.Dir) -}}
+      {{- errorf "content validation: %s id %q must match bundle slug %q" $page.File.Path $id (path.Base $page.File.Dir) -}}
+    {{- end -}}
+    {{- partial "content/validate-translation-id.html" (dict "page" $page "id" $id) -}}
+    {{- if not (partial "content/vocabulary-has.html" (dict "entries" hugo.Data.people_categories "id" $page.Params.category)) -}}
+      {{- errorf "content validation: %s has unknown people category %q" $page.File.Path $page.Params.category -}}
+    {{- end -}}
+    {{- if not (in (slice "current" "alumni") $page.Params.status) -}}
+      {{- errorf "content validation: %s has unknown people status %q" $page.File.Path $page.Params.status -}}
+    {{- end -}}
+    {{- if ne (eq $page.Params.category "alumni") (eq $page.Params.status "alumni") -}}
+      {{- errorf "content validation: %s must use category %q and status %q together" $page.File.Path "alumni" "alumni" -}}
+    {{- end -}}
+    {{- with $page.Params.photo -}}
+      {{- if not ($page.Resources.GetMatch .) -}}
+        {{- errorf "content validation: %s references missing bundle resource %q" $page.File.Path . -}}
+      {{- end -}}
+      {{- if not $page.Params.photoAlt -}}
+        {{- errorf "content validation: %s requires photoAlt when photo is set" $page.File.Path -}}
+      {{- end -}}
+    {{- end -}}
+
+  {{- else if eq $section "publications" -}}
+    {{- range slice "title" "id" "authors" "year" "publicationType" -}}
+      {{- partial "content/require-param.html" (dict "page" $page "field" .) -}}
+    {{- end -}}
+    {{- $id := $page.Params.id -}}
+    {{- if not (findRE `^[a-z0-9]+(-[a-z0-9]+)*$` $id) -}}
+      {{- errorf "content validation: %s has invalid stable id %q" $page.File.Path $id -}}
+    {{- end -}}
+    {{- if ne $id (path.Base $page.File.Dir) -}}
+      {{- errorf "content validation: %s id %q must match bundle slug %q" $page.File.Path $id (path.Base $page.File.Dir) -}}
+    {{- end -}}
+    {{- partial "content/validate-translation-id.html" (dict "page" $page "id" $id) -}}
+    {{- range $translation := $page.AllTranslations -}}
+      {{- if ne $translation.Lang $page.Lang -}}
+        {{- if ne $translation.Title $page.Title -}}
+          {{- errorf "content validation: publication translations %s and %s must use the same title" $page.File.Path $translation.File.Path -}}
+        {{- end -}}
+        {{- if ne (printf "%v" $translation.Params.year) (printf "%v" $page.Params.year) -}}
+          {{- errorf "content validation: publication translations %s and %s must use the same year" $page.File.Path $translation.File.Path -}}
+        {{- end -}}
+        {{- if ne $translation.Params.publicationType $page.Params.publicationType -}}
+          {{- errorf "content validation: publication translations %s and %s must use the same publicationType" $page.File.Path $translation.File.Path -}}
+        {{- end -}}
+        {{- if ne ($translation.Params.doi | default "") ($page.Params.doi | default "") -}}
+          {{- errorf "content validation: publication translations %s and %s must use the same DOI" $page.File.Path $translation.File.Path -}}
+        {{- end -}}
+        {{- if ne ($translation.Params.venue | default "") ($page.Params.venue | default "") -}}
+          {{- errorf "content validation: publication translations %s and %s must use the same venue" $page.File.Path $translation.File.Path -}}
+        {{- end -}}
+        {{- $authorSignature := slice -}}
+        {{- range $page.Params.authors -}}{{- $authorSignature = $authorSignature | append (printf "%s|%s" .name (.person | default "")) -}}{{- end -}}
+        {{- $translationAuthorSignature := slice -}}
+        {{- range $translation.Params.authors -}}{{- $translationAuthorSignature = $translationAuthorSignature | append (printf "%s|%s" .name (.person | default "")) -}}{{- end -}}
+        {{- if ne (delimit $authorSignature "||") (delimit $translationAuthorSignature "||") -}}
+          {{- errorf "content validation: publication translations %s and %s must preserve author names, order, and person mappings" $page.File.Path $translation.File.Path -}}
+        {{- end -}}
+      {{- end -}}
+    {{- end -}}
+    {{- if not (partial "content/vocabulary-has.html" (dict "entries" hugo.Data.publication_types "id" $page.Params.publicationType)) -}}
+      {{- errorf "content validation: %s has unknown publication type %q" $page.File.Path $page.Params.publicationType -}}
+    {{- end -}}
+    {{- range $page.Params.authors -}}
+      {{- if not .name -}}
+        {{- errorf "content validation: %s contains an author without a name" $page.File.Path -}}
+      {{- end -}}
+      {{- with .person -}}
+        {{- if not (in $page.Params.labMembers .) -}}
+          {{- errorf "content validation: %s author person %q must also appear in labMembers" $page.File.Path . -}}
+        {{- end -}}
+        {{- if not (partial "content/resolve-by-id.html" (dict "site" $site "section" "people" "id" .)) -}}
+          {{- errorf "content validation: %s author references missing People id %q" $page.File.Path . -}}
+        {{- end -}}
+      {{- end -}}
+    {{- end -}}
+    {{- range $page.Params.labMembers -}}
+      {{- if not (partial "content/resolve-by-id.html" (dict "site" $site "section" "people" "id" .)) -}}
+        {{- errorf "content validation: %s references missing People id %q" $page.File.Path . -}}
+      {{- end -}}
+      {{- $memberID := . -}}
+      {{- $mapped := false -}}
+      {{- range $page.Params.authors -}}{{- if eq (.person | default "") $memberID -}}{{- $mapped = true -}}{{- end -}}{{- end -}}
+      {{- if not $mapped -}}
+        {{- errorf "content validation: %s lab member %q must be mapped by one structured author" $page.File.Path $memberID -}}
+      {{- end -}}
+    {{- end -}}
+    {{- range $page.Params.researchAreas -}}
+      {{- if not (partial "content/vocabulary-has.html" (dict "entries" hugo.Data.research_areas "id" .)) -}}
+        {{- errorf "content validation: %s references unknown research area %q" $page.File.Path . -}}
+      {{- end -}}
+    {{- end -}}
+    {{- with $page.Params.doi -}}
+      {{- if not (findRE `^10\.[0-9]{4,9}/[-._;()/:A-Za-z0-9]+$` .) -}}
+        {{- errorf "content validation: %s has malformed DOI %q; store the identifier without https://doi.org/" $page.File.Path . -}}
+      {{- end -}}
+    {{- end -}}
+    {{- with $page.Params.bibtex -}}
+      {{- if not ($page.Resources.GetMatch .) -}}
+        {{- errorf "content validation: %s references missing BibTeX bundle resource %q" $page.File.Path . -}}
+      {{- end -}}
+    {{- end -}}
+    {{- with $page.Params.pdf -}}
+      {{- if and (not (hasPrefix . "https://")) (not (hasPrefix . "http://")) (not ($page.Resources.GetMatch .)) -}}
+        {{- errorf "content validation: %s references missing PDF bundle resource %q" $page.File.Path . -}}
+      {{- end -}}
+    {{- end -}}
+    {{- with $page.Params.thumbnail -}}
+      {{- if not ($page.Resources.GetMatch .) -}}
+        {{- errorf "content validation: %s references missing thumbnail bundle resource %q" $page.File.Path . -}}
+      {{- end -}}
+    {{- end -}}
+    {{- with $page.Params.projectPage -}}
+      {{- if and (not (hasPrefix . "https://")) (not (hasPrefix . "http://")) (not (partial "content/resolve-by-id.html" (dict "site" $site "section" "projects" "id" .))) -}}
+        {{- errorf "content validation: %s references missing Project id %q in projectPage" $page.File.Path . -}}
+      {{- end -}}
+    {{- end -}}
+
+  {{- else if eq $section "research" -}}
+    {{- range slice "title" "id" "description" -}}
+      {{- partial "content/require-param.html" (dict "page" $page "field" .) -}}
+    {{- end -}}
+    {{- $id := $page.Params.id -}}
+    {{- if not (findRE `^[a-z0-9]+(-[a-z0-9]+)*$` $id) -}}
+      {{- errorf "content validation: %s has invalid stable id %q" $page.File.Path $id -}}
+    {{- end -}}
+    {{- if ne $id (path.Base $page.File.Dir) -}}
+      {{- errorf "content validation: %s id %q must match bundle slug %q" $page.File.Path $id (path.Base $page.File.Dir) -}}
+    {{- end -}}
+    {{- partial "content/validate-translation-id.html" (dict "page" $page "id" $id) -}}
+    {{- $areaEntry := false -}}
+    {{- range hugo.Data.research_areas -}}{{- if eq .id $id -}}{{- $areaEntry = . -}}{{- end -}}{{- end -}}
+    {{- if not $areaEntry -}}
+      {{- errorf "content validation: %s uses research id %q not found in data/research_areas.yaml" $page.File.Path $id -}}
+    {{- else -}}
+      {{- $expectedTitle := $areaEntry.label -}}
+      {{- if eq $site.Language.Lang "zh" -}}{{- $expectedTitle = $areaEntry.labelZh -}}{{- end -}}
+      {{- if ne $page.Title $expectedTitle -}}
+        {{- errorf "content validation: %s title %q must match research-area label %q" $page.File.Path $page.Title $expectedTitle -}}
+      {{- end -}}
+      {{- if ne (printf "%v" ($page.Params.weight | default "")) (printf "%v" $areaEntry.weight) -}}
+        {{- errorf "content validation: %s weight %q must match research-area weight %q" $page.File.Path $page.Params.weight $areaEntry.weight -}}
+      {{- end -}}
+    {{- end -}}
+
+  {{- else if eq $section "projects" -}}
+    {{- range slice "title" "id" "summary" "status" "startYear" -}}
+      {{- partial "content/require-param.html" (dict "page" $page "field" .) -}}
+    {{- end -}}
+    {{- $id := $page.Params.id -}}
+    {{- if not (findRE `^[a-z0-9]+(-[a-z0-9]+)*$` $id) -}}
+      {{- errorf "content validation: %s has invalid stable id %q" $page.File.Path $id -}}
+    {{- end -}}
+    {{- if ne $id (path.Base $page.File.Dir) -}}
+      {{- errorf "content validation: %s id %q must match bundle slug %q" $page.File.Path $id (path.Base $page.File.Dir) -}}
+    {{- end -}}
+    {{- partial "content/validate-translation-id.html" (dict "page" $page "id" $id) -}}
+    {{- range $translation := $page.AllTranslations -}}
+      {{- if ne $translation.Lang $page.Lang -}}
+        {{- range slice "status" "startYear" "endYear" "featured" "weight" -}}
+          {{- $field := . -}}
+          {{- if ne (printf "%v" (index $translation.Params $field | default "")) (printf "%v" (index $page.Params $field | default "")) -}}
+            {{- errorf "content validation: project translations %s and %s must use the same %s" $page.File.Path $translation.File.Path $field -}}
+          {{- end -}}
+        {{- end -}}
+        {{- range slice "people" "researchAreas" "publications" -}}
+          {{- $field := . -}}
+          {{- if ne (delimit (index $translation.Params $field | default slice) "||") (delimit (index $page.Params $field | default slice) "||") -}}
+            {{- errorf "content validation: project translations %s and %s must preserve %s IDs and order" $page.File.Path $translation.File.Path $field -}}
+          {{- end -}}
+        {{- end -}}
+      {{- end -}}
+    {{- end -}}
+    {{- if not (partial "content/vocabulary-has.html" (dict "entries" hugo.Data.project_statuses "id" $page.Params.status)) -}}
+      {{- errorf "content validation: %s has unknown project status %q" $page.File.Path $page.Params.status -}}
+    {{- end -}}
+    {{- if or (lt (int $page.Params.startYear) 1900) (gt (int $page.Params.startYear) 2200) -}}
+      {{- errorf "content validation: %s has invalid startYear %q" $page.File.Path $page.Params.startYear -}}
+    {{- end -}}
+    {{- with $page.Params.endYear -}}
+      {{- if or (lt (int .) (int $page.Params.startYear)) (gt (int .) 2200) -}}
+        {{- errorf "content validation: %s has invalid endYear %q for startYear %q" $page.File.Path . $page.Params.startYear -}}
+      {{- end -}}
+    {{- end -}}
+    {{- range $page.Params.people -}}
+      {{- if not (partial "content/resolve-by-id.html" (dict "site" $site "section" "people" "id" .)) -}}
+        {{- errorf "content validation: %s references missing People id %q" $page.File.Path . -}}
+      {{- end -}}
+    {{- end -}}
+    {{- range $page.Params.publications -}}
+      {{- if not (partial "content/resolve-by-id.html" (dict "site" $site "section" "publications" "id" .)) -}}
+        {{- errorf "content validation: %s references missing Publication id %q" $page.File.Path . -}}
+      {{- end -}}
+    {{- end -}}
+    {{- range $page.Params.researchAreas -}}
+      {{- if not (partial "content/vocabulary-has.html" (dict "entries" hugo.Data.research_areas "id" .)) -}}
+        {{- errorf "content validation: %s references unknown research area %q" $page.File.Path . -}}
+      {{- end -}}
+    {{- end -}}
+    {{- with $page.Params.hero -}}
+      {{- if not ($page.Resources.GetMatch .) -}}
+        {{- errorf "content validation: %s references missing bundle resource %q" $page.File.Path . -}}
+      {{- end -}}
+      {{- if not $page.Params.heroAlt -}}
+        {{- errorf "content validation: %s requires heroAlt when hero is set" $page.File.Path -}}
+      {{- end -}}
+    {{- end -}}
+
+  {{- else if eq $section "news" -}}
+    {{- range slice "title" "category" -}}
+      {{- partial "content/require-param.html" (dict "page" $page "field" .) -}}
+    {{- end -}}
+    {{- if $page.Date.IsZero -}}
+      {{- errorf "content validation: %s is missing required field %q" $page.File.Path "date" -}}
+    {{- end -}}
+    {{- range $translation := $page.AllTranslations -}}
+      {{- if ne $translation.Lang $page.Lang -}}
+        {{- if ne $translation.Date.Unix $page.Date.Unix -}}
+          {{- errorf "content validation: news translations %s and %s must use the same date" $page.File.Path $translation.File.Path -}}
+        {{- end -}}
+        {{- if ne $translation.Params.category $page.Params.category -}}
+          {{- errorf "content validation: news translations %s and %s must use the same category" $page.File.Path $translation.File.Path -}}
+        {{- end -}}
+        {{- if ne ($translation.Params.relatedPublication | default "") ($page.Params.relatedPublication | default "") -}}
+          {{- errorf "content validation: news translations %s and %s must use the same relatedPublication" $page.File.Path $translation.File.Path -}}
+        {{- end -}}
+        {{- if ne ($translation.Params.relatedProject | default "") ($page.Params.relatedProject | default "") -}}
+          {{- errorf "content validation: news translations %s and %s must use the same relatedProject" $page.File.Path $translation.File.Path -}}
+        {{- end -}}
+        {{- if ne (printf "%v" ($translation.Params.featured | default false)) (printf "%v" ($page.Params.featured | default false)) -}}
+          {{- errorf "content validation: news translations %s and %s must use the same featured value" $page.File.Path $translation.File.Path -}}
+        {{- end -}}
+      {{- end -}}
+    {{- end -}}
+    {{- if not (partial "content/vocabulary-has.html" (dict "entries" hugo.Data.news_categories "id" $page.Params.category)) -}}
+      {{- errorf "content validation: %s has unknown news category %q" $page.File.Path $page.Params.category -}}
+    {{- end -}}
+    {{- with $page.Params.relatedPublication -}}
+      {{- if not (partial "content/resolve-by-id.html" (dict "site" $site "section" "publications" "id" .)) -}}
+        {{- errorf "content validation: %s references missing Publication id %q" $page.File.Path . -}}
+      {{- end -}}
+    {{- end -}}
+    {{- with $page.Params.relatedProject -}}
+      {{- if not (partial "content/resolve-by-id.html" (dict "site" $site "section" "projects" "id" .)) -}}
+        {{- errorf "content validation: %s references missing Project id %q" $page.File.Path . -}}
+      {{- end -}}
+    {{- end -}}
+    {{- with $page.Params.image -}}
+      {{- if not ($page.Resources.GetMatch .) -}}
+        {{- errorf "content validation: %s references missing bundle resource %q" $page.File.Path . -}}
+      {{- end -}}
+      {{- if not $page.Params.imageAlt -}}
+        {{- errorf "content validation: %s requires imageAlt when image is set" $page.File.Path -}}
+      {{- end -}}
+    {{- end -}}
+
+  {{- else if eq $section "join" -}}
+    {{- with partial "content/resolve-by-id.html" (dict "site" $site "section" "people" "id" $site.Params.principalInvestigatorId) -}}
+    {{- else -}}
+      {{- errorf "content validation: %s cannot resolve configured principalInvestigatorId %q" $page.File.Path $site.Params.principalInvestigatorId -}}
+    {{- end -}}
+    {{- if not (findRE `^https://[^[:space:]]+$` $site.Params.admissions.officialUrl) -}}
+      {{- errorf "content validation: %s requires a valid HTTPS admissions.officialUrl" $page.File.Path -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}

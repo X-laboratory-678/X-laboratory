@@ -1,0 +1,40 @@
+{{ define "main" }}
+  {{- $directory := site.GetPage "/projects" -}}
+  <article class="project-profile section">
+    <div class="container stack">
+      {{- with $directory }}<a class="text-link text-link--back" href="{{ .RelPermalink }}">{{ i18n "back_to_projects" }}</a>{{ end -}}
+      <header class="project-profile__header stack">
+        <p class="eyebrow">{{ i18n "project" }}</p>
+        <h1>{{ .Title }}</h1>
+        {{- with .Params.summary }}<p class="project-profile__summary">{{ . }}</p>{{ end }}
+        <dl class="project-facts">
+          {{- with partial "project/period.html" . }}<div><dt>{{ i18n "project_period" }}</dt><dd>{{ . }}</dd></div>{{ end }}
+          {{- with .Params.people }}
+            <div><dt>{{ i18n "project_people" }}</dt><dd><ul>{{ range . }}{{ with partial "content/resolve-by-id.html" (dict "site" site "section" "people" "id" .) }}<li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>{{ end }}{{ end }}</ul></dd></div>
+          {{- end }}
+          {{- with .Params.researchAreas }}
+            <div><dt>{{ i18n "research_areas" }}</dt><dd><ul>{{ range . }}<li>{{ partial "research/area-link.html" (dict "site" site "id" .) }}</li>{{ end }}</ul></dd></div>
+          {{- end }}
+        </dl>
+      </header>
+      {{- with .Content }}
+        <section class="project-profile__section" aria-labelledby="project-overview-heading">
+          <h2 id="project-overview-heading">{{ i18n "project_overview" }}</h2>
+          <div class="prose">{{ . }}</div>
+        </section>
+      {{- end }}
+      {{- with .Params.publications }}
+        <section class="project-profile__section" aria-labelledby="project-publications-heading">
+          <h2 id="project-publications-heading">{{ i18n "project_publications" }}</h2>
+          <ol class="editorial-list">{{ range . }}{{ with partial "content/resolve-by-id.html" (dict "site" site "section" "publications" "id" .) }}<li>{{ partial "publication/item.html" . }}</li>{{ end }}{{ end }}</ol>
+        </section>
+      {{- end }}
+      {{- if or .Params.code .Params.dataset .Params.demo .Params.links }}
+        <section class="project-profile__section" aria-labelledby="project-resources-heading">
+          <h2 id="project-resources-heading">{{ i18n "project_resources" }}</h2>
+          {{ partial "project/resources.html" . }}
+        </section>
+      {{- end }}
+    </div>
+  </article>
+{{ end }}

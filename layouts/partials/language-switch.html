@@ -1,0 +1,20 @@
+{{- $current := . -}}
+{{- $target := false -}}
+{{- with $current.Translations -}}
+  {{- $target = index . 0 -}}
+{{- end -}}
+{{- if not $target -}}
+  {{- range hugo.Sites -}}
+    {{- if ne .Language.Lang $current.Site.Language.Lang -}}
+      {{- $target = .Home -}}
+      {{- if $current.Section -}}
+        {{- with .GetPage $current.Section -}}
+          {{- $target = . -}}
+        {{- end -}}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- with $target -}}
+  <a class="language-switch" href="{{ .RelPermalink }}" lang="{{ .Site.Language.Locale }}" hreflang="{{ .Site.Language.Locale }}">{{ i18n "language_switch_label" }}</a>
+{{- end -}}

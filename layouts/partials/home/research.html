@@ -1,0 +1,19 @@
+{{- $areas := sort hugo.Data.research_areas "weight" "asc" -}}
+{{- with $areas }}
+  <section class="section section--tinted" aria-labelledby="research-heading">
+    <div class="container">
+      {{ partial "section-header.html" (dict "config" $.Params.sections.research "id" "research-heading") }}
+      <div class="grid research-grid">
+        {{- range $index, $area := . }}
+          <article class="research-area">
+            <span class="research-area__index" aria-hidden="true">{{ printf "%02d" (add $index 1) }}</span>
+            {{- with partial "research/area-page.html" (dict "site" site "id" $area.id) -}}
+              <h3><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
+              <p>{{ .Description }}</p>
+            {{- end -}}
+          </article>
+        {{- end }}
+      </div>
+    </div>
+  </section>
+{{- end }}

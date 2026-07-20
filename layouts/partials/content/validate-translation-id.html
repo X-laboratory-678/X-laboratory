@@ -1,0 +1,7 @@
+{{- $page := .page -}}
+{{- $id := .id -}}
+{{- range $page.AllTranslations -}}
+  {{- if ne .Params.id $id -}}
+    {{- errorf "content validation: translations for %s must share stable id %q; %s uses %q" $page.File.Path $id .File.Path .Params.id -}}
+  {{- end -}}
+{{- end -}}

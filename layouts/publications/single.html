@@ -1,0 +1,60 @@
+{{ define "main" }}
+  {{- $publicationID := .Params.id -}}
+  {{- $projects := where site.RegularPages "Section" "projects" -}}
+  {{- $projects = where $projects "Draft" false -}}
+  {{- $projects = where $projects "Params.publications" "intersect" (slice $publicationID) -}}
+  {{- $projects = sort $projects "Title" "asc" -}}
+  {{- $projects = sort $projects "Params.weight" "asc" -}}
+  {{- $directory := site.GetPage "/publications" -}}
+
+  <article class="publication-profile section">
+    <div class="container stack">
+      {{- with $directory }}<a class="publication-profile__back" href="{{ .RelPermalink }}">← {{ i18n "back_to_publications" }}</a>{{ end -}}
+      <header class="publication-profile__header stack">
+        <p class="eyebrow">{{ partial "publication/type-label.html" .Params.publicationType }}</p>
+        <h1>{{ .Title }}</h1>
+        <p class="publication-profile__authors">{{ partial "publication/authors.html" . }}</p>
+        <p class="publication-profile__venue">{{ with .Params.venue }}{{ . }} · {{ end }}{{ .Params.year }}</p>
+        {{ partial "publication/links.html" . }}
+      </header>
+
+      {{- with .Content -}}
+        <section class="publication-profile__section" aria-labelledby="abstract-heading">
+          <h2 id="abstract-heading">{{ i18n "abstract" }}</h2>
+          <div class="prose">{{ . }}</div>
+        </section>
+      {{- end -}}
+
+      {{- with .Params.researchAreas -}}
+        <section class="publication-profile__section" aria-labelledby="research-areas-heading">
+          <h2 id="research-areas-heading">{{ i18n "research_areas" }}</h2>
+          <ul class="publication-profile__areas">
+            {{- range . }}<li>{{ partial "research/area-link.html" (dict "site" site "id" .) }}</li>{{ end -}}
+          </ul>
+        </section>
+      {{- end -}}
+
+      {{ partial "publication/bibtex.html" . }}
+
+      {{- with .Params.labMembers -}}
+        <section class="publication-profile__section" aria-labelledby="researchers-heading">
+          <h2 id="researchers-heading">{{ i18n "publication_researchers" }}</h2>
+          <ul class="publication-profile__people">
+            {{- range . -}}
+              {{- with partial "content/resolve-by-id.html" (dict "site" $.Site "section" "people" "id" .) -}}
+                <li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>
+              {{- end -}}
+            {{- end -}}
+          </ul>
+        </section>
+      {{- end -}}
+
+      {{- with $projects -}}
+        <section class="publication-profile__section" aria-labelledby="related-projects-heading">
+          <h2 id="related-projects-heading">{{ i18n "publication_related_projects" }}</h2>
+          <ul>{{ range . }}<li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>{{ end }}</ul>
+        </section>
+      {{- end -}}
+    </div>
+  </article>
+{{ end }}

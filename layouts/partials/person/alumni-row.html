@@ -1,0 +1,14 @@
+{{- $page := . -}}
+<article class="alumni-row">
+  <div>
+    <h3><a href="{{ $page.RelPermalink }}">{{ $page.Title }}</a></h3>
+    <p class="alumni-row__role">{{ $page.Params.role }}</p>
+  </div>
+  {{- if or $page.Params.left $page.Params.alumniNext }}
+    <p class="alumni-row__outcome">
+      {{- with $page.Params.left }}<span>{{ . }}</span>{{ end -}}
+      {{- if and $page.Params.left $page.Params.alumniNext }}<span aria-hidden="true"> · </span>{{ end -}}
+      {{- with $page.Params.alumniNext }}<span>{{ . }}</span>{{ end -}}
+    </p>
+  {{- end }}
+</article>

@@ -1,0 +1,84 @@
+.join-page__header {
+  border-bottom: 1px solid var(--color-border);
+}
+
+.join-page__header .stack {
+  max-width: var(--content-narrow);
+  gap: var(--space-4);
+}
+
+.join-page__header h1,
+.join-page__header p,
+.join-research-card h3,
+.join-research-card p,
+.join-contact-card h3,
+.join-contact-card p,
+.admissions-callout h2,
+.admissions-callout p {
+  margin: 0;
+}
+
+.join-page__header p {
+  color: var(--color-muted);
+  font-size: var(--font-size-lg);
+}
+
+.join-research-grid {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
+}
+
+.join-research-card {
+  padding-top: var(--space-5, var(--space-6));
+  border-top: 0.2rem solid var(--color-accent);
+}
+
+.join-research-card p,
+.join-contact-card p {
+  color: var(--color-muted);
+}
+
+.join-page__content {
+  max-width: var(--content-narrow);
+}
+
+.join-page__content h2:not(:first-child) {
+  margin-top: var(--space-12);
+}
+
+.join-actions {
+  margin-top: var(--space-6);
+}
+
+.join-contact-grid {
+  display: grid;
+  gap: var(--space-8);
+}
+
+.join-contact-grid h2 {
+  margin: 0;
+}
+
+.join-contact-card,
+.admissions-callout {
+  padding: var(--space-6);
+  border-left: 0.25rem solid var(--color-accent);
+  background: var(--color-background);
+}
+
+.admissions-callout {
+  max-width: var(--content-narrow);
+  background: var(--color-surface);
+}
+
+.join-contact-card .button,
+.admissions-callout .text-link {
+  width: fit-content;
+  max-width: 100%;
+}
+
+@media (min-width: 48rem) {
+  .join-contact-grid {
+    grid-template-columns: minmax(0, 1fr) minmax(18rem, 0.7fr);
+    align-items: start;
+  }
+}

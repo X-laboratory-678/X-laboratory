@@ -1,0 +1,6 @@
+{{- $id := .id -}}
+{{- with partial "research/area-page.html" (dict "site" .site "id" $id) -}}
+  <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+{{- else -}}
+  {{- partial "publication/research-area-label.html" $id -}}
+{{- end -}}

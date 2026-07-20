@@ -1,0 +1,6 @@
+{{- $id := . -}}
+{{- range hugo.Data.research_areas -}}
+  {{- if eq .id $id -}}
+    {{- if eq site.Language.Lang "zh" -}}{{ .labelZh }}{{- else -}}{{ .label }}{{- end -}}
+  {{- end -}}
+{{- end -}}

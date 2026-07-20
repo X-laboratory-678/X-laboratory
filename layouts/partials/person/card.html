@@ -1,0 +1,17 @@
+{{- $page := .page -}}
+{{- $variant := .variant | default "standard" -}}
+<article class="person-card person-card--{{ $variant }}">
+  {{ partial "person/portrait.html" (dict "page" $page "variant" $variant) }}
+  <div class="person-card__content stack" style="--stack-space: var(--space-3)">
+    <div>
+      <h3><a href="{{ $page.RelPermalink }}">{{ $page.Title }}</a></h3>
+      <p class="person-card__role">{{ $page.Params.role }}</p>
+    </div>
+    {{- with $page.Params.researchInterests }}
+      <ul class="person-interests person-interests--card">
+        {{- range first 3 . }}<li>{{ . }}</li>{{ end }}
+      </ul>
+    {{- end }}
+    {{ partial "person/links.html" (dict "page" $page "compact" true) }}
+  </div>
+</article>

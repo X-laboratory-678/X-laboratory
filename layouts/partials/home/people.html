@@ -1,0 +1,18 @@
+{{- $people := where site.RegularPages "Section" "people" -}}
+{{- $people = where $people "Draft" false -}}
+{{- $people = where $people "Params.status" "current" -}}
+{{- $pi := where $people "Params.category" "pi" -}}
+{{- $faculty := where $people "Params.category" "faculty" -}}
+{{- $pi = sort $pi "Params.weight" "asc" -}}
+{{- $faculty = sort $faculty "Params.weight" "asc" -}}
+{{- $preview := $pi | append $faculty -}}
+{{- with first 4 $preview }}
+  <section class="section section--tinted" aria-labelledby="people-heading">
+    <div class="container">
+      {{ partial "section-header.html" (dict "config" $.Params.sections.people "id" "people-heading") }}
+      <div class="grid person-grid">
+        {{- range . }}{{ partial "person/preview.html" . }}{{ end }}
+      </div>
+    </div>
+  </section>
+{{- end }}

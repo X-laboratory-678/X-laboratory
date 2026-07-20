@@ -1,0 +1,154 @@
+.people-directory__intro {
+  max-width: var(--content-narrow);
+  padding-block: var(--space-16);
+}
+
+.people-directory__intro h1,
+.people-directory__intro p {
+  margin: 0;
+}
+
+.people-directory__intro .prose {
+  color: var(--color-muted);
+  font-size: var(--font-size-lg);
+}
+
+.people-group {
+  border-top: 1px solid var(--color-border);
+}
+
+.people-group__header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-4);
+  margin-bottom: var(--space-10);
+}
+
+.people-group__header h2 {
+  margin: 0;
+}
+
+.people-group__header span {
+  color: var(--color-muted);
+  font-size: var(--font-size-sm);
+}
+
+.people-grid {
+  display: grid;
+  gap: var(--space-10) var(--space-8);
+}
+
+.people-grid--featured {
+  max-width: 58rem;
+}
+
+.alumni-list {
+  border-top: 1px solid var(--color-border);
+}
+
+.alumni-row {
+  display: grid;
+  gap: var(--space-2);
+  padding-block: var(--space-6);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.alumni-row h3,
+.alumni-row p {
+  margin: 0;
+}
+
+.person-profile {
+  padding-block: var(--space-10) var(--space-20);
+}
+
+.text-link--back {
+  margin-bottom: var(--space-10);
+}
+
+.text-link--back::before {
+  content: "\2190";
+}
+
+.text-link--back::after {
+  content: none;
+}
+
+.person-profile__header {
+  display: grid;
+  gap: var(--space-8);
+  align-items: start;
+  padding-bottom: var(--space-12);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.person-portrait--profile {
+  width: min(100%, 13rem);
+}
+
+.person-profile__identity h1,
+.person-profile__identity p {
+  margin: 0;
+}
+
+.person-profile__role {
+  margin-top: var(--space-3);
+  color: var(--color-muted);
+  font-size: var(--font-size-lg);
+}
+
+.person-profile__body {
+  max-width: var(--content-narrow);
+}
+
+.person-profile__section {
+  padding-top: var(--space-12);
+}
+
+.person-profile__section + .person-profile__section {
+  margin-top: var(--space-4);
+  border-top: 1px solid var(--color-border);
+}
+
+.person-profile__section > h2 {
+  margin-bottom: var(--space-6);
+}
+
+.person-profile__section .prose h3 {
+  margin-top: var(--space-8);
+}
+
+.person-interests--profile {
+  padding-left: 1.25rem;
+  color: var(--color-foreground);
+}
+
+@media (min-width: 40rem) {
+  .alumni-row {
+    grid-template-columns: minmax(0, 1fr) minmax(12rem, auto);
+    align-items: baseline;
+  }
+
+  .alumni-row__outcome {
+    text-align: right;
+  }
+}
+
+@media (min-width: 48rem) {
+  .person-profile__header {
+    grid-template-columns: 13rem minmax(0, 1fr);
+  }
+
+  .people-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .people-grid--featured {
+    grid-template-columns: 1fr;
+  }
+
+  .people-grid--featured .person-card {
+    grid-template-columns: 13rem minmax(0, 1fr);
+  }
+}

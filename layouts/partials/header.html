@@ -1,0 +1,22 @@
+<header class="site-header">
+  <div class="container site-header__inner">
+    <div class="site-header__bar">
+      <a class="site-brand" href="{{ site.Home.RelPermalink }}">{{ site.Params.labName }}</a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-navigation" data-nav-toggle data-close-label="{{ i18n "close_menu" }}">
+        <span data-nav-label>{{ i18n "open_menu" }}</span>
+      </button>
+    </div>
+    <nav class="site-nav" id="primary-navigation" aria-label="{{ i18n "primary_navigation" }}" data-nav data-open="false">
+      <ul class="site-nav__list">
+        {{- range site.Menus.main }}
+          {{- $label := i18n (printf "nav_%s" .Identifier) | default .Name }}
+          {{- $active := or ($.IsMenuCurrent "main" .) ($.HasMenuCurrent "main" .) (and (ne .Identifier "home") (eq $.Section .Identifier)) }}
+          <li>
+            <a href="{{ .URL }}"{{ if $active }} aria-current="page"{{ end }}>{{ $label }}</a>
+          </li>
+        {{- end }}
+        <li>{{ partial "language-switch.html" $ }}</li>
+      </ul>
+    </nav>
+  </div>
+</header>
