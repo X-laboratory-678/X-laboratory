@@ -1,5 +1,6 @@
 {{ define "main" }}
-  {{- $pi := partial "content/resolve-by-id.html" (dict "site" site "section" "people" "id" site.Params.principalInvestigatorId) -}}
+  {{- $contact := partial "contact/context.html" . -}}
+  {{- $pi := $contact.pi -}}
   {{- $researchRoot := site.GetPage "/research" -}}
   {{- $publicationsRoot := site.GetPage "/publications" -}}
   {{- $projectsRoot := site.GetPage "/projects" -}}
@@ -55,7 +56,9 @@
               <h3><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
               <p>{{ i18n "people_category_pi" }}</p>
             </div>
-            {{- with .Params.email }}<a class="button" href="mailto:{{ . }}">{{ i18n "join_contact_pi" }}</a>{{ end -}}
+            <a class="button" href="mailto:{{ $contact.config.publicEmail }}">{{ i18n "join_contact_pi" }}</a>
+            {{- with .Params.email }}<a class="text-link" href="mailto:{{ . }}">{{ i18n "join_institutional_email" }}: {{ . }}</a>{{ end -}}
+            {{- with $contact.page }}<a class="text-link" href="{{ .RelPermalink }}">{{ i18n "join_contact_page" }}</a>{{ end -}}
           </aside>
         {{- end -}}
       </div>

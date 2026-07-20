@@ -39,6 +39,21 @@ These fixtures are not evidence of X-Laboratory membership or activity and must 
 
 They are marked `draft: true`, so they remain available to `hugo server -D` for relationship and validation testing but are excluded from production output.
 
+## Public Contact and Laboratory Location
+
+- Principal investigator stable ID: `jiangjiao-xu`
+- Public contact email: `jiangjiao.xu@outlook.com`
+- Institutional email: `jiangjiao.xu@shiep.edu.cn`
+- Public phone: `+86 183 2113 7385`
+- Laboratory address: 上海市杨浦区长阳路2588号
+- English address: 2588 Changyang Road, Yangpu District, Shanghai, China
+- Source and authorization: explicitly provided and approved for public display by the user
+- Last reviewed: 2026-07-20
+
+The public Outlook address and phone are maintained under `params.contact` for research inquiries. The institutional address remains the PI's `People.email` and is not replaced by the public contact address. Home, Contact, Join Us, Footer, and Organization structured data resolve these values from their authoritative configuration or People entity instead of maintaining copies.
+
+Map links are generated from the confirmed street address. No coordinate, map API key, embedded map, or third-party runtime map request is used.
+
 ## Representative Publications
 
 - Discovery source: Shanghai University of Electric Power official faculty profile, <https://dqxb.shiep.edu.cn/31/5c/c6639a274780/page.htm>

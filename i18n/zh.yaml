@@ -16,6 +16,8 @@
   translation: 动态
 - id: nav_join
   translation: 加入我们
+- id: nav_contact
+  translation: 联系方式
 - id: coming_soon
   translation: 即将提供
 - id: open_menu
@@ -210,9 +212,45 @@
   translation: 实验室负责人联系方式
 - id: join_contact_pi
   translation: 联系导师
+- id: join_institutional_email
+  translation: 机构邮箱
+- id: join_contact_page
+  translation: 查看完整联系方式与实验室地址
 - id: join_admissions
   translation: 官方招生信息
 - id: join_admissions_notice
   translation: 正式招生条件、名额、申请时间及资格要求以上海电力大学发布的官方政策和通知为准。学校招生信息不代表 X-Laboratory 已确认存在开放名额或职位。
 - id: join_admissions_link
   translation: 查看官方招生信息
+- id: contact_intro_label
+  translation: 联系方式
+- id: contact_principal_investigator
+  translation: 实验室负责人
+- id: contact_details
+  translation: 联系信息
+- id: contact_public_email
+  translation: 联系邮箱
+- id: contact_institutional_email
+  translation: 机构邮箱
+- id: contact_phone
+  translation: 电话
+- id: contact_address
+  translation: 地址
+- id: contact_location
+  translation: 实验室位置与导航
+- id: contact_location_intro
+  translation: 到访时请使用下方已确认地址。地图服务将在外部网站打开，并适用其各自的隐私政策。
+- id: contact_open_amap
+  translation: 在高德地图中打开
+- id: contact_open_google_maps
+  translation: 在 Google 地图中打开
+- id: contact_view_page
+  translation: 完整联系方式
+- id: home_contact_title
+  translation: 联系我们
+- id: home_contact_intro
+  translation: 如需科研咨询，请联系实验室负责人；也可通过地图服务查看实验室地址。
+- id: home_contact_details
+  translation: 联系信息
+- id: home_contact_location
+  translation: 实验室地址

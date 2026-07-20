@@ -87,9 +87,20 @@ Production News requires a reliable source, an exact event or publication date, 
 
 ## Update Join Us
 
-General guidance is in `content/join/index.en.md` and `index.zh.md`. The official admissions index is configured in `config/_default/params.yaml`; PI contact details resolve from the People bundle.
+General guidance is in `content/join/index.en.md` and `index.zh.md`. The official admissions index and public inquiry address are configured in `config/_default/params.yaml`; PI identity and the secondary institutional email resolve from the People bundle.
 
 Keep university admissions separate from laboratory availability. Do not add openings, quotas, funding, scholarships, eligibility rules, response promises, or application requirements without an authoritative source or explicit laboratory confirmation.
+
+## Update Contact and Location
+
+The single source of truth is `params.contact` in `config/_default/params.yaml`. Update the public email, phone display/`tel` pair, and English/Chinese address there—not in Home, Contact, Join Us, Footer, or Markdown body text.
+
+- `contact.publicEmail` is the user-approved public inquiry address.
+- The PI bundle's `email` remains the institutional address and continues to appear on the PI profile and as a secondary Contact/Join link.
+- Keep the phone display value in readable international form and the `tel` value compact with a leading `+`.
+- Update localized and structured-address fields together after confirmation.
+- Map links are generated from the confirmed Chinese address. Do not add guessed coordinates, API keys, a map SDK, or an automatically loaded iframe.
+- Update `docs/content-sources.md` with the authorization/source and review date after a factual change.
 
 ## Assets and Branding
 
@@ -139,7 +150,7 @@ Confirm the workflow and live site after deployment. Never commit or manually up
 
 ## Periodic Review
 
-- Recheck PI role, email, source provenance, admissions index, and News claims.
+- Recheck PI role, institutional email, public Contact email/phone/address, source provenance, admissions index, and News claims.
 - Recheck DOI and external links when updating Publications.
 - Review image and PDF rights before every public asset addition.
 - Replace the provisional favicon only after final branding approval.

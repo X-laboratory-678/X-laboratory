@@ -16,6 +16,8 @@
   translation: News
 - id: nav_join
   translation: Join Us
+- id: nav_contact
+  translation: Contact
 - id: coming_soon
   translation: Coming soon
 - id: open_menu
@@ -210,9 +212,45 @@
   translation: Principal investigator contact
 - id: join_contact_pi
   translation: Contact the PI
+- id: join_institutional_email
+  translation: Institutional email
+- id: join_contact_page
+  translation: View all contact and location details
 - id: join_admissions
   translation: Official Admissions Information
 - id: join_admissions_notice
   translation: Formal admissions requirements, availability, application timelines, and eligibility are subject to the official policies and announcements of Shanghai University of Electric Power. University admissions information does not indicate a confirmed X-Laboratory opening or quota.
 - id: join_admissions_link
   translation: View official admissions information
+- id: contact_intro_label
+  translation: Contact
+- id: contact_principal_investigator
+  translation: Principal Investigator
+- id: contact_details
+  translation: Contact Details
+- id: contact_public_email
+  translation: Public Email
+- id: contact_institutional_email
+  translation: Institutional Email
+- id: contact_phone
+  translation: Phone
+- id: contact_address
+  translation: Address
+- id: contact_location
+  translation: Location & Directions
+- id: contact_location_intro
+  translation: Use the confirmed street address below when planning a visit. Map services open in a new site and may apply their own privacy policies.
+- id: contact_open_amap
+  translation: Open in Amap
+- id: contact_open_google_maps
+  translation: Open in Google Maps
+- id: contact_view_page
+  translation: Full contact details
+- id: home_contact_title
+  translation: Contact
+- id: home_contact_intro
+  translation: Contact the principal investigator for research inquiries or open the laboratory address in a map service.
+- id: home_contact_details
+  translation: Contact details
+- id: home_contact_location
+  translation: Location

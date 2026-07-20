@@ -3,6 +3,29 @@
 {{- $publicationIndex := partialCached "content/id-index.html" (dict "site" $site "section" "publications") $site.Language.Locale "publications" -}}
 {{- $projectIndex := partialCached "content/id-index.html" (dict "site" $site "section" "projects") $site.Language.Locale "projects" -}}
 {{- $researchIndex := partialCached "content/id-index.html" (dict "site" $site "section" "research") $site.Language.Locale "research" -}}
+{{- $contact := $site.Params.contact -}}
+
+{{- if not $contact -}}
+  {{- errorf "site validation: missing required params.contact configuration" -}}
+{{- else -}}
+  {{- if not (partial "content/resolve-by-id.html" (dict "site" $site "section" "people" "id" $contact.principalInvestigatorId)) -}}
+    {{- errorf "site validation: contact.principalInvestigatorId %q does not resolve to a People entity" $contact.principalInvestigatorId -}}
+  {{- end -}}
+  {{- if not (findRE `^[^@[:space:]]+@[^@[:space:]]+\.[^@[:space:]]+$` $contact.publicEmail) -}}
+    {{- errorf "site validation: contact.publicEmail %q is missing or malformed" $contact.publicEmail -}}
+  {{- end -}}
+  {{- if not $contact.publicPhone.display -}}
+    {{- errorf "site validation: contact.publicPhone.display is required" -}}
+  {{- end -}}
+  {{- if not (findRE `^\+[0-9]{8,15}$` $contact.publicPhone.tel) -}}
+    {{- errorf "site validation: contact.publicPhone.tel %q must use an international tel URI value" $contact.publicPhone.tel -}}
+  {{- end -}}
+  {{- range slice "en" "zh" "streetAddress" "addressLocality" "addressRegion" "addressCountry" -}}
+    {{- if not (index $contact.address .) -}}
+      {{- errorf "site validation: contact.address.%s is required" . -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
 
 {{- range $site.RegularPages -}}
   {{- $page := . -}}
@@ -273,9 +296,9 @@
     {{- end -}}
 
   {{- else if eq $section "join" -}}
-    {{- with partial "content/resolve-by-id.html" (dict "site" $site "section" "people" "id" $site.Params.principalInvestigatorId) -}}
+    {{- with partial "content/resolve-by-id.html" (dict "site" $site "section" "people" "id" $site.Params.contact.principalInvestigatorId) -}}
     {{- else -}}
-      {{- errorf "content validation: %s cannot resolve configured principalInvestigatorId %q" $page.File.Path $site.Params.principalInvestigatorId -}}
+      {{- errorf "content validation: %s cannot resolve configured contact.principalInvestigatorId %q" $page.File.Path $site.Params.contact.principalInvestigatorId -}}
     {{- end -}}
     {{- if not (findRE `^https://[^[:space:]]+$` $site.Params.admissions.officialUrl) -}}
       {{- errorf "content validation: %s requires a valid HTTPS admissions.officialUrl" $page.File.Path -}}

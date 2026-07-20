@@ -10,6 +10,7 @@
         {{- range site.Menus.main }}
           <li><a href="{{ .URL }}">{{ i18n (printf "nav_%s" .Identifier) | default .Name }}</a></li>
         {{- end }}
+        {{- with site.GetPage "/contact" }}<li><a href="{{ .RelPermalink }}">{{ i18n "nav_contact" }}</a></li>{{ end }}
       </ul>
     </nav>
   </div>

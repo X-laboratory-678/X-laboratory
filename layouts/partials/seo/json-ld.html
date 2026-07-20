@@ -18,6 +18,26 @@
   "description" site.Params.description
   "parentOrganization" (dict "@type" "CollegeOrUniversity" "name" site.Params.universityName)
 -}}
+{{- $contact := site.Params.contact -}}
+{{- $postalAddress := dict
+  "@type" "PostalAddress"
+  "streetAddress" $contact.address.streetAddress
+  "addressLocality" $contact.address.addressLocality
+  "addressRegion" $contact.address.addressRegion
+  "addressCountry" $contact.address.addressCountry
+-}}
+{{- $contactPoint := dict
+  "@type" "ContactPoint"
+  "contactType" "research inquiries"
+  "email" $contact.publicEmail
+  "telephone" $contact.publicPhone.tel
+-}}
+{{- $organization = merge $organization (dict
+  "email" $contact.publicEmail
+  "telephone" $contact.publicPhone.tel
+  "address" $postalAddress
+  "contactPoint" $contactPoint
+) -}}
 {{- $schema := dict -}}
 
 {{- if $page.IsHome -}}

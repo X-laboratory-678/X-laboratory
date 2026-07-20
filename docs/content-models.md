@@ -166,9 +166,30 @@ The Markdown body stores the complete news article. Production News is event dat
 - English and Chinese translations must preserve `date`, `category`, `relatedPublication`, `relatedProject`, and `featured`. Titles, summaries, and Markdown bodies are localized.
 - Source URLs and review notes belong in `docs/content-sources.md`, not duplicated Front Matter.
 
+## Site Contact Configuration
+
+Public laboratory contact data has one authoritative configuration under `params.contact` in `config/_default/params.yaml`. Templates must resolve the principal investigator by stable People ID and must not duplicate email, phone, or address values in Home, Contact, Join Us, Footer, or Markdown bodies.
+
+| Field | Required | Description |
+|---|---:|---|
+| `principalInvestigatorId` | Yes | Stable People ID used to resolve the PI name, profile URL, and institutional email. |
+| `publicEmail` | Yes | User-approved public inquiry email used by Contact and Join Us. |
+| `publicPhone.display` | Yes | Internationally readable public phone display value. |
+| `publicPhone.tel` | Yes | Compact international `tel:` URI value beginning with `+`. |
+| `address.en` | Yes | Confirmed English laboratory address. |
+| `address.zh` | Yes | Confirmed Chinese laboratory address. |
+| `address.streetAddress` | Yes | Confirmed street-address component for structured data. |
+| `address.addressLocality` | Yes | Confirmed locality for structured data. |
+| `address.addressRegion` | Yes | Confirmed region for structured data. |
+| `address.addressCountry` | Yes | Confirmed country code for structured data. |
+
+The PI's `People.email` remains the institutional address. `contact.publicEmail` is the general public contact address and does not overwrite Person metadata. The English and Chinese Contact pages live in `content/contact/` and use a focused layout. Map links are derived from the confirmed address at build time; no coordinates, iframe, API key, or runtime map dependency is stored.
+
+Organization JSON-LD may use the public email, telephone, `ContactPoint`, and `PostalAddress`. Person JSON-LD continues to use the institutional People email.
+
 ## Join Us Content Page
 
-Join Us is a multilingual Markdown content page with a focused custom layout. Core guidance remains in `content/join/index.en.md` and `index.zh.md`. The layout resolves the principal investigator through the configured stable People ID, reads Research pages dynamically, and uses one configured official admissions URL.
+Join Us is a multilingual Markdown content page with a focused custom layout. Core guidance remains in `content/join/index.en.md` and `index.zh.md`. The layout resolves the principal investigator through `params.contact.principalInvestigatorId`, uses `params.contact.publicEmail` as the primary inquiry address, preserves the People entity's institutional email as a secondary link, reads Research pages dynamically, and uses one configured official admissions URL.
 
 Join Us is informational rather than a vacancy or application model. Openings, quotas, funding, eligibility, response times, or application requirements must not be inferred. Changes to admissions links, availability language, or contact instructions require an authoritative source or explicit laboratory confirmation.
 
@@ -183,7 +204,7 @@ content/<section>/<stable-slug>/
 └── optional-bundle-resource.ext
 ```
 
-The implemented sections are `people`, `research`, `publications`, `projects`, and `news`. Section roots use `_index.en.md` and `_index.zh.md`. Do not store entity records directly in section root files or central YAML arrays. Research is the narrow exception to the central-data rule: only its controlled ID/label/weight vocabulary lives in YAML; all public page content remains in Page Bundles.
+The primary entity sections are `people`, `research`, `publications`, `projects`, and `news`. Their section roots use `_index.en.md` and `_index.zh.md`. Contact and Join Us are standalone multilingual content pages rather than entity directories. Do not store entity records directly in section root files or central YAML arrays. Research is the narrow exception to the central-data rule: only its controlled ID/label/weight vocabulary lives in YAML; all public page content remains in Page Bundles.
 
 People, Publication, and Project `id` values must match their bundle slug. IDs use lowercase ASCII where practical, contain hyphen-separated alphanumeric segments, and remain unchanged when a display title changes. News uses a stable date-prefixed bundle slug, such as `2026-01-publication-announcement`, instead of a separate `id` field.
 
@@ -245,4 +266,4 @@ When `photo`, `hero`, or `image` is set, it must resolve through `Page.Resources
 
 ## Build-Time Validation
 
-`layouts/partials/content/validate-site.html` runs once per rendered language through `partialCached`. It checks required fields, ID syntax and bundle matching, duplicate IDs, controlled vocabularies, bundle resources, and internal references. Research validation checks vocabulary membership and localized title consistency. Project validation checks year ranges and translation-invariant relationships. News validation checks category, related IDs, bundle images, and translation-invariant event metadata. Join validation resolves the configured PI and requires an HTTPS admissions URL. Publication translations additionally validate title, year, publication type, DOI, venue, author order, and person mappings. Publication validation also checks DOI representation and the consistency of `authors[].person` with `labMembers`. Validation uses `errorf`, so invalid content exits nonzero in both normal and strict builds.
+`layouts/partials/content/validate-site.html` runs once per rendered language through `partialCached`. It checks required fields, ID syntax and bundle matching, duplicate IDs, controlled vocabularies, bundle resources, and internal references. Research validation checks vocabulary membership and localized title consistency. Project validation checks year ranges and translation-invariant relationships. News validation checks category, related IDs, bundle images, and translation-invariant event metadata. Site Contact validation resolves the configured PI and requires a public email, phone display and international `tel` value, both localized addresses, and the confirmed structured-address fields. Join validation requires an HTTPS admissions URL. Publication translations additionally validate title, year, publication type, DOI, venue, author order, and person mappings. Publication validation also checks DOI representation and the consistency of `authors[].person` with `labMembers`. Validation uses `errorf`, so invalid content exits nonzero in both normal and strict builds.

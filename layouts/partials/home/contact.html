@@ -1,0 +1,26 @@
+{{- $contact := partial "contact/context.html" . -}}
+{{- $config := $contact.config -}}
+{{- with $contact.page -}}
+  <section class="section home-contact" aria-labelledby="home-contact-heading">
+    <div class="container">
+      <header class="section__header">
+        <p class="eyebrow">{{ i18n "contact_intro_label" }}</p>
+        <h2 id="home-contact-heading">{{ i18n "home_contact_title" }}</h2>
+        <p>{{ i18n "home_contact_intro" }}</p>
+      </header>
+      <div class="home-contact__grid">
+        <div class="stack">
+          <h3>{{ i18n "home_contact_details" }}</h3>
+          {{- with $contact.pi }}<p><a href="{{ .RelPermalink }}">{{ .Title }}</a><br>{{ i18n "contact_principal_investigator" }}</p>{{ end -}}
+          <p><a href="mailto:{{ $config.publicEmail }}">{{ $config.publicEmail }}</a><br><a href="tel:{{ $config.publicPhone.tel }}">{{ $config.publicPhone.display }}</a></p>
+          <a class="text-link" href="{{ .RelPermalink }}">{{ i18n "contact_view_page" }}</a>
+        </div>
+        <div class="stack">
+          <h3>{{ i18n "home_contact_location" }}</h3>
+          <address>{{ $contact.address }}</address>
+          <a class="text-link" href="{{ $contact.amapURL }}" rel="external">{{ i18n "contact_open_amap" }}</a>
+        </div>
+      </div>
+    </div>
+  </section>
+{{- end -}}

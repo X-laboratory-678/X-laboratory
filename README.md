@@ -30,11 +30,12 @@ content/publications/  Publication records and BibTeX
 content/projects/      Project records
 content/news/          Source-backed News
 content/join/          Join Us guidance
+content/contact/       Contact and location page copy
 data/                  Controlled IDs, labels, categories, and ordering
 i18n/                  Shared interface translations
 ```
 
-People, Publications, Projects, Research, and News are authoritative in their Page Bundles. Stable IDs—not display names—connect related content. Homepage and related-content summaries are generated from these sources.
+People, Publications, Projects, Research, and News are authoritative in their Page Bundles. Stable IDs—not display names—connect related content. Homepage and related-content summaries are generated from these sources. Public email, phone, and laboratory address have one source of truth under `params.contact` in `config/_default/params.yaml`; the PI's People email remains the institutional address.
 
 Draft Example bundles remain development fixtures for validation and are excluded from production. Factual provenance is recorded in `docs/content-sources.md`.
 

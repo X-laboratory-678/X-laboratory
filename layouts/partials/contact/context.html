@@ -1,0 +1,16 @@
+{{- $config := site.Params.contact -}}
+{{- $pi := partial "content/resolve-by-id.html" (dict "site" site "section" "people" "id" $config.principalInvestigatorId) -}}
+{{- $address := $config.address.en -}}
+{{- if eq site.Language.Lang "zh" -}}{{- $address = $config.address.zh -}}{{- end -}}
+{{- $addressQuery := urlquery $config.address.zh -}}
+{{- $cityQuery := urlquery "上海" -}}
+{{- $amapURL := printf "https://uri.amap.com/search?keyword=%s&city=%s&view=map&callnative=0" $addressQuery $cityQuery -}}
+{{- $googleMapsURL := printf "https://www.google.com/maps/search/?api=1&query=%s" $addressQuery -}}
+{{- return (dict
+  "config" $config
+  "pi" $pi
+  "address" $address
+  "amapURL" $amapURL
+  "googleMapsURL" $googleMapsURL
+  "page" (site.GetPage "/contact")
+) -}}
