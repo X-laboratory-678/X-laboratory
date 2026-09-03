@@ -234,6 +234,18 @@
   translation: 机构邮箱
 - id: contact_phone
   translation: 电话
+- id: contact_copy_email
+  translation: 复制邮箱
+- id: contact_send_email
+  translation: 使用邮件程序发送
+- id: contact_copy_phone
+  translation: 复制电话
+- id: contact_call_phone
+  translation: 使用拨号程序拨打
+- id: contact_copied
+  translation: 已复制
+- id: contact_copy_failed
+  translation: 复制失败，请手动选择上方内容
 - id: contact_address
   translation: 地址
 - id: contact_location

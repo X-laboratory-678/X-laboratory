@@ -1,0 +1,27 @@
+{{- $kind := .kind -}}
+{{- $value := .value -}}
+{{- $display := .display | default $value -}}
+{{- $copyLabel := i18n "contact_copy_email" -}}
+{{- $openLabel := i18n "contact_send_email" -}}
+{{- $uri := printf "mailto:%s" $value -}}
+{{- if eq $kind "phone" -}}
+  {{- $copyLabel = i18n "contact_copy_phone" -}}
+  {{- $openLabel = i18n "contact_call_phone" -}}
+  {{- $uri = printf "tel:%s" $value -}}
+{{- end -}}
+<div class="contact-action">
+  <span class="contact-action__value">{{ $display }}</span>
+  <div class="cluster contact-action__controls">
+    <button
+      class="button button--secondary contact-action__copy"
+      type="button"
+      hidden
+      data-contact-copy
+      data-copy-value="{{ $value }}"
+      data-copied-label="{{ i18n "contact_copied" }}"
+      data-copy-error-label="{{ i18n "contact_copy_failed" }}"
+    >{{ $copyLabel }}</button>
+    <a class="text-link" href="{{ $uri | safeURL }}">{{ $openLabel }}</a>
+  </div>
+  <span class="contact-action__status" role="status" aria-live="polite" data-contact-status></span>
+</div>

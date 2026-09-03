@@ -56,8 +56,16 @@
               <h3><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
               <p>{{ i18n "people_category_pi" }}</p>
             </div>
-            <a class="button" href="mailto:{{ $contact.config.publicEmail }}">{{ i18n "join_contact_pi" }}</a>
-            {{- with .Params.email }}<a class="text-link" href="mailto:{{ . }}">{{ i18n "join_institutional_email" }}: {{ . }}</a>{{ end -}}
+            <div class="join-contact-method stack">
+              <strong>{{ i18n "contact_public_email" }}</strong>
+              {{ partial "contact/action.html" (dict "kind" "email" "value" $contact.config.publicEmail) }}
+            </div>
+            {{- with .Params.email }}
+              <div class="join-contact-method stack">
+                <strong>{{ i18n "join_institutional_email" }}</strong>
+                {{ partial "contact/action.html" (dict "kind" "email" "value" .) }}
+              </div>
+            {{- end -}}
             {{- with $contact.page }}<a class="text-link" href="{{ .RelPermalink }}">{{ i18n "join_contact_page" }}</a>{{ end -}}
           </aside>
         {{- end -}}

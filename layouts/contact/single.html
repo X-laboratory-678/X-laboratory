@@ -27,17 +27,17 @@
             <dl>
               <div>
                 <dt>{{ i18n "contact_public_email" }}</dt>
-                <dd><a href="mailto:{{ $config.publicEmail }}">{{ $config.publicEmail }}</a></dd>
+                <dd>{{ partial "contact/action.html" (dict "kind" "email" "value" $config.publicEmail) }}</dd>
               </div>
               {{- with $pi.Params.email }}
                 <div>
                   <dt>{{ i18n "contact_institutional_email" }}</dt>
-                  <dd><a href="mailto:{{ . }}">{{ . }}</a></dd>
+                  <dd>{{ partial "contact/action.html" (dict "kind" "email" "value" .) }}</dd>
                 </div>
               {{- end }}
               <div>
                 <dt>{{ i18n "contact_phone" }}</dt>
-                <dd><a href="tel:{{ $config.publicPhone.tel }}">{{ $config.publicPhone.display }}</a></dd>
+                <dd>{{ partial "contact/action.html" (dict "kind" "phone" "value" $config.publicPhone.tel "display" $config.publicPhone.display) }}</dd>
               </div>
               <div>
                 <dt>{{ i18n "contact_address" }}</dt>
@@ -55,7 +55,9 @@
             <p><strong>{{ $contact.campusName }}</strong><br>{{ $contact.address }}</p>
             <div class="cluster contact-map-links">
               <a class="button" href="{{ $contact.amapURL }}" rel="external">{{ i18n "contact_open_amap" }}</a>
-              <a class="button button--secondary" href="{{ $contact.googleMapsURL }}" rel="external">{{ i18n "contact_open_google_maps" }}</a>
+              {{- if eq site.Language.Lang "en" }}
+                <a class="button button--secondary" href="{{ $contact.googleMapsURL }}" rel="external">{{ i18n "contact_open_google_maps" }}</a>
+              {{- end }}
             </div>
           </div>
         </div>

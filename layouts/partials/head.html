@@ -88,6 +88,16 @@
     {{- end }}
   {{- end }}
 
+  {{- if or .IsHome (eq .Section "contact") (eq .Section "join") -}}
+    {{- $contactActionsJS := resources.Get "js/contact-actions.js" -}}
+    {{- if hugo.IsProduction -}}
+      {{- $contactActionsJS = $contactActionsJS | resources.Minify | resources.Fingerprint "sha384" -}}
+      <script type="module" src="{{ $contactActionsJS.RelPermalink }}" integrity="{{ $contactActionsJS.Data.Integrity }}" crossorigin="anonymous"></script>
+    {{- else -}}
+      <script type="module" src="{{ $contactActionsJS.RelPermalink }}"></script>
+    {{- end -}}
+  {{- end -}}
+
   {{- if and (eq .Section "publications") .IsSection -}}
     {{- $publicationsJS := resources.Get "js/publications.js" -}}
     {{- if hugo.IsProduction -}}

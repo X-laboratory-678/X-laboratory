@@ -6,7 +6,7 @@
 {{- end -}}
 {{- if $hasLinks }}
   <ul class="person-links" aria-label="{{ i18n "person_links" }}">
-    {{- with $page.Params.email }}<li><a href="mailto:{{ . }}">{{ i18n "person_email" }}</a></li>{{ end }}
+    {{- with $page.Params.email }}<li><a href="mailto:{{ . }}">{{ i18n "person_email" }}: {{ . }}</a></li>{{ end }}
     {{- with $page.Params.homepage }}<li><a href="{{ . }}" rel="me external">{{ i18n "person_website" }}</a></li>{{ end }}
     {{- with $page.Params.googleScholar }}<li><a href="{{ . }}" rel="me external">{{ i18n "person_google_scholar" }}</a></li>{{ end }}
     {{- if not $compact }}

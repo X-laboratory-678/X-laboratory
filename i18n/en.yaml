@@ -234,6 +234,18 @@
   translation: Institutional Email
 - id: contact_phone
   translation: Phone
+- id: contact_copy_email
+  translation: Copy email
+- id: contact_send_email
+  translation: Open email app
+- id: contact_copy_phone
+  translation: Copy phone number
+- id: contact_call_phone
+  translation: Open calling app
+- id: contact_copied
+  translation: Copied
+- id: contact_copy_failed
+  translation: Copy failed; select the value above manually
 - id: contact_address
   translation: Address
 - id: contact_location
