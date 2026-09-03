@@ -2,6 +2,8 @@
 title: "Research on a Large-Language-Model-Empowered Research and Innovation Platform for Smart Grids"
 id: llm-smart-grid-research-platform
 translationKey: project-llm-smart-grid-research-platform
+aliases:
+  - /projects/llm-smart-grid-research-platform/
 summary: A Shanghai Municipal Education Commission project on a large-language-model-empowered research and innovation platform for smart grids.
 hero: ""
 heroAlt: ""

@@ -329,7 +329,14 @@ class Audit:
                 self.error(f"{document.relative}: missing Open Graph fields: {', '.join(missing_og)}")
             if og.get("og:url") != document.canonical():
                 self.error(f"{document.relative}: og:url does not match canonical")
-            article_expected = document.relative.startswith(("news/", "zh/news/", "publications/", "zh/publications/")) and document.relative.count("/") >= (3 if document.relative.startswith("zh/") else 2)
+            localized_relative = document.relative.removeprefix("zh/")
+            article_expected = (
+                localized_relative.startswith("docs/home/news/")
+                and localized_relative != "docs/home/news/index.html"
+            ) or (
+                localized_relative.startswith("docs/research/publications/")
+                and localized_relative != "docs/research/publications/index.html"
+            )
             if og.get("og:type") != ("article" if article_expected else "website"):
                 self.error(f"{document.relative}: incorrect og:type {og.get('og:type')!r}")
 
@@ -505,7 +512,7 @@ class Audit:
                 if placeholder.casefold() in text.casefold():
                     self.error(f"{path.relative_to(self.root).as_posix()}: placeholder/fixture in XML: {placeholder}")
 
-        for required in ("sitemap.xml", "index.xml", "news/index.xml"):
+        for required in ("sitemap.xml", "index.xml", "docs/home/news/index.xml"):
             if not (self.root / required).is_file():
                 self.error(f"missing required XML output: {required}")
 

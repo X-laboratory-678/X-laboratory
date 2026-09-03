@@ -2,6 +2,8 @@
 title: Meta Reinforcement Learning Based Adaptive and Interpretable Energy Storage Control Meets Dynamic Scenarios
 id: meta-rl-energy-storage-control
 translationKey: publication-meta-rl-energy-storage-control
+aliases:
+  - /publications/meta-rl-energy-storage-control/
 authors:
   - name: Yibing Dang
   - name: Jiangjiao Xu

@@ -2,6 +2,8 @@
 title: A Preference-Based Online Reinforcement Learning With Embedded Communication Failure Solutions in Smart Grid
 id: preference-online-rl-smart-grid
 translationKey: publication-preference-online-rl-smart-grid
+aliases:
+  - /publications/preference-online-rl-smart-grid/
 authors:
   - name: Yibing Dang
   - name: Jiangjiao Xu

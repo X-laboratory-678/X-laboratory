@@ -44,7 +44,7 @@ Use this checklist before a GitHub Pages release, after binding a custom domain,
 - [x] Open representative canonical and `hreflang` URLs from the deployed page source and confirm they resolve reciprocally.
 - [x] Open Home, People, Publications, Join Us, a News detail, a Project detail, a Research detail, and a deliberately missing URL in a real browser.
 - [x] Confirm the deployed 404 page is bilingual, returns the host's expected not-found behavior, links to the correct base-path home, and is not indexed.
-- [x] Fetch the deployed `sitemap.xml`, `robots.txt`, `/index.xml`, and `/news/index.xml`; confirm they use the final domain.
+- [x] Fetch the deployed `sitemap.xml`, `robots.txt`, `/index.xml`, and `/docs/home/news/index.xml`; confirm they use the final domain.
 - [x] Check the browser console and network activity for missing assets, mixed content, unexpected third-party requests, and JavaScript errors.
 - [x] Repeat keyboard and mobile-navigation checks on the deployed site.
 - [x] Record the deployment URL, release commit, verification date, and deviations.

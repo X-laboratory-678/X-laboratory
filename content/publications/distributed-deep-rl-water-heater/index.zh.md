@@ -2,6 +2,8 @@
 title: Distributed Deep Reinforcement Learning for Data-Driven Water Heater Model in Smart Grid
 id: distributed-deep-rl-water-heater
 translationKey: publication-distributed-deep-rl-water-heater
+aliases:
+  - /publications/distributed-deep-rl-water-heater/
 authors:
   - name: Jiangjiao Xu
     person: jiangjiao-xu

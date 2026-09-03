@@ -2,6 +2,8 @@
 title: "国网上海市电力公司：面向数据驱动知识图谱构建的计量设备异常诊断技术及运维平台"
 id: knowledge-graph-metering-diagnosis
 translationKey: project-knowledge-graph-metering-diagnosis
+aliases:
+  - /projects/knowledge-graph-metering-diagnosis/
 summary: 面向数据驱动知识图谱构建，研究计量设备异常诊断技术及运维平台。
 hero: ""
 heroAlt: ""

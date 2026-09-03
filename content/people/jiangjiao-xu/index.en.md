@@ -2,6 +2,8 @@
 title: Jiangjiao Xu
 id: jiangjiao-xu
 translationKey: people-jiangjiao-xu
+aliases:
+  - /people/jiangjiao-xu/
 role: Principal Investigator · Lecturer
 category: pi
 status: current

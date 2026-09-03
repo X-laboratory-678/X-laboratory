@@ -1,6 +1,8 @@
 ---
 title: Paper published online in IEEE Transactions on Industrial Informatics
 translationKey: news-2024-12-12-preference-online-rl-published
+aliases:
+  - /news/2024-12-12-preference-online-rl-published/
 date: 2024-12-12
 lastmod: 2026-07-20
 summary: A study co-authored by Jiangjiao Xu on preference-based online reinforcement learning for smart grids was published online.

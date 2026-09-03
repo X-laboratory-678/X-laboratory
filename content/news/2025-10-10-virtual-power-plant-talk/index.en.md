@@ -1,6 +1,8 @@
 ---
 title: Jiangjiao Xu presents research on distribution grid–virtual power plant coordination
 translationKey: news-2025-10-10-virtual-power-plant-talk
+aliases:
+  - /news/2025-10-10-virtual-power-plant-talk/
 date: 2025-10-10
 lastmod: 2026-07-20
 summary: Jiangjiao Xu presented a thematic talk on coordinated scheduling between distribution grids and virtual power plants at an international power-system forum in Shanghai.

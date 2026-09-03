@@ -2,6 +2,8 @@
 title: Research
 description: Three connected areas frame our work on artificial intelligence and modern power systems.
 translationKey: section-research
+aliases:
+  - /research/
 ---
 
 Our research spans artificial intelligence and large models, power forecasting and collaborative optimization, and grid monitoring and fault diagnosis. Each area highlights related projects and publications.

@@ -1,6 +1,8 @@
 ---
 title: 许江蛟在电力系统新生态国际高峰论坛作主题演讲
 translationKey: news-2025-10-10-virtual-power-plant-talk
+aliases:
+  - /news/2025-10-10-virtual-power-plant-talk/
 date: 2025-10-10
 lastmod: 2026-07-20
 summary: 许江蛟在上海举行的电力系统新生态国际高峰论坛上，围绕配电网与虚拟电厂协同调度作主题演讲。

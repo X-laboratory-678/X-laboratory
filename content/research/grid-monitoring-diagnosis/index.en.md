@@ -2,6 +2,8 @@
 title: Grid Monitoring & Fault Diagnosis
 id: grid-monitoring-diagnosis
 translationKey: research-grid-monitoring-diagnosis
+aliases:
+  - /research/grid-monitoring-diagnosis/
 description: Online grid monitoring and data-informed anomaly and fault diagnosis.
 weight: 30
 draft: false

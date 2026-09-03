@@ -2,6 +2,8 @@
 title: 许江蛟
 id: jiangjiao-xu
 translationKey: people-jiangjiao-xu
+aliases:
+  - /people/jiangjiao-xu/
 role: 讲师、硕士生导师
 category: pi
 status: current

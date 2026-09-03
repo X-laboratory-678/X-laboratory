@@ -2,6 +2,8 @@
 title: Join Us
 description: X-Laboratory welcomes research inquiries from students and researchers interested in artificial intelligence and modern power systems.
 translationKey: section-join
+aliases:
+  - /join/
 ---
 
 ## For Prospective Students

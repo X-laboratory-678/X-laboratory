@@ -2,6 +2,8 @@
 title: Multioutput Framework for Time-Series Forecasting in Smart Grid Meets Data Scarcity
 id: multioutput-time-series-forecasting
 translationKey: publication-multioutput-time-series-forecasting
+aliases:
+  - /publications/multioutput-time-series-forecasting/
 authors:
   - name: Jiangjiao Xu
     person: jiangjiao-xu

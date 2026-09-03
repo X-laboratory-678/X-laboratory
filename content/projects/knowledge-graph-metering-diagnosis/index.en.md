@@ -2,6 +2,8 @@
 title: "Data-Driven Knowledge-Graph-Based Anomaly Diagnosis and Operations Platform for Metering Equipment"
 id: knowledge-graph-metering-diagnosis
 translationKey: project-knowledge-graph-metering-diagnosis
+aliases:
+  - /projects/knowledge-graph-metering-diagnosis/
 summary: A State Grid Shanghai project on data-driven knowledge graphs for metering-equipment anomaly diagnosis and operations.
 hero: ""
 heroAlt: ""

@@ -2,6 +2,8 @@
 title: "上海市教委人工智能范式改革项目：大语言模型赋能的智能电网科研创新平台研究"
 id: llm-smart-grid-research-platform
 translationKey: project-llm-smart-grid-research-platform
+aliases:
+  - /projects/llm-smart-grid-research-platform/
 summary: 上海市教委人工智能范式改革项目，聚焦大语言模型赋能的智能电网科研创新平台。
 hero: ""
 heroAlt: ""

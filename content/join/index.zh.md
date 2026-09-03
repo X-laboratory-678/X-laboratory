@@ -2,6 +2,8 @@
 title: 加入我们
 description: X-Laboratory 欢迎对人工智能与现代电力系统交叉研究感兴趣的学生和研究人员开展科研交流。
 translationKey: section-join
+aliases:
+  - /join/
 ---
 
 ## 面向有意了解研究方向的学生

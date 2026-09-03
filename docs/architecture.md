@@ -97,3 +97,11 @@ These decisions define the initial architecture. A future change that conflicts 
 **Reason:** GitHub's Pages artifact flow avoids committing generated files or maintaining a `gh-pages` branch. Using the Pages-provided base URL supports repository subpaths and a future configured custom domain without changing templates.
 
 **Consequences:** A failed version check, Hugo warning, build error, or audit error prevents artifact upload and deployment. The workflow runs on pushes to `main` and manual dispatch only. Repository administrators must select GitHub Actions as the Pages source. The authorized repository is `X-laboratory-678/X-laboratory`; it is deployed as Project Pages at `https://x-laboratory-678.github.io/X-laboratory/`. GitHub supplies the base URL at build time, so the repository subpath remains correct without hard-coded deployment URLs in templates. No custom domain or `CNAME` is currently configured.
+
+## ADR-013 — Group Public Routes by Documentation Area
+
+**Decision:** Publish People, News, Join Us, and Contact below `/docs/home/`; publish Research, Publications, and Projects below `/docs/research/`. English uses these paths at the site root and Chinese uses the same ASCII paths below `/zh/`. Leaf routes use the stable Page Bundle directory name through Hugo's `:contentbasename` token.
+
+**Reason:** A grouped documentation-style URL hierarchy makes the information architecture visible in the URL and follows the requested laboratory-site reference without coupling public paths to translated titles.
+
+**Consequences:** Hugo permalink configuration is the single source of truth for canonical routes. Templates continue to use page-reference helpers, canonical and `hreflang` metadata follow the new routes automatically, and legacy top-level routes are retained as Hugo redirect aliases. Future content must preserve its bundle directory name after publication.

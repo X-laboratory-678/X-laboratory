@@ -2,6 +2,8 @@
 title: Multiscale Feature Fusion Transformer With Hybrid Attention for Insulator Defect Detection
 id: multiscale-transformer-insulator-detection
 translationKey: publication-multiscale-transformer-insulator-detection
+aliases:
+  - /publications/multiscale-transformer-insulator-detection/
 authors:
   - name: Jiangjiao Xu
     person: jiangjiao-xu

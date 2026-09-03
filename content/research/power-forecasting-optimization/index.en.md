@@ -2,6 +2,8 @@
 title: Power Forecasting & Collaborative Optimization
 id: power-forecasting-optimization
 translationKey: research-power-forecasting-optimization
+aliases:
+  - /research/power-forecasting-optimization/
 description: Source-load forecasting and data-informed collaborative optimization for modern power systems.
 weight: 20
 draft: false

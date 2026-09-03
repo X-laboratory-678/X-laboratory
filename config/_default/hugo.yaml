@@ -8,6 +8,24 @@ disableKinds:
   - taxonomy
   - term
 
+# Keep the public information architecture close to a documentation-style
+# research site while leaving the source content organized by domain.
+permalinks:
+  page:
+    people: /docs/home/members/:contentbasename/
+    research: /docs/research/:contentbasename/
+    publications: /docs/research/publications/:contentbasename/
+    projects: /docs/research/projects/:contentbasename/
+    news: /docs/home/news/:contentbasename/
+    join: /docs/home/join-us/
+    contact: /docs/home/contact/
+  section:
+    people: /docs/home/members/
+    research: /docs/research/
+    publications: /docs/research/publications/
+    projects: /docs/research/projects/
+    news: /docs/home/news/
+
 markup:
   goldmark:
     renderer:

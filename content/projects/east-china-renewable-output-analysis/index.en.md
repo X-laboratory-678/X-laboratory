@@ -2,6 +2,8 @@
 title: "Statistical Characterization and Application Analysis of Renewable Energy Output in the East China Power Grid"
 id: east-china-renewable-output-analysis
 translationKey: project-east-china-renewable-output-analysis
+aliases:
+  - /projects/east-china-renewable-output-analysis/
 summary: An East China Branch of State Grid project on statistical characterization and application analysis of renewable-energy output.
 hero: ""
 heroAlt: ""

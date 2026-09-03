@@ -21,6 +21,20 @@ The site is a bilingual, content-driven Hugo website deployed automatically to G
 
 English is published at `/`; Simplified Chinese is published at `/zh/`. The live Project Pages base path is `/X-laboratory/`, and templates derive it dynamically rather than hard-coding it.
 
+Public content uses documentation-style route groups:
+
+```text
+/docs/home/members/          People
+/docs/home/news/             News
+/docs/home/join-us/          Join Us
+/docs/home/contact/          Contact
+/docs/research/              Research
+/docs/research/publications/ Publications
+/docs/research/projects/     Projects
+```
+
+Chinese routes use the same stable ASCII paths below `/zh/`. Legacy top-level routes remain redirect aliases.
+
 ## Content Architecture
 
 ```text
