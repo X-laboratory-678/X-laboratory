@@ -1,0 +1,52 @@
+- id: ai
+  label: Artificial Intelligence
+  labelZh: 人工智能
+  weight: 10
+- id: ml
+  label: Machine Learning
+  labelZh: 机器学习
+  weight: 20
+- id: cv
+  label: Computer Vision
+  labelZh: 计算机视觉
+  weight: 30
+- id: nlp
+  label: Natural Language Processing
+  labelZh: 自然语言处理
+  weight: 40
+- id: dm
+  label: Data Mining
+  labelZh: 数据挖掘
+  weight: 50
+- id: se
+  label: Software Engineering
+  labelZh: 软件工程
+  weight: 60
+- id: ec
+  label: Evolutionary Computation
+  labelZh: 进化计算
+  weight: 70
+- id: power-systems
+  label: Power Systems
+  labelZh: 电力系统
+  weight: 80
+- id: smart-grid
+  label: Smart Grid
+  labelZh: 智能电网
+  weight: 90
+- id: energy-systems
+  label: Energy Systems
+  labelZh: 能源系统
+  weight: 100
+- id: control
+  label: Control
+  labelZh: 控制
+  weight: 110
+- id: optimization
+  label: Optimization
+  labelZh: 优化
+  weight: 120
+- id: ai-for-power
+  label: AI for Power
+  labelZh: 电力人工智能
+  weight: 130

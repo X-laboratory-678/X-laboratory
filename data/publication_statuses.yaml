@@ -1,0 +1,20 @@
+- id: preprint
+  label: Preprint
+  labelZh: 预印本
+  weight: 10
+- id: submitted
+  label: Submitted
+  labelZh: 已投稿
+  weight: 20
+- id: accepted
+  label: Accepted
+  labelZh: 已接收
+  weight: 30
+- id: in-press
+  label: In Press
+  labelZh: 印刷中
+  weight: 40
+- id: published
+  label: Published
+  labelZh: 已发表
+  weight: 50

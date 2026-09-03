@@ -3,41 +3,148 @@ main:
     name: Home
     pageRef: /
     weight: 10
-    params:
-      enabled: true
+    params: { enabled: true }
+
   - identifier: people
     name: People
     pageRef: /people
     weight: 20
-    params:
-      enabled: true
+    params: { enabled: true }
+  - identifier: members
+    name: Members
+    parent: people
+    pageRef: /people
+    weight: 10
+    params: { enabled: true }
+  - identifier: alumni
+    name: Alumni
+    parent: people
+    weight: 20
+    params: { enabled: false }
+  - identifier: opportunities
+    name: Opportunities
+    parent: people
+    weight: 30
+    params: { enabled: false }
+  - identifier: contact
+    name: Contact
+    parent: people
+    pageRef: /contact
+    weight: 40
+    params: { enabled: true }
+
   - identifier: research
     name: Research
     pageRef: /research
     weight: 30
-    params:
-      enabled: true
-  - identifier: publications
-    name: Publications
-    pageRef: /publications
-    weight: 40
-    params:
-      enabled: true
+    params: { enabled: true }
+  - identifier: research-areas
+    name: Research Areas
+    parent: research
+    pageRef: /research
+    weight: 10
+    params: { enabled: true }
   - identifier: projects
     name: Projects
+    parent: research
     pageRef: /projects
+    weight: 20
+    params: { enabled: true }
+  - identifier: publications
+    name: Publications
+    parent: research
+    pageRef: /publications
+    weight: 30
+    params: { enabled: true }
+  - identifier: grants
+    name: Grants
+    parent: research
+    weight: 40
+    params: { enabled: false }
+  - identifier: research-resources
+    name: Software & Resources
+    parent: research
     weight: 50
-    params:
-      enabled: true
+    params: { enabled: false }
+
+  # Future groups stay disabled until their routes ship, preventing broken links.
+  - identifier: events
+    name: Events
+    weight: 40
+    params: { enabled: false }
+  - identifier: seminars
+    name: Seminars
+    parent: events
+    weight: 10
+    params: { enabled: false }
+  - identifier: reading-group
+    name: Reading Group
+    parent: events
+    weight: 20
+    params: { enabled: false }
+  - identifier: study-group
+    name: Study Group
+    parent: events
+    weight: 30
+    params: { enabled: false }
+  - identifier: workshops
+    name: Workshops
+    parent: events
+    weight: 40
+    params: { enabled: false }
+  - identifier: event-archive
+    name: Event Archive
+    parent: events
+    weight: 50
+    params: { enabled: false }
+
+  - identifier: resources
+    name: Resources
+    weight: 50
+    params: { enabled: false }
+  - identifier: materials
+    name: Materials
+    parent: resources
+    weight: 10
+    params: { enabled: false }
+  - identifier: supplementary
+    name: Supplementary
+    parent: resources
+    weight: 20
+    params: { enabled: false }
+  - identifier: software
+    name: Software
+    parent: resources
+    weight: 30
+    params: { enabled: false }
+  - identifier: datasets
+    name: Datasets
+    parent: resources
+    weight: 40
+    params: { enabled: false }
+  - identifier: benchmarks
+    name: Benchmarks
+    parent: resources
+    weight: 50
+    params: { enabled: false }
+
+  - identifier: tools
+    name: Tools
+    weight: 60
+    params: { enabled: false }
+  - identifier: conference-deadlines
+    name: Conference Deadlines
+    parent: tools
+    weight: 10
+    params: { enabled: false }
+
   - identifier: news
     name: News
     pageRef: /news
-    weight: 60
-    params:
-      enabled: true
+    weight: 70
+    params: { enabled: true }
   - identifier: join
     name: Join Us
     pageRef: /join
-    weight: 70
-    params:
-      enabled: true
+    weight: 80
+    params: { enabled: true }

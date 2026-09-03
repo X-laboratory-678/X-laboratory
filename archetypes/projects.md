@@ -6,6 +6,7 @@ summary: ""
 hero: ""
 heroAlt: ""
 status: planned
+projectType: research
 startYear: {{ time.AsTime .Date | time.Format "2006" }}
 endYear:
 people: []
@@ -14,6 +15,8 @@ publications: []
 code: ""
 dataset: ""
 demo: ""
+repository: ""
+documentation: ""
 links: []
 featured: false
 weight: 100

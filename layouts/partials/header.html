@@ -9,13 +9,11 @@
     <nav class="site-nav" id="primary-navigation" aria-label="{{ i18n "primary_navigation" }}" data-nav data-open="false">
       <ul class="site-nav__list">
         {{- range site.Menus.main }}
-          {{- $label := i18n (printf "nav_%s" .Identifier) | default .Name }}
-          {{- $active := or ($.IsMenuCurrent "main" .) ($.HasMenuCurrent "main" .) (and (ne .Identifier "home") (eq $.Section .Identifier)) }}
-          <li>
-            <a href="{{ .URL }}"{{ if $active }} aria-current="page"{{ end }}>{{ $label }}</a>
-          </li>
+          {{- if ne .Params.enabled false }}
+            {{- partial "navigation/menu-item.html" (dict "page" $ "entry" .) }}
+          {{- end }}
         {{- end }}
-        <li>{{ partial "language-switch.html" $ }}</li>
+        <li class="site-nav__item site-nav__item--language">{{ partial "language-switch.html" $ }}</li>
       </ul>
     </nav>
   </div>

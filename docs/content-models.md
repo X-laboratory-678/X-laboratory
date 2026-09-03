@@ -220,6 +220,11 @@ The build rejects published content missing these fields:
 - Publications: `title`, `id`, non-empty `authors`, `year`, `publicationType`
 - Projects: `title`, `id`, `summary`, `status`, `startYear`
 - News: `title`, parseable `date`, `category`
+- Grants: `title`, `id`, `funder`, `role`, `startYear`, `status`, `summary`
+- Opportunities: `title`, `id`, `type`, `status`, `summary`
+- Events: `title`, `id`, parseable `date`, `series`, `eventType`, `status`
+- Resources: `title`, `id`, `resourceType`, `summary`
+- Materials: `title`, `id`, `summary`, at least one `category`
 
 Each Publication author is an object containing at least `name`. This preserves author order while allowing later fields such as equal contribution, correspondence, or affiliation without changing the basic structure.
 
@@ -234,6 +239,14 @@ Controlled values live in small files under `data/`:
 - `project_statuses.yaml` validates `Project.status`.
 - `research_areas.yaml` validates every `researchAreas` reference.
 - `news_categories.yaml` validates `News.category`.
+- `grant_statuses.yaml` validates `Grant.status`.
+- `opportunity_types.yaml` and `opportunity_statuses.yaml` validate Opportunities.
+- `event_series.yaml` and `event_statuses.yaml` validate Events.
+- `resource_types.yaml` validates Resources.
+- `project_types.yaml` validates the optional `Project.projectType` extension.
+- `publication_statuses.yaml` validates the optional `Publication.publicationStatus` extension.
+- `material_categories.yaml` and `material_tags.yaml` constrain Materials taxonomies.
+- `conference_areas.yaml` constrains Conference Deadline filters.
 
 Each entry has a stable `id`, an administrative label, and a `weight` where ordering is relevant. Interface labels are localized through `i18n/`; research-area entries also carry localized content labels. The current research-area vocabulary is a restrained information-architecture summary of the principal investigator's officially published research directions; provenance is recorded in `docs/content-sources.md`.
 
@@ -249,6 +262,17 @@ Publication.labMembers        → People.id
 Publication.researchAreas     → Research Area.id
 News.relatedPublication       → Publication.id
 News.relatedProject           → Project.id
+Grant.people                  → People.id
+Grant.projects                → Project.id
+Opportunity.people            → People.id
+Opportunity.contactPerson     → People.id
+Event.presenters/moderator    → People.id
+Event.relatedPublication      → Publication.id
+Event.relatedProject          → Project.id
+Resource.relatedPublication   → Publication.id
+Resource.relatedProject       → Project.id
+Material.authors              → People.id
+Material.relatedResources     → Resource.id
 ```
 
 `Project.people` is authoritative for People-to-Project membership. Person bundles do not maintain a duplicate `projects` array. `Project.publications` is authoritative for the explicit Project-to-Publication relationship. `Publication.projectPage` is an optional landing-page link and is not a relational source of truth. Sharing a `researchAreas` value establishes topical grouping only; it never implies that a Publication is an output of a Project.
@@ -270,3 +294,35 @@ When `photo`, `hero`, or `image` is set, it must resolve through `Page.Resources
 ## Build-Time Validation
 
 `layouts/partials/content/validate-site.html` runs once per rendered language through `partialCached`. It checks required fields, ID syntax and bundle matching, duplicate IDs, controlled vocabularies, bundle resources, and internal references. Research validation checks vocabulary membership and localized title consistency. Project validation checks year ranges and translation-invariant relationships. News validation checks category, related IDs, bundle images, and translation-invariant event metadata. Site Contact validation resolves the configured PI and requires a public email, phone display and international `tel` value, both localized addresses, and the confirmed structured-address fields. Join validation requires an HTTPS admissions URL. Publication translations additionally validate title, year, publication type, DOI, venue, author order, and person mappings. Publication validation also checks DOI representation and the consistency of `authors[].person` with `labMembers`. Validation uses `errorf`, so invalid content exits nonzero in both normal and strict builds.
+
+## V2 Entity Schemas
+
+The following schemas are implemented as draft-safe archetypes. Their public directories and layouts ship in later phases. Absence of a public record is represented by no published bundle, not by invented data or placeholder copy.
+
+### Grants
+
+`content/grants/<id>/` is authoritative. Grants are funding records, never substitutes for Projects. Fields are `title`, `id`, `program`, `funder`, `grantNumber`, `role`, optional `amount` plus `currency`, `startYear`, optional `endYear`, `status`, `people`, `researchAreas`, `projects`, `officialUrl`, optional bundle `logo`/`logoAlt`, `summary`, `featured`, and `draft`. The build rejects impossible year ranges and unresolved relationships.
+
+### Opportunities
+
+`content/opportunities/<id>/` stores confirmed laboratory-specific opportunities. Fields are `title`, `id`, `type`, `status`, `summary`, optional `deadline`, optional `startDate`, `fundingType`, `fundingDescription`, `eligibility`, `researchAreas`, `people`, `applicationUrl`, `officialUrl`, `contactPerson`, `featured`, and `draft`. Dates are parsed by Hugo, and all people/research references resolve. General Join Us guidance remains separate and must not be transformed into an opening.
+
+### Events
+
+`content/events/<id>/` is the single model for seminars, reading groups, study groups, workshops, lab meetings, conference talks, defenses, and tutorials. Fields are `title`, `id`, `series`, `eventType`, `date`, optional `endDate`, `location`, internal `presenters`, internal `moderator`, `paperTitle`, `paperUrl`, `slides`, `video`, `website`, `researchAreas`, `relatedPublication`, `relatedProject`, `externalSpeakers`, `status`, `featured`, and `draft`. End dates cannot precede start dates.
+
+### Resources
+
+`content/resources/<id>/` stores supplementary material, software artifacts, datasets, benchmarks, demos, tutorials, code, appendices, and visualizations. Fields are `title`, `id`, `resourceType`, `summary`, `relatedPublication`, `relatedProject`, `researchAreas`, `people`, `code`, `dataset`, `pdf`, `video`, `demo`, `repository`, `externalLinks`, `license`, and `draft`. Publication `supplementary` is the authoritative list of Resource IDs for publication-to-resource membership; Resource back-links are validated metadata for rendering and discovery.
+
+### Materials
+
+`content/materials/<id>/` stores authored knowledge-base articles. Fields are `title`, `id`, `date`, `summary`, `tldr`, controlled `categories`, controlled `tags`, People IDs in `authors`, `researchAreas`, `relatedPublication`, `relatedProject`, `relatedResources`, optional bundle `cover`/`coverAlt`, `featured`, and `draft`. New category or tag IDs must be reviewed in the vocabulary before use.
+
+### Existing Entity Extensions
+
+- Publications add optional `publicationStatus`, `acceptanceRate`, `acceptanceRateSource`, `distinctions`, `metricsId`, `supplementary`, and `blog`. Acceptance rate requires a source; missing metrics render nothing.
+- Projects add optional controlled `projectType`, `repository`, and `documentation`. Software showcases remain Projects rather than a parallel software entity.
+- News adds optional `relatedGrant`, `relatedEvent`, and `relatedOpportunity`, all resolved by stable ID.
+
+Citation metrics will be cached at build time in `data/generated/publication-metrics.json`, keyed by Publication ID with `citedByCount`, `source`, and `updatedAt`. Browser-side live API calls are prohibited. Conference deadlines remain structured YAML in `data/conferences.yaml` because they are compact repeated records rather than narrative pages; their area IDs must come from `data/conference_areas.yaml`.

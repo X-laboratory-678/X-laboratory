@@ -9,6 +9,9 @@ imageAlt: ""
 category: announcement
 relatedPublication: ""
 relatedProject: ""
+relatedGrant: ""
+relatedEvent: ""
+relatedOpportunity: ""
 featured: false
 draft: true
 ---

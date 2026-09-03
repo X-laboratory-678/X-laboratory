@@ -206,6 +206,27 @@ alumniNext: Publicly approved next position
 
 `left` and `alumniNext` are optional. Omit unknown values instead of adding `N/A` or placeholders.
 
+## Add a V2 Entity
+
+Use the matching archetype and keep the new bundle in draft until both translations, provenance, relationships, and assets have been reviewed:
+
+```bash
+hugo new content --kind grants grants/stable-id/index.en.md
+hugo new content --kind opportunities opportunities/stable-id/index.en.md
+hugo new content --kind events events/stable-id/index.en.md
+hugo new content --kind resources resources/stable-id/index.en.md
+hugo new content --kind materials materials/stable-id/index.en.md
+```
+
+- Create the Chinese file in the same bundle with the same `id` and `translationKey`.
+- Select controlled values only from the matching file under `data/`; never add a one-off spelling directly in Front Matter.
+- Use People, Project, Publication, Research, Grant, Event, Opportunity, and Resource IDs for relationships. A shared topic is not evidence of a direct relationship.
+- Record factual sources and the review date in `docs/content-sources.md` before changing `draft` to `false`.
+- Track unavailable facts in `docs/missing-information.md`. Placeholder tokens and `[待提供]` text are prohibited in production.
+- Enable a disabled navigation destination only after the English and Chinese routes exist and the strict audit finds no broken links.
+
+For Publications, `acceptanceRate` must be a number from 0 through 100 and requires `acceptanceRateSource`. OpenAlex IDs must match the publication DOI or title; citation data is cached at build time and hidden when missing. For Opportunities, never infer an opening, quota, funding route, eligibility rule, or deadline from general admissions information.
+
 ## Pull Requests
 
 Each pull request must:

@@ -1,0 +1,20 @@
+{{- $name := .name -}}
+{{- $entries := .entries -}}
+{{- $seen := dict -}}
+{{- range $entries -}}
+  {{- $entry := . -}}
+  {{- range slice "id" "label" "labelZh" "weight" -}}
+    {{- if not (isset $entry .) -}}
+      {{- errorf "vocabulary validation: data/%s.yaml entry is missing %q" $name . -}}
+    {{- end -}}
+  {{- end -}}
+  {{- $id := $entry.id | default "" -}}
+  {{- if not (findRE `^[a-z0-9]+(-[a-z0-9]+)*$` $id) -}}
+    {{- errorf "vocabulary validation: data/%s.yaml has invalid id %q" $name $id -}}
+  {{- end -}}
+  {{- if isset $seen $id -}}
+    {{- errorf "vocabulary validation: data/%s.yaml has duplicate id %q" $name $id -}}
+  {{- else -}}
+    {{- $seen = merge $seen (dict $id true) -}}
+  {{- end -}}
+{{- end -}}

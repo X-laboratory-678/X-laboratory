@@ -2,12 +2,54 @@
   translation: Skip to content
 - id: primary_navigation
   translation: Primary navigation
+- id: submenu_toggle
+  translation: "Toggle {{ .Name }} submenu"
 - id: nav_home
   translation: Home
 - id: nav_people
   translation: People
+- id: nav_members
+  translation: Members
+- id: nav_alumni
+  translation: Alumni
+- id: nav_opportunities
+  translation: Opportunities
 - id: nav_research
   translation: Research
+- id: nav_research-areas
+  translation: Research Areas
+- id: nav_grants
+  translation: Grants
+- id: nav_research-resources
+  translation: Software & Resources
+- id: nav_events
+  translation: Events
+- id: nav_seminars
+  translation: Seminars
+- id: nav_reading-group
+  translation: Reading Group
+- id: nav_study-group
+  translation: Study Group
+- id: nav_workshops
+  translation: Workshops
+- id: nav_event-archive
+  translation: Event Archive
+- id: nav_resources
+  translation: Resources
+- id: nav_materials
+  translation: Materials
+- id: nav_supplementary
+  translation: Supplementary
+- id: nav_software
+  translation: Software
+- id: nav_datasets
+  translation: Datasets
+- id: nav_benchmarks
+  translation: Benchmarks
+- id: nav_tools
+  translation: Tools
+- id: nav_conference-deadlines
+  translation: Conference Deadlines
 - id: nav_publications
   translation: Publications
 - id: nav_projects

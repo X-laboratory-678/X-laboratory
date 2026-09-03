@@ -157,3 +157,4 @@ Confirm the workflow and live site after deployment. Never commit or manually up
 - Review image and PDF rights before every public asset addition.
 - Replace the provisional favicon only after final branding approval.
 - Repeat `docs/launch-checklist.md` after a custom-domain or public base-URL change.
+- Review `docs/missing-information.md` when the laboratory supplies a new grant, opportunity, event, resource, software project, material, conference deadline, member, or metrics identifier. Resolve the registry entry and add provenance in the same change.

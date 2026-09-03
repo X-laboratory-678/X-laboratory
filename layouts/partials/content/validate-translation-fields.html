@@ -1,0 +1,13 @@
+{{- $page := .page -}}
+{{- range $translation := $page.AllTranslations -}}
+  {{- if ne $translation.Lang $page.Lang -}}
+    {{- range $.fields -}}
+      {{- $field := . -}}
+      {{- $sourceValue := index $page.Params $field | default "" -}}
+      {{- $translationValue := index $translation.Params $field | default "" -}}
+      {{- if ne (jsonify $sourceValue) (jsonify $translationValue) -}}
+        {{- errorf "content validation: translations %s and %s must preserve %s" $page.File.Path $translation.File.Path $field -}}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}

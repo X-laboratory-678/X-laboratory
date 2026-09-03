@@ -1,0 +1,16 @@
+- id: upcoming
+  label: Upcoming
+  labelZh: 即将开放
+  weight: 10
+- id: open
+  label: Open
+  labelZh: 开放申请
+  weight: 20
+- id: closed
+  label: Closed
+  labelZh: 已截止
+  weight: 30
+- id: archived
+  label: Archived
+  labelZh: 已归档
+  weight: 40

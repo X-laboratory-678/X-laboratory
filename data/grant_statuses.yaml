@@ -1,0 +1,12 @@
+- id: active
+  label: Active
+  labelZh: 进行中
+  weight: 10
+- id: completed
+  label: Completed
+  labelZh: 已完成
+  weight: 20
+- id: archived
+  label: Archived
+  labelZh: 已归档
+  weight: 30

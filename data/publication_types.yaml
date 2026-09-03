@@ -1,21 +1,28 @@
 - id: conference
   label: Conference Paper
+  labelZh: 会议论文
   weight: 10
 - id: journal
   label: Journal Article
+  labelZh: 期刊论文
   weight: 20
 - id: preprint
   label: Preprint
+  labelZh: 预印本
   weight: 30
 - id: workshop
   label: Workshop Paper
+  labelZh: 研讨会论文
   weight: 40
 - id: book-chapter
   label: Book Chapter
+  labelZh: 书籍章节
   weight: 50
 - id: thesis
   label: Thesis
+  labelZh: 学位论文
   weight: 60
 - id: other
   label: Other
+  labelZh: 其他
   weight: 70

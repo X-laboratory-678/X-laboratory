@@ -1,0 +1,36 @@
+- id: research-notes
+  label: Research Notes
+  labelZh: 研究笔记
+  weight: 10
+- id: paper-explainers
+  label: Paper Explainers
+  labelZh: 论文解读
+  weight: 20
+- id: tutorials
+  label: Tutorials
+  labelZh: 教程
+  weight: 30
+- id: lab-rules
+  label: Lab Rules
+  labelZh: 实验室规范
+  weight: 40
+- id: latex
+  label: LaTeX
+  labelZh: LaTeX
+  weight: 50
+- id: writing
+  label: Writing
+  labelZh: 学术写作
+  weight: 60
+- id: tools
+  label: Tools
+  labelZh: 工具
+  weight: 70
+- id: datasets
+  label: Datasets
+  labelZh: 数据集
+  weight: 80
+- id: engineering-practice
+  label: Engineering Practice
+  labelZh: 工程实践
+  weight: 90

@@ -24,7 +24,7 @@ Status vocabulary:
 | Important home notices | `/` | Missing | No scheduled announcement model. | Add validated `data/announcements.yaml` with language pairs, priority, date window, optional link, and production placeholder rejection. |
 | Recent news | `/` | Covered | Current latest-news aggregation exists; archive grouping needs enhancement. | Keep source-backed aggregation and add year/month archive behavior. |
 | Contact and embedded map | `/` | Covered | Existing home/contact map and verified contact data exceed the reference's link-only failure modes; preserve current pending copy-action improvements. | Keep visible OpenStreetMap embed, Amap navigation, visible/copyable email and phone, and bilingual contact page. |
-| Hierarchical global navigation | all routes | Partially covered | Current navigation is flat; no nested desktop or mobile disclosures. | Create data-driven Home, People, Research, Events, Resources, Tools, News, and Join groups with keyboard, Escape, focus, ARIA, and no-JS fallback. |
+| Hierarchical global navigation | all routes | Covered | Enabled destinations use grouped desktop/mobile disclosures; future route groups remain registered but disabled to prevent broken links. | Hugo menu data, keyboard/Escape focus handling, ARIA state, and a no-JS link fallback are implemented. |
 | Language selector | all routes | Partially covered | Translation-aware EN/ZH switch exists, but not a scalable language disclosure. | Retain Hugo translations and add an accessible data-driven language menu without inventing Russian content. |
 | Members directory | `/docs/home/members/` | Covered | Category model is broad, but cards do not yet expose all optional period/affiliation fields. | Preserve People Page Bundles and add only reusable optional member metadata and grant/event/resource aggregation. |
 | Faculty / research staff / students | `/docs/home/members/` | Covered | Production currently contains one verified PI; missing people must not be invented. | Render supported categories only when real or draft records exist. Use draft placeholder members for development layout QA. |
@@ -102,3 +102,5 @@ The required sequence remains:
 9. Phase I — final parity and visual verification.
 
 Each implementation phase must pass the strict production build and generated-site audit before commit and deployment. Draft development placeholders must never enter production output.
+
+Phase A foundation status: hierarchical navigation, placeholder registry, controlled vocabularies, draft-safe archetypes, duplicate/reference/date/translation validation, and generic production placeholder detection are implemented. Public feature routes remain intentionally deferred to their assigned phases.

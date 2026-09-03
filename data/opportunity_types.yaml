@@ -1,0 +1,28 @@
+- id: phd
+  label: PhD Position
+  labelZh: 博士研究生机会
+  weight: 10
+- id: postdoc
+  label: Postdoctoral Position
+  labelZh: 博士后机会
+  weight: 20
+- id: research-fellow
+  label: Research Fellow
+  labelZh: 专职研究人员机会
+  weight: 30
+- id: research-assistant
+  label: Research Assistant
+  labelZh: 研究助理机会
+  weight: 40
+- id: visiting-scholar
+  label: Visiting Scholar
+  labelZh: 访问学者机会
+  weight: 50
+- id: internship
+  label: Internship
+  labelZh: 实习机会
+  weight: 60
+- id: other
+  label: Other
+  labelZh: 其他
+  weight: 70

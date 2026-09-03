@@ -13,6 +13,8 @@ The site uses Hugo Extended with custom layouts, Markdown Leaf Page Bundles, sma
 
 English is published at `/`; Simplified Chinese is published at `/zh/`. Content-specific resources remain inside their Page Bundle. Shared categories, status values, research IDs, and ordering live under `data/`.
 
+V2 uses a hierarchical Hugo menu. People and Research are currently enabled groups; Events, Resources, Tools, and not-yet-built child destinations remain registered but disabled until their routes ship. The disclosure behavior is progressively enhanced with native JavaScript and retains a complete no-JavaScript link fallback.
+
 ## Content Authority
 
 - People, Publications, Projects, Research, and News are authoritative in `content/`.
@@ -22,6 +24,7 @@ English is published at `/`; Simplified Chinese is published at `/zh/`. Content-
 - English and Chinese files share stable IDs and `translationKey` values.
 - Example bundles remain `draft: true` validation fixtures and must never be treated as real laboratory activity.
 - Provenance for factual claims is recorded in `docs/content-sources.md`.
+- Missing or unverified V2 facts are tracked in `docs/missing-information.md`, never in public copy.
 
 ## Deployment
 
@@ -65,3 +68,4 @@ Required result: zero Hugo warnings and zero audit critical errors. Also review 
 - Factual provenance: `docs/content-sources.md`
 - Architecture decisions: `docs/architecture.md`
 - Release and domain-change checks: `docs/launch-checklist.md`
+- Missing information and publication blockers: `docs/missing-information.md`

@@ -1,27 +1,36 @@
 - id: pi
   label: Principal Investigator
+  labelZh: 负责人
   weight: 10
 - id: faculty
   label: Faculty
+  labelZh: 教师
   weight: 20
 - id: postdoc
   label: Postdoctoral Researchers
+  labelZh: 博士后研究人员
   weight: 30
 - id: phd
   label: PhD Students
+  labelZh: 博士研究生
   weight: 40
 - id: master
   label: Master Students
+  labelZh: 硕士研究生
   weight: 50
 - id: ra
   label: Research Assistants
+  labelZh: 研究助理
   weight: 60
 - id: undergraduate
   label: Undergraduate Students
+  labelZh: 本科生
   weight: 70
 - id: visitor
   label: Visitors
+  labelZh: 访问成员
   weight: 80
 - id: alumni
   label: Alumni
+  labelZh: 校友
   weight: 90

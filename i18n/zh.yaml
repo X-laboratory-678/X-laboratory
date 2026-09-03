@@ -2,12 +2,54 @@
   translation: 跳到主要内容
 - id: primary_navigation
   translation: 主导航
+- id: submenu_toggle
+  translation: "展开或收起{{ .Name }}子菜单"
 - id: nav_home
   translation: 首页
 - id: nav_people
   translation: 成员
+- id: nav_members
+  translation: 团队成员
+- id: nav_alumni
+  translation: 校友
+- id: nav_opportunities
+  translation: 招募机会
 - id: nav_research
   translation: 研究
+- id: nav_research-areas
+  translation: 研究方向
+- id: nav_grants
+  translation: 科研项目资助
+- id: nav_research-resources
+  translation: 软件与研究资源
+- id: nav_events
+  translation: 学术活动
+- id: nav_seminars
+  translation: 学术报告
+- id: nav_reading-group
+  translation: 论文研读
+- id: nav_study-group
+  translation: 专题学习
+- id: nav_workshops
+  translation: 工作坊
+- id: nav_event-archive
+  translation: 活动归档
+- id: nav_resources
+  translation: 资源
+- id: nav_materials
+  translation: 学习资料
+- id: nav_supplementary
+  translation: 补充材料
+- id: nav_software
+  translation: 软件
+- id: nav_datasets
+  translation: 数据集
+- id: nav_benchmarks
+  translation: 基准测试
+- id: nav_tools
+  translation: 工具
+- id: nav_conference-deadlines
+  translation: 会议截止日期
 - id: nav_publications
   translation: 论文
 - id: nav_projects

@@ -1,0 +1,12 @@
+- id: upcoming
+  label: Upcoming
+  labelZh: 即将举行
+  weight: 10
+- id: completed
+  label: Completed
+  labelZh: 已结束
+  weight: 20
+- id: cancelled
+  label: Cancelled
+  labelZh: 已取消
+  weight: 30

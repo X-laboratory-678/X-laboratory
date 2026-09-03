@@ -1,0 +1,32 @@
+- id: seminar
+  label: Seminar
+  labelZh: 学术报告
+  weight: 10
+- id: reading-group
+  label: Reading Group
+  labelZh: 论文研读
+  weight: 20
+- id: study-group
+  label: Study Group
+  labelZh: 专题学习
+  weight: 30
+- id: workshop
+  label: Workshop
+  labelZh: 工作坊
+  weight: 40
+- id: lab-meeting
+  label: Lab Meeting
+  labelZh: 组会
+  weight: 50
+- id: conference-talk
+  label: Conference Talk
+  labelZh: 会议报告
+  weight: 60
+- id: defense
+  label: Defense
+  labelZh: 答辩
+  weight: 70
+- id: tutorial
+  label: Tutorial
+  labelZh: 教程活动
+  weight: 80

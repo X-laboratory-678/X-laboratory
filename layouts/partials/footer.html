@@ -8,7 +8,9 @@
     <nav aria-label="{{ i18n "footer_navigation" }}">
       <ul class="site-footer__nav">
         {{- range site.Menus.main }}
-          <li><a href="{{ .URL }}">{{ i18n (printf "nav_%s" .Identifier) | default .Name }}</a></li>
+          {{- if ne .Params.enabled false }}
+            <li><a href="{{ .URL }}">{{ i18n (printf "nav_%s" .Identifier) | default .Name }}</a></li>
+          {{- end }}
         {{- end }}
         {{- with site.GetPage "/contact" }}<li><a href="{{ .RelPermalink }}">{{ i18n "nav_contact" }}</a></li>{{ end }}
       </ul>

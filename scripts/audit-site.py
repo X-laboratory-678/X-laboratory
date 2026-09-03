@@ -34,6 +34,13 @@ PLACEHOLDERS = (
     "示例动态",
 )
 
+PLACEHOLDER_PATTERNS = (
+    re.compile(r"\{\{\s*PLACEHOLDER_[A-Z0-9_*]+\s*\}\}", re.IGNORECASE),
+    re.compile(r"\{\{\s*[A-Z][A-Z0-9_]*(?:_\*|_[A-Z0-9_]+)\s*\}\}"),
+    re.compile(r"\[\s*(?:待提供|Placeholder)\s*\]", re.IGNORECASE),
+    re.compile(r"\bLorem ipsum\b", re.IGNORECASE),
+)
+
 EDITORIAL_LEAKAGE_PHRASES = (
     "缺少直接证据时",
     "本页面不为项目归属",
@@ -479,6 +486,9 @@ class Audit:
             for placeholder in PLACEHOLDERS:
                 if placeholder.casefold() in visible.casefold():
                     self.error(f"{document.relative}: visible placeholder/fixture text: {placeholder}")
+            for pattern in PLACEHOLDER_PATTERNS:
+                if pattern.search(visible):
+                    self.error(f"{document.relative}: visible placeholder pattern: {pattern.pattern}")
             for blocked in BLOCKED_ROUTE_PARTS:
                 for _, _, value in document.references:
                     if blocked in value:
@@ -511,6 +521,9 @@ class Audit:
             for placeholder in PLACEHOLDERS:
                 if placeholder.casefold() in text.casefold():
                     self.error(f"{path.relative_to(self.root).as_posix()}: placeholder/fixture in XML: {placeholder}")
+            for pattern in PLACEHOLDER_PATTERNS:
+                if pattern.search(text):
+                    self.error(f"{path.relative_to(self.root).as_posix()}: placeholder pattern in XML: {pattern.pattern}")
 
         for required in ("sitemap.xml", "index.xml", "docs/home/news/index.xml"):
             if not (self.root / required).is_file():

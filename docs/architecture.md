@@ -105,3 +105,19 @@ These decisions define the initial architecture. A future change that conflicts 
 **Reason:** A grouped documentation-style URL hierarchy makes the information architecture visible in the URL and follows the requested laboratory-site reference without coupling public paths to translated titles.
 
 **Consequences:** Hugo permalink configuration is the single source of truth for canonical routes. Templates continue to use page-reference helpers, canonical and `hreflang` metadata follow the new routes automatically, and legacy top-level routes are retained as Hugo redirect aliases. Future content must preserve its bundle directory name after publication.
+
+## ADR-014 — Use a Progressive Hierarchical Navigation
+
+**Decision:** Define the full navigation hierarchy in Hugo's menu configuration. Render enabled routes as linked parent items with separate disclosure buttons for children. Keep future groups disabled until their routes are implemented.
+
+**Reason:** The platform will grow beyond seven sections, but a wide flat menu does not scale. Hugo menus preserve multilingual, base-path-safe page references without introducing a client framework.
+
+**Consequences:** JavaScript enhances disclosure state, Escape handling, outside-click closing, and keyboard focus. Without JavaScript, all enabled links remain visible. A menu entry may be enabled only when its destination exists in both supported languages.
+
+## ADR-015 — Separate Research Entities by Meaning
+
+**Decision:** Grants, Opportunities, Events, Resources, and Materials are independent multilingual Leaf Page Bundle types. Projects remain the reusable model for research, software, platforms, datasets, benchmarks, initiatives, competitions, and tools. Relationships use stable IDs.
+
+**Reason:** A grant is not a project, an event is not news, and a downloadable resource is not a publication. Separate entities avoid duplicated facts and support reliable reverse aggregation.
+
+**Consequences:** Controlled values live in small YAML vocabularies. New production records require provenance, valid IDs, valid dates, resolved relationships, and matching invariant fields across translations. Missing facts remain in `docs/missing-information.md`, never public output.

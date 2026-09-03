@@ -1,0 +1,31 @@
+{{- $page := .page -}}
+{{- $entry := .entry -}}
+{{- $children := slice -}}
+{{- range $entry.Children -}}
+  {{- if ne .Params.enabled false -}}
+    {{- $children = $children | append . -}}
+  {{- end -}}
+{{- end -}}
+{{- $label := i18n (printf "nav_%s" $entry.Identifier) | default $entry.Name -}}
+{{- $matchesPage := $page.IsMenuCurrent "main" $entry -}}
+{{- $current := and (not $children) $matchesPage -}}
+{{- $active := or $matchesPage ($page.HasMenuCurrent "main" $entry) -}}
+<li class="site-nav__item{{ if $children }} site-nav__item--parent{{ end }}{{ if $active }} is-active{{ end }}"{{ if $children }} data-nav-group data-open="false"{{ end }}>
+  <div class="site-nav__item-row">
+    <a href="{{ $entry.URL }}"{{ if $current }} aria-current="page"{{ end }}>{{ $label }}</a>
+    {{- if $children }}
+      {{- $submenuID := printf "submenu-%s" $entry.Identifier -}}
+      <button class="site-nav__disclosure" type="button" aria-expanded="false" aria-controls="{{ $submenuID }}" data-nav-disclosure>
+        <span class="visually-hidden">{{ i18n "submenu_toggle" (dict "Name" $label) }}</span>
+        <span aria-hidden="true">▾</span>
+      </button>
+    {{- end }}
+  </div>
+  {{- if $children }}
+    <ul class="site-nav__submenu" id="{{ printf "submenu-%s" $entry.Identifier }}">
+      {{- range $children }}
+        {{- partial "navigation/menu-item.html" (dict "page" $page "entry" .) -}}
+      {{- end }}
+    </ul>
+  {{- end }}
+</li>

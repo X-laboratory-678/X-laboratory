@@ -5,7 +5,7 @@ Official website source for **X-Laboratory** at Shanghai University of Electric 
 - Live site: <https://x-laboratory-678.github.io/X-laboratory/>
 - Repository: <https://github.com/X-laboratory-678/X-laboratory>
 - Production branch: `main`
-- Status: Milestone 10 — Testing, Polish & Handover completed
+- Status: V2 Phase A — platform foundation completed
 
 The site is a bilingual, content-driven Hugo website deployed automatically to GitHub Project Pages. It has no database, backend server, CMS, or Node frontend toolchain.
 
@@ -48,6 +48,8 @@ content/contact/       Contact and location page copy
 data/                  Controlled IDs, labels, categories, and ordering
 i18n/                  Shared interface translations
 ```
+
+The V2 foundation also defines draft-safe schemas for Grants, Opportunities, Events, Resources, and Materials. Their public routes remain disabled until a later phase supplies complete UI and either verified content or an honest empty state. See `docs/missing-information.md` for facts still needed from the laboratory.
 
 People, Publications, Projects, Research, and News are authoritative in their Page Bundles. Stable IDs—not display names—connect related content. Homepage and related-content summaries are generated from these sources. Public email, phone, and laboratory address have one source of truth under `params.contact` in `config/_default/params.yaml`; the PI's People email remains the institutional address.
 
@@ -116,6 +118,7 @@ Do not create a `gh-pages` branch or manually upload `public/`. The current site
 - [Contribution guide](CONTRIBUTING.md)
 - [Content models](docs/content-models.md)
 - [Content provenance](docs/content-sources.md)
+- [Missing information registry](docs/missing-information.md)
 - [Architecture decisions](docs/architecture.md)
 - [Launch and domain-change checklist](docs/launch-checklist.md)
 
