@@ -18,6 +18,7 @@ V2 uses a hierarchical Hugo menu. People and Research are currently enabled grou
 ## Content Authority
 
 - People, Publications, Projects, Research, and News are authoritative in `content/`.
+- Grants and Opportunities have production directories, but currently contain no verified production records; their example bundles are drafts only.
 - Stable IDs and bundle paths are relationship keys; display names and titles are not.
 - Project `people` and `publications`, Publication `labMembers`, and News relationship fields define their respective links.
 - Homepage summaries and related-content lists are generated from these authoritative bundles.

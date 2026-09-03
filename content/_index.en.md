@@ -25,6 +25,12 @@ sections:
     description: A selection of current and completed research projects.
     actionLabel: View all projects
     pageRef: /projects
+  grants:
+    eyebrow: Grants
+    title: Research support
+    description: Verified active research grants supporting the laboratory's work.
+    actionLabel: View all grants
+    pageRef: /grants
   publications:
     eyebrow: Publications
     title: Selected publications
@@ -43,6 +49,12 @@ sections:
     description: A preview of current laboratory leadership and faculty.
     actionLabel: View all people
     pageRef: /people
+  opportunities:
+    eyebrow: Opportunities
+    title: Work with the laboratory
+    description: Confirmed laboratory-specific research and study opportunities.
+    actionLabel: View opportunities
+    pageRef: /opportunities
   join:
     eyebrow: Join Us
     title: Work with the laboratory

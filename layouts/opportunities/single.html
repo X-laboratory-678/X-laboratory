@@ -1,0 +1,23 @@
+{{ define "main" }}
+  {{- $directory := site.GetPage "/opportunities" -}}
+  {{- $status := partial "opportunity/effective-status.html" . -}}
+  <article class="record-profile section">
+    <div class="container stack">
+      {{- with $directory }}<a class="text-link text-link--back" href="{{ .RelPermalink }}">{{ i18n "back_to_opportunities" }}</a>{{ end }}
+      <header class="record-profile__header stack">
+        <p class="eyebrow">{{ i18n (printf "opportunity_type_%s" .Params.type) }}</p>
+        <h1>{{ .Title }}</h1>
+        <p class="record-profile__summary">{{ .Params.summary }}</p>
+        <dl class="record-profile__facts">
+          <div><dt>{{ i18n "opportunity_status" }}</dt><dd>{{ i18n (printf "opportunity_status_%s" $status) }}</dd></div>
+          {{- with .Params.deadline }}<div><dt>{{ i18n "opportunity_deadline" }}</dt><dd><time datetime="{{ time.AsTime . | time.Format "2006-01-02T15:04:05Z07:00" }}">{{ time.AsTime . | time.Format ":date_long" }}</time></dd></div>{{ end }}
+          {{- with .Params.startDate }}<div><dt>{{ i18n "opportunity_start_date" }}</dt><dd><time datetime="{{ time.AsTime . | time.Format "2006-01-02" }}">{{ time.AsTime . | time.Format ":date_long" }}</time></dd></div>{{ end }}
+          {{- with .Params.fundingType }}<div><dt>{{ i18n "opportunity_funding" }}</dt><dd>{{ . }}</dd></div>{{ end }}
+        </dl>
+      </header>
+      {{- with .Params.eligibility }}<section><h2>{{ i18n "opportunity_eligibility" }}</h2><p>{{ . }}</p></section>{{ end }}
+      {{- with .Content }}<section><h2>{{ i18n "opportunity_details" }}</h2><div class="prose">{{ . }}</div></section>{{ end }}
+      {{- if or .Params.applicationUrl .Params.officialUrl }}<div class="cluster">{{ with .Params.applicationUrl }}<a class="button" href="{{ . }}" rel="external">{{ i18n "opportunity_apply" }}</a>{{ end }}{{ with .Params.officialUrl }}<a class="button button--secondary" href="{{ . }}" rel="external">{{ i18n "official_information" }}</a>{{ end }}</div>{{ end }}
+    </div>
+  </article>
+{{ end }}

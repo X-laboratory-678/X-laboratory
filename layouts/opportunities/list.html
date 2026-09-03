@@ -1,0 +1,35 @@
+{{ define "main" }}
+  {{- $pages := .Pages -}}
+  {{- if hugo.IsProduction }}{{ $pages = where $pages "Draft" false }}{{ end -}}
+  {{- $current := slice -}}{{- $visiting := slice -}}{{- $archived := slice -}}
+  {{- range $pages -}}
+    {{- $status := partial "opportunity/effective-status.html" . -}}
+    {{- if in (slice "closed" "archived") $status -}}{{- $archived = $archived | append . -}}
+    {{- else if eq .Params.type "visiting-scholar" -}}{{- $visiting = $visiting | append . -}}
+    {{- else -}}{{- $current = $current | append . -}}{{- end -}}
+  {{- end -}}
+  <header class="directory-header section">
+    <div class="container stack">
+      <p class="eyebrow">{{ i18n "nav_opportunities" }}</p>
+      <h1>{{ .Title }}</h1>
+    </div>
+  </header>
+  <div class="record-directory section">
+    <div class="container stack">
+      <section aria-labelledby="current-opportunities-heading">
+        <div class="record-directory__heading"><h2 id="current-opportunities-heading">{{ i18n "current_opportunities" }}</h2><span>{{ len $current }}</span></div>
+        {{- if $current }}<div class="record-list">{{ range $current }}{{ partial "opportunity/item.html" . }}{{ end }}</div>{{ else }}<p class="empty-state">{{ i18n "no_current_opportunities" }}</p>{{ end }}
+      </section>
+      {{- if $visiting }}<section aria-labelledby="visiting-opportunities-heading"><div class="record-directory__heading"><h2 id="visiting-opportunities-heading">{{ i18n "visiting_opportunities" }}</h2><span>{{ len $visiting }}</span></div><div class="record-list">{{ range $visiting }}{{ partial "opportunity/item.html" . }}{{ end }}</div></section>{{ end }}
+      <section aria-labelledby="opportunity-guidance-heading">
+        <h2 id="opportunity-guidance-heading">{{ i18n "funding_and_applications" }}</h2>
+        <div class="prose">{{ .Content }}</div>
+        <div class="cluster">
+          <a class="button button--secondary" href="{{ site.Params.admissions.officialUrl }}" rel="external">{{ i18n "join_admissions_link" }}</a>
+          {{- with site.GetPage "/contact" }}<a class="text-link" href="{{ .RelPermalink }}">{{ i18n "contact_view_page" }}</a>{{ end }}
+        </div>
+      </section>
+      {{- if $archived }}<details class="record-archive"><summary>{{ i18n "archived_opportunities" }} <span>({{ len $archived }})</span></summary><div class="record-list">{{ range $archived }}{{ partial "opportunity/item.html" . }}{{ end }}</div></details>{{ end }}
+    </div>
+  </div>
+{{ end }}

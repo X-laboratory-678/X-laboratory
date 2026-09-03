@@ -25,7 +25,8 @@ main:
     name: Opportunities
     parent: people
     weight: 30
-    params: { enabled: false }
+    pageRef: /opportunities
+    params: { enabled: true }
   - identifier: contact
     name: Contact
     parent: people
@@ -60,7 +61,8 @@ main:
     name: Grants
     parent: research
     weight: 40
-    params: { enabled: false }
+    pageRef: /grants
+    params: { enabled: true }
   - identifier: research-resources
     name: Software & Resources
     parent: research

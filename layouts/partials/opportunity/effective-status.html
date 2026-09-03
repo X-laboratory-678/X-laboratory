@@ -1,0 +1,7 @@
+{{- $status := .Params.status -}}
+{{- with .Params.deadline -}}
+  {{- if and (eq $status "open") (lt (time.AsTime .) now) -}}
+    {{- $status = "closed" -}}
+  {{- end -}}
+{{- end -}}
+{{- return $status -}}

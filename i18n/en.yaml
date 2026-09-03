@@ -314,3 +314,93 @@
   translation: Contact details
 - id: home_contact_location
   translation: Location
+- id: development_draft
+  translation: Development draft
+- id: grant
+  translation: Grant
+- id: active_grants
+  translation: Active Grants
+- id: completed_grants
+  translation: Completed Grants
+- id: no_active_grants
+  translation: No verified active grant records are currently published.
+- id: grant_funder
+  translation: Funder
+- id: grant_program
+  translation: Programme
+- id: grant_number
+  translation: Grant number
+- id: grant_role
+  translation: Role
+- id: grant_amount
+  translation: Amount
+- id: grant_period
+  translation: Period
+- id: grant_status
+  translation: Status
+- id: grant_status_active
+  translation: Active
+- id: grant_status_completed
+  translation: Completed
+- id: grant_status_archived
+  translation: Archived
+- id: view_grant
+  translation: View grant
+- id: back_to_grants
+  translation: Grants
+- id: grant_official_link
+  translation: Official grant record
+- id: overview
+  translation: Overview
+- id: current_opportunities
+  translation: Current Opportunities
+- id: visiting_opportunities
+  translation: Visiting Opportunities
+- id: archived_opportunities
+  translation: Archived Opportunities
+- id: no_current_opportunities
+  translation: No currently confirmed laboratory-specific openings.
+- id: funding_and_applications
+  translation: Funding and Applications
+- id: opportunity_status
+  translation: Status
+- id: opportunity_status_upcoming
+  translation: Upcoming
+- id: opportunity_status_open
+  translation: Open
+- id: opportunity_status_closed
+  translation: Closed
+- id: opportunity_status_archived
+  translation: Archived
+- id: opportunity_type_phd
+  translation: PhD Position
+- id: opportunity_type_postdoc
+  translation: Postdoctoral Position
+- id: opportunity_type_research-fellow
+  translation: Research Fellow
+- id: opportunity_type_research-assistant
+  translation: Research Assistant
+- id: opportunity_type_visiting-scholar
+  translation: Visiting Scholar
+- id: opportunity_type_internship
+  translation: Internship
+- id: opportunity_type_other
+  translation: Other Opportunity
+- id: opportunity_deadline
+  translation: Deadline
+- id: opportunity_start_date
+  translation: Start date
+- id: opportunity_funding
+  translation: Funding
+- id: opportunity_eligibility
+  translation: Eligibility
+- id: opportunity_details
+  translation: Details
+- id: opportunity_apply
+  translation: Apply through the official system
+- id: official_information
+  translation: Official information
+- id: view_opportunity
+  translation: View opportunity
+- id: back_to_opportunities
+  translation: Opportunities

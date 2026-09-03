@@ -94,6 +94,12 @@ Status is an internal editorial inference from the listed period as reviewed on 
 
 No amount, grant number, expanded team, method, dataset, deployment, outcome, patent, impact statement, hero image, external resource, or project-to-publication relationship was imported. A shared Research Area indicates topic only. The commissioning or funding organization remains part of the official Chinese title; a separate funder schema was intentionally not added because the source set is small and does not provide consistently structured funder metadata.
 
+## Grants and Opportunities
+
+No production Grant or laboratory-specific Opportunity record is currently published. Existing Project titles that mention a commissioning or funding organization do not establish a separate verified Grant record, role, award number, amount, or exact award period. General university admissions guidance does not establish an X-Laboratory vacancy, quota, scholarship, funding commitment, eligibility rule, or deadline.
+
+The bilingual Grants and Opportunities directories therefore render explicit empty states. `example-grant` and `example-opportunity` are draft-only layout fixtures containing registered placeholders; they are excluded from production and must never be cited as laboratory activity. A production record requires the sources listed in `docs/missing-information.md`, with provenance added here before publication.
+
 ## News Sources
 
 All production News items require a reliable source, a day-precise event or first-publication date, and a direct relationship to Jiangjiao Xu or an existing X-Laboratory entity. Last reviewed: 2026-07-20.

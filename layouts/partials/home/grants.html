@@ -1,0 +1,12 @@
+{{- $pages := where site.RegularPages "Section" "grants" -}}
+{{- $pages = where $pages "Draft" false -}}
+{{- $pages = where $pages "Params.featured" true -}}
+{{- $pages = where $pages "Params.status" "active" -}}
+{{- with first 3 (sort $pages "Params.startYear" "desc") }}
+  <section class="section section--tinted" aria-labelledby="grants-heading">
+    <div class="container">
+      {{ partial "section-header.html" (dict "config" $.Params.sections.grants "id" "grants-heading") }}
+      <div class="record-list">{{ range . }}{{ partial "grant/item.html" . }}{{ end }}</div>
+    </div>
+  </section>
+{{- end }}

@@ -1,0 +1,26 @@
+{{ define "main" }}
+  {{- $directory := site.GetPage "/grants" -}}
+  <article class="record-profile section">
+    <div class="container stack">
+      {{- with $directory }}<a class="text-link text-link--back" href="{{ .RelPermalink }}">{{ i18n "back_to_grants" }}</a>{{ end }}
+      <header class="record-profile__header stack">
+        <p class="eyebrow">{{ i18n "grant" }}</p>
+        <h1>{{ .Title }}</h1>
+        <p class="record-profile__summary">{{ .Params.summary }}</p>
+        <dl class="record-profile__facts">
+          <div><dt>{{ i18n "grant_funder" }}</dt><dd>{{ .Params.funder }}</dd></div>
+          {{- with .Params.program }}<div><dt>{{ i18n "grant_program" }}</dt><dd>{{ . }}</dd></div>{{ end }}
+          {{- with .Params.grantNumber }}<div><dt>{{ i18n "grant_number" }}</dt><dd>{{ . }}</dd></div>{{ end }}
+          <div><dt>{{ i18n "grant_role" }}</dt><dd>{{ .Params.role }}</dd></div>
+          {{- with .Params.amount }}<div><dt>{{ i18n "grant_amount" }}</dt><dd>{{ . }} {{ $.Params.currency }}</dd></div>{{ end }}
+          <div><dt>{{ i18n "grant_period" }}</dt><dd>{{ .Params.startYear }}{{ with .Params.endYear }}–{{ . }}{{ end }}</dd></div>
+          <div><dt>{{ i18n "grant_status" }}</dt><dd>{{ i18n (printf "grant_status_%s" .Params.status) }}</dd></div>
+        </dl>
+      </header>
+      {{- with .Content }}<section><h2>{{ i18n "overview" }}</h2><div class="prose">{{ . }}</div></section>{{ end }}
+      {{- with .Params.people }}<section><h2>{{ i18n "project_people" }}</h2><ul>{{ range . }}{{ with partial "content/resolve-by-id.html" (dict "site" site "section" "people" "id" .) }}<li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>{{ end }}{{ end }}</ul></section>{{ end }}
+      {{- with .Params.projects }}<section><h2>{{ i18n "related_projects" }}</h2><ul>{{ range . }}{{ with partial "content/resolve-by-id.html" (dict "site" site "section" "projects" "id" .) }}<li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>{{ end }}{{ end }}</ul></section>{{ end }}
+      {{- with .Params.officialUrl }}<p><a class="button button--secondary" href="{{ . }}" rel="external">{{ i18n "grant_official_link" }}</a></p>{{ end }}
+    </div>
+  </article>
+{{ end }}

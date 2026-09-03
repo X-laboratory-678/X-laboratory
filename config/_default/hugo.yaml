@@ -19,12 +19,16 @@ permalinks:
     news: /docs/home/news/:contentbasename/
     join: /docs/home/join-us/
     contact: /docs/home/contact/
+    grants: /docs/research/grants/:contentbasename/
+    opportunities: /docs/home/opportunities/:contentbasename/
   section:
     people: /docs/home/members/
     research: /docs/research/
     publications: /docs/research/publications/
     projects: /docs/research/projects/
     news: /docs/home/news/
+    grants: /docs/research/grants/
+    opportunities: /docs/home/opportunities/
 
 markup:
   goldmark:

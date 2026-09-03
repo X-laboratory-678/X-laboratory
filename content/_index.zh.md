@@ -25,6 +25,12 @@ sections:
     description: 展示在研与已完成科研项目中的代表性工作。
     actionLabel: 查看全部项目
     pageRef: /projects
+  grants:
+    eyebrow: 科研资助
+    title: 研究支持
+    description: 支持实验室研究工作的已核实在研科研资助。
+    actionLabel: 查看全部资助
+    pageRef: /grants
   publications:
     eyebrow: 论文
     title: 精选论文
@@ -43,6 +49,12 @@ sections:
     description: 当前实验室负责人和教师成员预览。
     actionLabel: 查看全部成员
     pageRef: /people
+  opportunities:
+    eyebrow: 招募机会
+    title: 与实验室共同研究
+    description: 已确认的实验室专项科研与学习机会。
+    actionLabel: 查看招募机会
+    pageRef: /opportunities
   join:
     eyebrow: 加入我们
     title: 与实验室共同研究

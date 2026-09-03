@@ -76,6 +76,13 @@ APPROVED_EXTERNAL_IFRAMES = {
     ("https", "www.openstreetmap.org", "/export/embed.html"),
 }
 
+REQUIRED_HTML = (
+    "docs/research/grants/index.html",
+    "zh/docs/research/grants/index.html",
+    "docs/home/opportunities/index.html",
+    "zh/docs/home/opportunities/index.html",
+)
+
 
 @dataclass
 class Document:
@@ -556,6 +563,16 @@ class Audit:
             if expected_sitemap not in content:
                 self.error("robots.txt does not point to the configured sitemap")
 
+    def audit_required_routes(self) -> None:
+        for relative in REQUIRED_HTML:
+            path = self.root / relative
+            if not path.is_file():
+                self.error(f"missing required route output: {relative}")
+                continue
+            document = self.documents.get(relative)
+            if not document or not document.indexable:
+                self.error(f"required route is not indexable: {relative}")
+
     def run(self) -> int:
         self.load()
         if self.documents and self.site_origin:
@@ -567,6 +584,7 @@ class Audit:
             self.audit_placeholders()
             self.audit_editorial_leakage()
             self.audit_xml_and_robots()
+            self.audit_required_routes()
 
         js_bytes = sum((self.root / path).stat().st_size for path in self.runtime_js if (self.root / path).is_file())
         css_bytes = sum((self.root / path).stat().st_size for path in self.runtime_css if (self.root / path).is_file())

@@ -1,0 +1,13 @@
+{{- $pages := where site.RegularPages "Section" "opportunities" -}}
+{{- $pages = where $pages "Draft" false -}}
+{{- $pages = where $pages "Params.featured" true -}}
+{{- $active := slice -}}
+{{- range $pages -}}{{- if in (slice "upcoming" "open") (partial "opportunity/effective-status.html" .) -}}{{- $active = $active | append . -}}{{- end -}}{{- end -}}
+{{- with first 3 $active }}
+  <section class="section" aria-labelledby="opportunities-heading">
+    <div class="container">
+      {{ partial "section-header.html" (dict "config" $.Params.sections.opportunities "id" "opportunities-heading") }}
+      <div class="record-list">{{ range . }}{{ partial "opportunity/item.html" . }}{{ end }}</div>
+    </div>
+  </section>
+{{- end }}

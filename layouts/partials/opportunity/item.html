@@ -1,0 +1,13 @@
+{{- $page := . -}}
+{{- $status := partial "opportunity/effective-status.html" $page -}}
+<article class="record-card">
+  <div class="record-card__meta cluster">
+    <span>{{ i18n (printf "opportunity_type_%s" $page.Params.type) }}</span>
+    <span>{{ i18n (printf "opportunity_status_%s" $status) }}</span>
+    {{- if $page.Draft }}<span>{{ i18n "development_draft" }}</span>{{ end }}
+  </div>
+  <h3><a href="{{ $page.RelPermalink }}">{{ $page.Title }}</a></h3>
+  <p>{{ $page.Params.summary }}</p>
+  {{- with $page.Params.deadline }}<p class="record-card__deadline"><strong>{{ i18n "opportunity_deadline" }}:</strong> <time datetime="{{ time.AsTime . | time.Format "2006-01-02T15:04:05Z07:00" }}">{{ time.AsTime . | time.Format ":date_long" }}</time></p>{{ end }}
+  <a class="text-link" href="{{ $page.RelPermalink }}">{{ i18n "view_opportunity" }}</a>
+</article>

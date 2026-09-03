@@ -147,7 +147,7 @@
         {{- errorf "content validation: %s has unknown publication status %q" $page.File.Path . -}}
       {{- end -}}
     {{- end -}}
-    {{- partial "content/validate-translation-fields.html" (dict "page" $page "fields" (slice "publicationStatus" "acceptanceRate" "acceptanceRateSource" "distinctions" "metricsId" "supplementary")) -}}
+    {{- partial "content/validate-translation-fields.html" (dict "page" $page "fields" (slice "publicationStatus" "acceptanceRate" "acceptanceRateSource" "metricsId" "supplementary")) -}}
     {{- with $page.Params.acceptanceRate -}}
       {{- if or (lt (float .) 0) (gt (float .) 100) -}}
         {{- errorf "content validation: %s acceptanceRate %q must be between 0 and 100" $page.File.Path . -}}
@@ -382,7 +382,7 @@
       {{- errorf "content validation: %s has invalid or bundle-mismatched stable id %q" $page.File.Path $id -}}
     {{- end -}}
     {{- partial "content/validate-translation-id.html" (dict "page" $page "id" $id) -}}
-    {{- partial "content/validate-translation-fields.html" (dict "page" $page "fields" (slice "program" "funder" "grantNumber" "role" "amount" "currency" "startYear" "endYear" "status" "people" "researchAreas" "projects" "officialUrl" "featured")) -}}
+    {{- partial "content/validate-translation-fields.html" (dict "page" $page "fields" (slice "grantNumber" "amount" "currency" "startYear" "endYear" "status" "people" "researchAreas" "projects" "officialUrl" "featured")) -}}
     {{- if not (partial "content/vocabulary-has.html" (dict "entries" hugo.Data.grant_statuses "id" $page.Params.status)) -}}
       {{- errorf "content validation: %s has unknown grant status %q" $page.File.Path $page.Params.status -}}
     {{- end -}}
@@ -397,6 +397,8 @@
     {{- if and $page.Params.amount (not $page.Params.currency) -}}
       {{- errorf "content validation: %s requires currency when amount is set" $page.File.Path -}}
     {{- end -}}
+    {{- with $page.Params.officialUrl -}}{{- if not (findRE `^https://[^[:space:]]+$` .) -}}{{- errorf "content validation: %s has invalid officialUrl %q" $page.File.Path . -}}{{- end -}}{{- end -}}
+    {{- with $page.Params.logo -}}{{- if not ($page.Resources.GetMatch .) -}}{{- errorf "content validation: %s references missing logo resource %q" $page.File.Path . -}}{{- end -}}{{- if not $page.Params.logoAlt -}}{{- errorf "content validation: %s requires logoAlt when logo is set" $page.File.Path -}}{{- end -}}{{- end -}}
     {{- range $page.Params.people -}}
       {{- if not (partial "content/resolve-by-id.html" (dict "site" $site "section" "people" "id" .)) -}}{{- errorf "content validation: %s references missing People id %q" $page.File.Path . -}}{{- end -}}
     {{- end -}}
@@ -419,6 +421,7 @@
     {{- if not (partial "content/vocabulary-has.html" (dict "entries" hugo.Data.opportunity_statuses "id" $page.Params.status)) -}}{{- errorf "content validation: %s has unknown opportunity status %q" $page.File.Path $page.Params.status -}}{{- end -}}
     {{- with $page.Params.deadline -}}{{- $deadline := time.AsTime . -}}{{- if le $deadline.Unix 0 -}}{{- errorf "content validation: %s has invalid deadline %q" $page.File.Path . -}}{{- end -}}{{- end -}}
     {{- with $page.Params.startDate -}}{{- $start := time.AsTime . -}}{{- if le $start.Unix 0 -}}{{- errorf "content validation: %s has invalid startDate %q" $page.File.Path . -}}{{- end -}}{{- end -}}
+    {{- range slice "applicationUrl" "officialUrl" -}}{{- $field := . -}}{{- with index $page.Params $field -}}{{- if not (findRE `^https://[^[:space:]]+$` .) -}}{{- errorf "content validation: %s has invalid %s %q" $page.File.Path $field . -}}{{- end -}}{{- end -}}{{- end -}}
     {{- range $page.Params.people -}}{{- if not (partial "content/resolve-by-id.html" (dict "site" $site "section" "people" "id" .)) -}}{{- errorf "content validation: %s references missing People id %q" $page.File.Path . -}}{{- end -}}{{- end -}}
     {{- with $page.Params.contactPerson -}}{{- if not (partial "content/resolve-by-id.html" (dict "site" $site "section" "people" "id" .)) -}}{{- errorf "content validation: %s references missing contact Person id %q" $page.File.Path . -}}{{- end -}}{{- end -}}
     {{- range $page.Params.researchAreas -}}{{- if not (partial "content/vocabulary-has.html" (dict "entries" hugo.Data.research_areas "id" .)) -}}{{- errorf "content validation: %s references unknown research area %q" $page.File.Path . -}}{{- end -}}{{- end -}}
@@ -444,7 +447,7 @@
     {{- $id := $page.Params.id -}}
     {{- if or (not (findRE `^[a-z0-9]+(-[a-z0-9]+)*$` $id)) (ne $id (path.Base $page.File.Dir)) -}}{{- errorf "content validation: %s has invalid or bundle-mismatched stable id %q" $page.File.Path $id -}}{{- end -}}
     {{- partial "content/validate-translation-id.html" (dict "page" $page "id" $id) -}}
-    {{- partial "content/validate-translation-fields.html" (dict "page" $page "fields" (slice "resourceType" "relatedPublication" "relatedProject" "researchAreas" "people" "code" "dataset" "pdf" "video" "demo" "repository" "externalLinks" "license")) -}}
+    {{- partial "content/validate-translation-fields.html" (dict "page" $page "fields" (slice "resourceType" "relatedPublication" "relatedProject" "researchAreas" "people" "code" "dataset" "pdf" "video" "demo" "repository" "license")) -}}
     {{- if not (partial "content/vocabulary-has.html" (dict "entries" hugo.Data.resource_types "id" $page.Params.resourceType)) -}}{{- errorf "content validation: %s has unknown resource type %q" $page.File.Path $page.Params.resourceType -}}{{- end -}}
     {{- with $page.Params.relatedPublication -}}{{- if not (partial "content/resolve-by-id.html" (dict "site" $site "section" "publications" "id" .)) -}}{{- errorf "content validation: %s references missing Publication id %q" $page.File.Path . -}}{{- end -}}{{- end -}}
     {{- with $page.Params.relatedProject -}}{{- if not (partial "content/resolve-by-id.html" (dict "site" $site "section" "projects" "id" .)) -}}{{- errorf "content validation: %s references missing Project id %q" $page.File.Path . -}}{{- end -}}{{- end -}}

@@ -91,6 +91,12 @@ General guidance is in `content/join/index.en.md` and `index.zh.md`. The officia
 
 Keep university admissions separate from laboratory availability. Do not add openings, quotas, funding, scholarships, eligibility rules, response promises, or application requirements without an authoritative source or explicit laboratory confirmation.
 
+## Add a Grant or Opportunity
+
+Create the English and Chinese files with the matching archetype. Keep `draft: true` until the official title, role/status, dates, relationships, URLs, and any funding claims are verified and recorded in `docs/content-sources.md`. A Project is not automatically a Grant, and general admissions information is not an Opportunity.
+
+For Opportunities, use a timezone-qualified deadline when a deadline exists. The page computes an effective closed state after that instant, but the source record should be reviewed and moved to `closed` or `archived`. Never publish an application button without an official HTTPS application URL.
+
 ## Update Contact and Location
 
 The single source of truth is `params.contact` in `config/_default/params.yaml`. Update the public email, phone display/`tel` pair, and English/Chinese address there—not in Home, Contact, Join Us, Footer, or Markdown body text.

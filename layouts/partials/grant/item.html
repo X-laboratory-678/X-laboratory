@@ -1,0 +1,16 @@
+{{- $page := . -}}
+<article class="record-card">
+  <div class="record-card__meta cluster">
+    <span>{{ i18n (printf "grant_status_%s" $page.Params.status) }}</span>
+    <span>{{ $page.Params.startYear }}{{ with $page.Params.endYear }}–{{ . }}{{ end }}</span>
+    {{- if $page.Draft }}<span>{{ i18n "development_draft" }}</span>{{ end }}
+  </div>
+  <h3><a href="{{ $page.RelPermalink }}">{{ $page.Title }}</a></h3>
+  <p>{{ $page.Params.summary }}</p>
+  <dl class="record-card__facts">
+    <div><dt>{{ i18n "grant_funder" }}</dt><dd>{{ $page.Params.funder }}</dd></div>
+    {{- with $page.Params.program }}<div><dt>{{ i18n "grant_program" }}</dt><dd>{{ . }}</dd></div>{{ end }}
+    <div><dt>{{ i18n "grant_role" }}</dt><dd>{{ $page.Params.role }}</dd></div>
+  </dl>
+  <a class="text-link" href="{{ $page.RelPermalink }}">{{ i18n "view_grant" }}</a>
+</article>

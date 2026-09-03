@@ -303,9 +303,13 @@ The following schemas are implemented as draft-safe archetypes. Their public dir
 
 `content/grants/<id>/` is authoritative. Grants are funding records, never substitutes for Projects. Fields are `title`, `id`, `program`, `funder`, `grantNumber`, `role`, optional `amount` plus `currency`, `startYear`, optional `endYear`, `status`, `people`, `researchAreas`, `projects`, `officialUrl`, optional bundle `logo`/`logoAlt`, `summary`, `featured`, and `draft`. The build rejects impossible year ranges and unresolved relationships.
 
+The canonical bilingual directories are `/docs/research/grants/` and `/zh/docs/research/grants/`; `/grants/` and `/zh/grants/` remain aliases.
+
 ### Opportunities
 
 `content/opportunities/<id>/` stores confirmed laboratory-specific opportunities. Fields are `title`, `id`, `type`, `status`, `summary`, optional `deadline`, optional `startDate`, `fundingType`, `fundingDescription`, `eligibility`, `researchAreas`, `people`, `applicationUrl`, `officialUrl`, `contactPerson`, `featured`, and `draft`. Dates are parsed by Hugo, and all people/research references resolve. General Join Us guidance remains separate and must not be transformed into an opening.
+
+The canonical bilingual directories are `/docs/home/opportunities/` and `/zh/docs/home/opportunities/`; `/opportunities/` and `/zh/opportunities/` remain aliases. An `open` opportunity automatically renders as closed after its deadline, so core status remains accurate without JavaScript. Editors should still archive stale records during routine review.
 
 ### Events
 
