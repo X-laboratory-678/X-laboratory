@@ -1,13 +1,35 @@
 {{- partialCached "content/validate-site.html" site site.Language.Locale -}}
 <!doctype html>
-<html lang="{{ site.Language.Locale }}">
+<html lang="{{ site.Language.Locale }}" dir="{{ site.Language.Direction | default "ltr" }}">
   {{ partial "head.html" . }}
-  <body>
+  <body dir="{{ site.Language.Direction | default "ltr" }}">
     <a class="skip-link" href="#main-content">{{ i18n "skip_to_content" }}</a>
-    {{ partial "header.html" . }}
-    <main id="main-content" class="site-main" tabindex="-1">
-      {{ block "main" . }}{{ end }}
+    <input type="checkbox" class="hidden toggle" id="menu-control" aria-label="{{ i18n "open_menu" }}">
+    <input type="checkbox" class="hidden toggle" id="toc-control" aria-hidden="true">
+
+    <main class="container flex">
+      <aside class="book-menu" aria-label="{{ i18n "primary_navigation" }}">
+        {{ partial "header.html" . }}
+      </aside>
+
+      <div class="book-page">
+        <header class="book-header">
+          <div class="flex align-center justify-between">
+            <label for="menu-control" class="book-menu-toggle">
+              <img src="{{ "icons/menu.svg" | relURL }}" class="book-icon" width="24" height="24" alt="{{ i18n "open_menu" }}">
+            </label>
+            <h3>{{ if .IsHome }}{{ i18n "nav_home" }}{{ else }}{{ .Title }}{{ end }}</h3>
+            <label for="toc-control" class="book-toc-toggle"></label>
+          </div>
+        </header>
+
+        <article id="main-content" class="markdown" tabindex="-1">
+          {{ block "main" . }}{{ end }}
+        </article>
+
+        {{ partial "footer.html" . }}
+        <label for="menu-control" class="hidden book-menu-overlay" aria-label="{{ i18n "close_menu" }}"></label>
+      </div>
     </main>
-    {{ partial "footer.html" . }}
   </body>
 </html>

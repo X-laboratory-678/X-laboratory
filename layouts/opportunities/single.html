@@ -5,7 +5,6 @@
     <div class="container stack">
       {{- with $directory }}<a class="text-link text-link--back" href="{{ .RelPermalink }}">{{ i18n "back_to_opportunities" }}</a>{{ end }}
       <header class="record-profile__header stack">
-        <p class="eyebrow">{{ i18n (printf "opportunity_type_%s" .Params.type) }}</p>
         <h1>{{ .Title }}</h1>
         <p class="record-profile__summary">{{ .Params.summary }}</p>
         <dl class="record-profile__facts">

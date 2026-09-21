@@ -1,71 +1,114 @@
 {{ define "main" }}
   {{- $publications := where .Pages "Draft" false -}}
-  {{- $publications = sort $publications "Title" "asc" -}}
-  {{- $publications = sort $publications "Date" "desc" -}}
   {{- $publications = sort $publications "Params.year" "desc" -}}
-  {{- $years := slice -}}
+  {{- $toAppear := slice -}}
+  {{- $inPress := slice -}}
+  {{- $technicalReports := slice -}}
+  {{- $published := slice -}}
   {{- range $publications -}}
+    {{- $status := lower (replace (replace (printf "%v" (.Params.status | default .Params.publicationStatus | default "")) "_" "-") " " "-") -}}
+    {{- $publicationType := lower (replace (replace (printf "%v" (.Params.publicationType | default "")) "_" "-") " " "-") -}}
+    {{- if or (eq $status "to-appear") (eq $status "toappear") (eq $publicationType "to-appear") (eq $publicationType "toappear") -}}
+      {{- $toAppear = $toAppear | append . -}}
+    {{- else if or (eq $status "in-press") (eq $status "inpress") (eq $publicationType "in-press") (eq $publicationType "inpress") -}}
+      {{- $inPress = $inPress | append . -}}
+    {{- else if or (eq $status "technical-report") (eq $status "report") (eq $publicationType "technical-report") (eq $publicationType "report") -}}
+      {{- $technicalReports = $technicalReports | append . -}}
+    {{- else -}}
+      {{- $published = $published | append . -}}
+    {{- end -}}
+  {{- end -}}
+  {{- $years := slice -}}
+  {{- range $published -}}
     {{- if not (in $years .Params.year) -}}{{- $years = $years | append .Params.year -}}{{- end -}}
   {{- end -}}
 
   <header class="publication-directory__header section">
     <div class="container stack">
-      <p class="eyebrow">{{ site.Params.labName }}</p>
       <h1>{{ .Title }}</h1>
       <div class="prose">{{ .Content }}</div>
     </div>
   </header>
 
-  <div class="publication-directory container" data-publication-directory data-count-one="{{ i18n "publication_count_one" }}" data-count-many="{{ i18n "publication_count_many" }}">
+  <div class="publication-directory publication-board container" data-publication-directory data-count-one="{{ i18n "publication_count_one" }}" data-count-many="{{ i18n "publication_count_many" }}">
     {{- with $publications -}}
-      <form class="publication-filters" data-publication-filters hidden>
-        <div class="publication-filters__field">
-          <label for="publication-year">{{ i18n "filter_year" }}</label>
-          <select id="publication-year" name="year" data-publication-filter="year">
-            <option value="">{{ i18n "filter_all_years" }}</option>
-            {{- range $years }}<option value="{{ . }}">{{ . }}</option>{{ end -}}
-          </select>
-        </div>
-        <div class="publication-filters__field">
-          <label for="publication-type">{{ i18n "filter_type" }}</label>
-          <select id="publication-type" name="type" data-publication-filter="type">
-            <option value="">{{ i18n "filter_all_types" }}</option>
-            {{- range sort hugo.Data.publication_types "weight" -}}
-              {{- $typeID := .id -}}
-              {{- if where $publications "Params.publicationType" $typeID -}}
-                <option value="{{ $typeID }}">{{ partial "publication/type-label.html" $typeID }}</option>
-              {{- end -}}
-            {{- end }}
-          </select>
-        </div>
-        <div class="publication-filters__field">
-          <label for="publication-research-area">{{ i18n "filter_research_area" }}</label>
-          <select id="publication-research-area" name="research" data-publication-filter="research">
-            <option value="">{{ i18n "filter_all_research_areas" }}</option>
-            {{- range sort hugo.Data.research_areas "weight" -}}
-              {{- $areaID := .id -}}
-              {{- if where $publications "Params.researchAreas" "intersect" (slice $areaID) -}}
-                <option value="{{ $areaID }}">{{ partial "publication/research-area-label.html" $areaID }}</option>
-              {{- end -}}
-            {{- end }}
-          </select>
-        </div>
-        <button class="publication-filters__reset" type="button" data-publication-reset>{{ i18n "reset_filters" }}</button>
-        <p class="publication-filters__count" aria-live="polite" data-publication-count></p>
-      </form>
+      {{- $statusGroups := slice
+        (dict "id" "to-appear" "title" (i18n "publication_group_to_appear") "pages" $toAppear)
+        (dict "id" "in-press" "title" (i18n "publication_group_in_press") "pages" $inPress)
+        (dict "id" "technical-report" "title" (i18n "publication_group_technical_report") "pages" $technicalReports)
+      -}}
+      {{- if or $toAppear $inPress $technicalReports -}}
+      <div class="publication-status-groups">
+        {{- range $statusGroups -}}
+          {{- $statusGroup := . -}}
+          {{- with $statusGroup.pages -}}
+            <section class="publication-status-group publication-section" data-publication-group="{{ $statusGroup.id }}" aria-labelledby="publication-{{ $statusGroup.id }}-heading">
+              <h2 id="publication-{{ $statusGroup.id }}-heading">{{ $statusGroup.title }}</h2>
+              <ul class="publication-list">
+                {{- range . -}}
+                  <li data-publication-item data-year="{{ .Params.year }}" data-type="{{ .Params.publicationType }}" data-research-areas="{{ delimit .Params.researchAreas " " }}">
+                    {{ partial "publication/directory-item.html" . }}
+                  </li>
+                {{- end -}}
+              </ul>
+            </section>
+          {{- end -}}
+        {{- end -}}
+      </div>
+      {{- end -}}
 
       <div class="publication-years">
         {{- range $years -}}
           {{- $year := . -}}
-          <section class="publication-year" data-publication-year="{{ $year }}" aria-labelledby="year-{{ $year }}">
+          {{- $yearPublications := where $published "Params.year" $year -}}
+          {{- $journals := where $yearPublications "Params.publicationType" "journal" -}}
+          {{- $conferences := where $yearPublications "Params.publicationType" "conference" -}}
+          {{- $otherPublications := slice -}}
+          {{- range $yearPublications -}}
+            {{- if and (ne .Params.publicationType "journal") (ne .Params.publicationType "conference") -}}
+              {{- $otherPublications = $otherPublications | append . -}}
+            {{- end -}}
+          {{- end -}}
+          <section class="publication-year publication-section" data-publication-group="year-{{ $year }}" data-publication-year="{{ $year }}" aria-labelledby="year-{{ $year }}">
             <h2 id="year-{{ $year }}">{{ $year }}</h2>
-            <ol class="publication-list">
-              {{- range where $publications "Params.year" $year -}}
-                <li data-publication-item data-year="{{ .Params.year }}" data-type="{{ .Params.publicationType }}" data-research-areas="{{ delimit .Params.researchAreas " " }}">
-                  {{ partial "publication/item.html" . }}
-                </li>
+            <div class="publication-year__groups">
+              {{- with $journals -}}
+                <section class="publication-venue-group publication-venue" data-publication-group="{{ $year }}-journal" aria-labelledby="{{ $year }}-journal-heading">
+                  <h3 id="{{ $year }}-journal-heading">{{ i18n "publication_group_journal" }}</h3>
+                  <ul class="publication-list">
+                    {{- range . -}}
+                      <li data-publication-item data-year="{{ .Params.year }}" data-type="{{ .Params.publicationType }}" data-research-areas="{{ delimit .Params.researchAreas " " }}">
+                        {{ partial "publication/directory-item.html" . }}
+                      </li>
+                    {{- end -}}
+                  </ul>
+                </section>
               {{- end -}}
-            </ol>
+              {{- with $conferences -}}
+                <section class="publication-venue-group publication-venue" data-publication-group="{{ $year }}-conference" aria-labelledby="{{ $year }}-conference-heading">
+                  <h3 id="{{ $year }}-conference-heading">{{ i18n "publication_group_conference" }}</h3>
+                  <ul class="publication-list">
+                    {{- range . -}}
+                      <li data-publication-item data-year="{{ .Params.year }}" data-type="{{ .Params.publicationType }}" data-research-areas="{{ delimit .Params.researchAreas " " }}">
+                        {{ partial "publication/directory-item.html" . }}
+                      </li>
+                    {{- end -}}
+                  </ul>
+                </section>
+              {{- end -}}
+              {{- with $otherPublications -}}
+                <section class="publication-venue-group publication-venue" data-publication-group="{{ $year }}-other" aria-labelledby="{{ $year }}-other-heading">
+                  <h3 id="{{ $year }}-other-heading">{{ i18n "publication_group_other" }}</h3>
+                  <ul class="publication-list">
+                    {{- range . -}}
+                      <li data-publication-item data-year="{{ .Params.year }}" data-type="{{ .Params.publicationType }}" data-research-areas="{{ delimit .Params.researchAreas " " }}">
+                        {{ partial "publication/directory-item.html" . }}
+                      </li>
+                    {{- end -}}
+                  </ul>
+                </section>
+              {{- end -}}
+            </div>
           </section>
         {{- end -}}
       </div>

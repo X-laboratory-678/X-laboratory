@@ -1,33 +1,41 @@
 :root {
   color-scheme: light;
-  --color-background: #fbfcfd;
-  --color-surface: #f2f5f7;
-  --color-surface-strong: #e7edf0;
-  --color-foreground: #172126;
-  --color-muted: #55646c;
-  --color-border: #ccd6da;
-  --color-accent: #145d65;
-  --color-accent-strong: #0d454c;
-  --color-accent-soft: #dcebed;
+  --color-background: #ffffff;
+  --color-surface: #f5f6f7;
+  --color-surface-strong: #e9ecef;
+  --color-foreground: #000000;
+  --color-muted: #4b4b4b;
+  --color-border: #e5e7eb;
+  --color-border-strong: #adb5bd;
+  --color-accent: #0055bb;
+  --color-accent-strong: #00458f;
+  --color-accent-soft: #f8f9fa;
+  --color-visited: #8440f1;
+  --color-notice-info: #edf7ff;
+  --color-notice-info-border: #4da3ff;
+  --color-notice-warning: #fff0f0;
+  --color-notice-warning-border: #ff5b61;
   --color-on-accent: #ffffff;
   --color-focus: #9a4f00;
-  --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  --font-serif: Georgia, "Times New Roman", serif;
+  --font-sans: "Oxygen Mono", "Roboto Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  --font-serif: "Roboto", system-ui, sans-serif;
   --font-size-sm: 0.875rem;
   --font-size-base: 1rem;
   --font-size-lg: 1.125rem;
   --font-size-xl: clamp(1.5rem, 3vw, 2rem);
-  --font-size-2xl: clamp(2.3rem, 7vw, 4.75rem);
+  --leading-body: 1.6;
   --leading-tight: 1.1;
-  --leading-body: 1.65;
   --content-narrow: 45rem;
-  --content-max: 72rem;
-  --content-wide: 82rem;
-  --gutter: clamp(1rem, 3vw, 2rem);
+  /* Hugo Book's stock shell caps the centered site at 80rem. */
+  --content-max: 80rem;
+  --content-wide: 80rem;
+  --sidebar-width: 16rem;
+  --page-padding: 1rem;
   --space-1: 0.25rem;
   --space-2: 0.5rem;
   --space-3: 0.75rem;
   --space-4: 1rem;
+  --space-5: 1.25rem;
   --space-6: 1.5rem;
   --space-8: 2rem;
   --space-10: 2.5rem;
@@ -37,5 +45,3 @@
   --radius-sm: 0.25rem;
   --radius-md: 0.5rem;
 }
-
-/* Breakpoint strategy: mobile first, with structural changes from 48rem. */

@@ -2,6 +2,9 @@
 title: X-Laboratory
 description: Research at the intersection of artificial intelligence and modern power systems.
 translationKey: home
+notices:
+  recruitment: We welcome research inquiries from students and collaborators interested in artificial intelligence, smart grids, and data-driven energy systems. Please use the contact page for verified opportunities.
+  update: The laboratory website is being assembled from verified laboratory records. Sections without published records are marked as placeholders and will be updated as information is confirmed.
 hero:
   eyebrow: Research Laboratory
   title: Intelligence for modern power systems.

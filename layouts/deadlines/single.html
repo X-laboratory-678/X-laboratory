@@ -1,0 +1,83 @@
+{{ define "main" }}
+  {{- $deadlinePages := where site.RegularPages "Section" "deadlines" -}}
+  {{- $items := slice -}}
+  {{- range $deadlinePages -}}
+    {{- if ne .File.Path $.File.Path -}}
+      {{- if or (not hugo.IsProduction) (not .Draft) -}}
+        {{- $items = $items | append . -}}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+  {{- $upcoming := slice -}}
+  {{- $archive := slice -}}
+  {{- $filterIDs := slice -}}
+  {{- $today := now -}}
+  {{- range $items -}}
+    {{- $status := lower (printf "%v" (.Params.status | default "")) -}}
+    {{- $isArchive := or (in (slice "archived" "past" "closed") $status) (eq .Params.archive true) -}}
+    {{- with .Params.deadline -}}
+      {{- if lt (time.AsTime .).Unix $today.Unix -}}{{- $isArchive = true -}}{{- end -}}
+    {{- end -}}
+    {{- if $isArchive -}}
+      {{- $archive = $archive | append . -}}
+    {{- else -}}
+      {{- $upcoming = $upcoming | append . -}}
+      {{- range .Params.categories -}}{{- $filterIDs = $filterIDs | append (printf "category-%s" .) -}}{{- end -}}
+      {{- range .Params.tags -}}{{- $filterIDs = $filterIDs | append (printf "tag-%s" .) -}}{{- end -}}
+    {{- end -}}
+  {{- end -}}
+  {{- $filterIDs = uniq $filterIDs -}}
+  <article class="misc-document deadlines-page" data-deadlines>
+    <header class="misc-document__header section">
+      <div class="container stack">
+        <h1>{{ .Title }}</h1>
+        <div class="prose">{{ .Content }}</div>
+      </div>
+    </header>
+
+    <section class="misc-document__body deadline-board section" aria-labelledby="deadlines-upcoming-heading">
+      <div class="container stack">
+        <section class="misc-document__section deadline-section deadline-section--upcoming">
+          <h2 id="deadlines-upcoming-heading">{{ i18n "deadlines_upcoming" }}</h2>
+          <div class="deadline-filters" aria-label="{{ i18n "deadlines_filters" }}">
+            <button class="deadline-filter is-active" type="button" data-deadline-filter="all" aria-pressed="true">{{ i18n "deadlines_all" }}</button>
+            {{- range $filterID := $filterIDs -}}
+              {{- $labelID := replaceRE `^(category|tag)-` "" $filterID -}}
+              {{- $label := $labelID -}}
+              {{- if hasPrefix $filterID "category-" -}}
+                {{- range hugo.Data.conference_areas -}}{{- if eq .id $labelID -}}{{- if eq site.Language.Lang "zh" }}{{- $label = .labelZh -}}{{- else }}{{- $label = .label -}}{{- end -}}{{- end -}}{{- end -}}
+              {{- end -}}
+              <button class="deadline-filter" type="button" data-deadline-filter="{{ $filterID }}" aria-pressed="false">{{ $label }}</button>
+            {{- end -}}
+          </div>
+
+          <section class="deadline-group deadline-group--ahead" aria-labelledby="deadlines-ahead-heading">
+            <h3 id="deadlines-ahead-heading">{{ i18n "deadlines_conferences_ahead" }}</h3>
+            {{- if $upcoming -}}
+              <div class="deadline-list deadline-grid">
+                {{- range sort $upcoming "Params.deadline" "asc" -}}{{ partial "deadline/item.html" . }}{{ end -}}
+              </div>
+              <p class="deadline-empty" data-deadline-filter-empty hidden>{{ i18n "no_matching_deadlines" }}</p>
+            {{- else -}}
+              <p class="deadline-empty" data-deadline-empty>{{ i18n "no_upcoming_deadlines" }}</p>
+            {{- end -}}
+          </section>
+        </section>
+
+        <section class="misc-document__section deadline-section deadline-archive-section" aria-labelledby="deadlines-archive-heading">
+          <h2 id="deadlines-archive-heading">{{ i18n "deadlines_archive" }}</h2>
+          <details class="deadline-archive" data-deadline-archive>
+            <summary data-show-label="{{ i18n "deadlines_show_archive" }}" data-hide-label="{{ i18n "deadlines_hide_archive" }}">{{ i18n "deadlines_show_archive" }}</summary>
+            {{- if $archive -}}
+              <div class="deadline-list deadline-grid">
+                {{- range sort $archive "Params.deadline" "desc" -}}{{ partial "deadline/item.html" . }}{{ end -}}
+              </div>
+            {{- else -}}
+              <p class="deadline-empty">{{ i18n "no_archived_deadlines" }}</p>
+            {{- end -}}
+          </details>
+        </section>
+      </div>
+    </section>
+  </article>
+{{ end }}

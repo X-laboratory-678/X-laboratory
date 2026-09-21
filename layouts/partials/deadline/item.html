@@ -1,0 +1,22 @@
+{{- $page := . -}}
+{{- $filters := slice -}}
+{{- range $page.Params.categories -}}{{- $filters = $filters | append (printf "category-%s" .) -}}{{- end -}}
+{{- range $page.Params.tags -}}{{- $filters = $filters | append (printf "tag-%s" .) -}}{{- end -}}
+<article class="deadline-entry" data-deadline-item data-deadline-filters="{{ delimit (uniq $filters) " " }}"{{ with $page.Params.deadline }} data-deadline-date="{{ time.AsTime . | time.Format "2006-01-02T15:04:05Z07:00" }}"{{ end }}>
+  <header class="deadline-entry__header">
+    <h4>{{ $page.Title }}{{ with $page.Params.acronym }} <span class="deadline-entry__acronym">({{ . }})</span>{{ end }}</h4>
+  </header>
+  <dl class="deadline-entry__facts">
+    {{- with $page.Params.deadline -}}<div><dt>{{ i18n "deadline_date" }}</dt><dd><time datetime="{{ time.AsTime . | time.Format "2006-01-02" }}">{{ time.AsTime . | time.Format ":date_long" }}</time></dd></div>{{- end -}}
+    {{- with $page.Params.conferenceDate -}}<div><dt>{{ i18n "conference_date" }}</dt><dd><time datetime="{{ time.AsTime . | time.Format "2006-01-02" }}">{{ time.AsTime . | time.Format ":date_long" }}</time></dd></div>{{- end -}}
+    {{- with $page.Params.location -}}<div><dt>{{ i18n "deadline_location" }}</dt><dd>{{ . }}</dd></div>{{- end -}}
+  </dl>
+  {{- with $page.Params.deadline -}}<span class="deadline-entry__countdown" data-deadline-countdown aria-live="polite"></span>{{- end -}}
+  {{- if or $page.Params.categories $page.Params.tags -}}
+    <ul class="deadline-entry__taxonomy" aria-label="{{ i18n "deadline_categories_and_tags" }}">
+      {{- range $page.Params.categories -}}<li>{{ . }}</li>{{- end -}}
+      {{- range $page.Params.tags -}}<li>{{ . }}</li>{{- end -}}
+    </ul>
+  {{- end -}}
+  {{- with $page.Params.link -}}<p class="deadline-entry__link"><a href="{{ . }}" rel="external">{{ i18n "deadline_link" }}</a></p>{{- end -}}
+</article>

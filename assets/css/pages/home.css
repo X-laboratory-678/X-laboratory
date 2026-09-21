@@ -1,100 +1,246 @@
-.home-hero {
-  overflow: hidden;
-  padding-block: var(--space-16);
+.cola-home {
+  width: min(100%, var(--content-wide));
+  max-width: 100%;
+  margin-inline: auto;
+  padding-block: 0 var(--space-8);
 }
 
-.home-hero__layout {
-  display: grid;
-  align-items: center;
-  gap: var(--space-12);
+.cola-home__intro {
+  max-width: 70rem;
 }
 
-.home-hero__copy {
-  max-width: 48rem;
+.cola-home__intro h1 {
+  margin: 0 0 var(--space-4);
+  font-size: var(--font-size-xl);
+  line-height: 1;
+  letter-spacing: 0.02em;
 }
 
-.home-hero h1,
-.home-hero__description {
+.cola-home__intro p {
+  max-width: 70rem;
+  margin: 0;
+  font-size: var(--font-size-base);
+  line-height: var(--leading-body);
+}
+
+.cola-notice {
+  margin-top: var(--space-4);
+  padding: var(--space-3) var(--space-4);
+  border-left: 0.25rem solid;
+  border-radius: var(--radius-sm);
+  line-height: 1.5;
+}
+
+.cola-notice p {
   margin: 0;
 }
 
-.home-hero__description {
-  max-width: 42rem;
-  color: var(--color-muted);
-  font-size: clamp(1.125rem, 2.5vw, 1.35rem);
+.cola-notice--info {
+  border-color: var(--color-notice-info-border);
+  background: var(--color-notice-info);
 }
 
-.home-hero__visual {
-  display: grid;
-  min-height: 17rem;
-  grid-template-columns: repeat(3, 1fr);
+.cola-notice--warning {
+  border-color: var(--color-notice-warning-border);
+  background: var(--color-notice-warning);
+}
+
+.cola-news,
+.cola-contact {
+  margin-top: var(--space-8);
+}
+
+.cola-news h2,
+.cola-contact h2 {
+  display: flex;
+  align-items: center;
   gap: var(--space-3);
-  align-items: end;
-  padding: var(--space-8);
+  margin: 0 0 var(--space-3);
+  font-size: 1.5rem;
+  line-height: 1.25;
+}
+
+.cola-section-icon {
+  width: 1.35rem;
+  height: 1.35rem;
+  flex: 0 0 auto;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.8;
+}
+
+.cola-news__year {
+  font-size: 0.82em;
+}
+
+.cola-news__tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0;
   border: 1px solid var(--color-border);
-  background: var(--color-surface);
+  border-bottom: 0;
+  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
 }
 
-.home-hero__visual span {
-  display: block;
-  background: var(--color-accent-soft);
+.cola-news__tab {
+  min-width: 4.375rem;
+  padding: var(--space-2) var(--space-4);
+  border-bottom: 2px solid transparent;
+  border-radius: 0;
+  background: var(--color-background);
+  color: var(--color-foreground);
+  cursor: pointer;
+  line-height: 1.25;
 }
 
-.home-hero__visual span:nth-child(1) { height: 46%; }
-.home-hero__visual span:nth-child(2) { height: 82%; background: var(--color-accent); }
-.home-hero__visual span:nth-child(3) { height: 63%; background: var(--color-surface-strong); }
-
-.research-grid {
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
+.cola-news__tab:hover,
+.cola-news__tab.is-selected {
+  border-bottom-color: var(--color-accent);
+  color: var(--color-accent-strong);
 }
 
-.research-area {
-  padding-top: var(--space-4);
+.cola-news__panel {
+  border: 1px solid var(--color-border);
+  border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+}
+
+.cola-news__item {
+  display: grid;
+  grid-template-columns: 0.4rem minmax(0, 1fr);
+  gap: var(--space-3);
+  padding: var(--space-4);
+}
+
+.cola-news__item + .cola-news__item {
   border-top: 1px solid var(--color-border);
 }
 
-.research-area__index {
-  display: block;
-  margin-bottom: var(--space-8);
-  color: var(--color-accent);
-  font-size: var(--font-size-sm);
-  font-weight: 700;
+.cola-news__item[hidden] {
+  display: none;
 }
 
-.research-area h3 {
+.cola-news__bullet {
+  width: 0.4rem;
+  height: 0.4rem;
+  margin-top: 0.55rem;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.cola-news__item h3,
+.cola-news__item p,
+.cola-news__item time {
   margin: 0;
 }
 
-.research-area p {
-  margin: var(--space-3) 0 0;
+.cola-news__item h3 {
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+.cola-news__item p {
+  margin-top: var(--space-2);
+  line-height: 1.55;
+}
+
+.cola-news__item time {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-top: var(--space-2);
+  color: var(--color-muted);
+  font-size: 0.9rem;
+}
+
+.cola-inline-icon {
+  width: 1rem;
+  height: 1rem;
+  flex: 0 0 auto;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.8;
+}
+
+.cola-news__archive {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin: var(--space-4) 0 0;
+}
+
+.cola-empty {
+  padding: var(--space-4);
+  border: 1px solid var(--color-border);
   color: var(--color-muted);
 }
 
-.join-callout {
+.cola-contact__grid {
   display: grid;
   gap: var(--space-8);
-  padding: var(--space-8);
-  border-left: 0.25rem solid var(--color-accent);
-  background: var(--color-surface);
+  min-width: 0;
 }
 
-.join-callout h2,
-.join-callout p {
-  margin: 0;
+.cola-contact__grid > * {
+  min-width: 0;
 }
 
-@media (min-width: 48rem) {
-  .home-hero {
-    padding-block: var(--space-20);
+.cola-contact__details p {
+  margin: 0 0 var(--space-3);
+}
+
+.cola-contact__address {
+  white-space: pre-line;
+}
+
+.cola-contact__details ul {
+  margin: var(--space-4) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.cola-contact__details li {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+}
+
+.cola-contact__details li + li {
+  margin-top: var(--space-2);
+}
+
+.cola-contact__details li > span[aria-hidden="true"] {
+  width: 1rem;
+  flex: 0 0 1rem;
+  text-align: center;
+}
+
+.cola-contact__map {
+  min-width: 0;
+}
+
+.cola-contact .contact-map {
+  width: 100%;
+  height: 15.5rem;
+}
+
+@media (min-width: 56rem) {
+  .cola-contact__grid {
+    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+    align-items: start;
+  }
+}
+
+@media (max-width: 55.99rem) {
+  .cola-home__intro h1 {
+    font-size: var(--font-size-xl);
   }
 
-  .home-hero__layout {
-    grid-template-columns: minmax(0, 1.6fr) minmax(16rem, 0.8fr);
-  }
-
-  .join-callout {
-    grid-template-columns: minmax(0, 1fr) auto;
-    align-items: center;
-    padding: var(--space-12);
+  .cola-contact__grid {
+    gap: var(--space-6);
   }
 }

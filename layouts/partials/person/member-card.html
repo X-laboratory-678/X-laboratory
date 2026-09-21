@@ -1,0 +1,31 @@
+{{- $page := .page -}}
+{{- $variant := .variant | default "standard" -}}
+<article class="member-card member-card--{{ $variant }}" data-member-category="{{ $page.Params.category }}">
+  <div class="member-card__portrait">
+    {{ partial "person/portrait.html" (dict "page" $page "variant" "member") }}
+  </div>
+
+  <div class="member-card__content">
+    <h3 class="member-card__name"><a href="{{ $page.RelPermalink }}">{{ $page.Title }}</a></h3>
+    {{- with $page.Params.role }}<p class="member-card__role">{{ . }}</p>{{ end -}}
+    {{- if or $page.Params.joined $page.Params.left }}
+      <p class="member-card__period">
+        {{- with $page.Params.joined }}{{ . }}{{ end -}}
+        {{- if or $page.Params.joined $page.Params.left }}–{{ end -}}
+        {{- with $page.Params.left }}{{ . }}{{ else }}{{ i18n "person_present" }}{{ end -}}
+      </p>
+    {{- end }}
+    {{- with $page.Params.researchInterests }}
+      <p class="member-card__interests">
+        <span class="member-card__label">{{ i18n "person_research_interests" }}:</span>
+        <span>{{ delimit (first 3 .) ", " }}</span>
+      </p>
+    {{- end }}
+  </div>
+
+  {{- if or $page.Params.email $page.Params.homepage $page.Params.googleScholar -}}
+    <div class="member-card__links">
+      {{ partial "person/links.html" (dict "page" $page "compact" true) }}
+    </div>
+  {{- end }}
+</article>

@@ -3,28 +3,27 @@
   {{- if hugo.IsProduction }}{{ $pages = where $pages "Draft" false }}{{ end -}}
   {{- $active := where $pages "Params.status" "active" -}}
   {{- $completed := where $pages "Params.status" "in" (slice "completed" "archived") -}}
-  <header class="directory-header section">
+  <header class="research-directory-header section">
     <div class="container stack">
-      <p class="eyebrow">{{ i18n "nav_grants" }}</p>
       <h1>{{ .Title }}</h1>
       <div class="prose">{{ .Content }}</div>
     </div>
   </header>
-  <div class="record-directory section">
+  <div class="research-record-directory grants-board section">
     <div class="container stack">
       <section aria-labelledby="active-grants-heading">
-        <div class="record-directory__heading"><h2 id="active-grants-heading">{{ i18n "active_grants" }}</h2><span>{{ len $active }}</span></div>
+        <div class="research-record-section__heading"><h2 id="active-grants-heading">{{ i18n "active_grants" }}</h2><span>{{ len $active }}</span></div>
         {{- if $active }}
-          <div class="record-list">{{ range sort $active "Params.startYear" "desc" }}{{ partial "grant/item.html" . }}{{ end }}</div>
+          <ol class="research-record-list grant-list">{{ range sort $active "Params.startYear" "desc" }}<li>{{ partial "grant/directory-item.html" . }}</li>{{ end }}</ol>
         {{- else }}
-          <p class="empty-state">{{ i18n "no_active_grants" }}</p>
+          <p class="research-empty">{{ i18n "no_active_grants" }}</p>
         {{- end }}
       </section>
       {{- if $completed }}
-        <details class="record-archive">
-          <summary>{{ i18n "completed_grants" }} <span>({{ len $completed }})</span></summary>
-          <div class="record-list">{{ range sort $completed "Params.endYear" "desc" }}{{ partial "grant/item.html" . }}{{ end }}</div>
-        </details>
+        <section class="research-record-section" aria-labelledby="completed-grants-heading">
+          <div class="research-record-section__heading"><h2 id="completed-grants-heading">{{ i18n "completed_grants" }}</h2><span>{{ len $completed }}</span></div>
+          <ol class="research-record-list grant-list">{{ range sort $completed "Params.endYear" "desc" }}<li>{{ partial "grant/directory-item.html" . }}</li>{{ end }}</ol>
+        </section>
       {{- end }}
     </div>
   </div>

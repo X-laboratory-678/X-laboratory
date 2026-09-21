@@ -1,0 +1,17 @@
+{{- $page := . -}}
+<article class="research-record grant-entry">
+  <p class="research-record__meta">
+    {{- i18n (printf "grant_status_%s" $page.Params.status) -}}
+    {{- with $page.Params.startYear }}<span aria-hidden="true"> · </span>{{ . }}{{ end -}}
+    {{- with $page.Params.endYear }}<span aria-hidden="true">–</span>{{ . }}{{ end -}}
+  </p>
+  <h3><a href="{{ $page.RelPermalink }}">{{ $page.Title }}</a></h3>
+  {{- with $page.Params.summary }}<p class="research-record__summary">{{ . }}</p>{{ end -}}
+  <dl class="research-record__facts">
+    {{- with $page.Params.funder }}<div><dt>{{ i18n "grant_funder" }}</dt><dd>{{ . }}</dd></div>{{ end -}}
+    {{- with $page.Params.program }}<div><dt>{{ i18n "grant_program" }}</dt><dd>{{ . }}</dd></div>{{ end -}}
+    {{- with $page.Params.role }}<div><dt>{{ i18n "grant_role" }}</dt><dd>{{ . }}</dd></div>{{ end -}}
+    {{- with $page.Params.amount }}<div><dt>{{ i18n "grant_amount" }}</dt><dd>{{ . }}{{ with $page.Params.currency }} {{ . }}{{ end }}</dd></div>{{ end -}}
+  </dl>
+  <a class="text-link" href="{{ $page.RelPermalink }}">{{ i18n "view_grant" }}</a>
+</article>

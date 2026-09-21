@@ -2,6 +2,30 @@
   translation: 跳到主要内容
 - id: primary_navigation
   translation: 主导航
+- id: search_label
+  translation: 搜索站点内容
+- id: search_placeholder
+  translation: 搜索
+- id: home_notice_label
+  translation: 科研咨询
+- id: home_update_label
+  translation: 网站更新
+- id: home_recent_news
+  translation: 最新动态
+- id: home_welcome
+  translation: 欢迎来到{{ .Lab }}实验室
+- id: home_year
+  translation: 年
+- id: home_news_months
+  translation: 按月份查看动态
+- id: home_news_archive_intro
+  translation: 更早的动态请查看
+- id: home_news_archive
+  translation: 动态归档
+- id: nav_misc
+  translation: 其他
+- id: breadcrumbs
+  translation: 面包屑导航
 - id: submenu_toggle
   translation: "展开或收起{{ .Name }}子菜单"
 - id: nav_home
@@ -9,7 +33,9 @@
 - id: nav_people
   translation: 成员
 - id: nav_members
-  translation: 团队成员
+  translation: 成员
+- id: nav_vacancies
+  translation: 招募岗位
 - id: nav_alumni
   translation: 校友
 - id: nav_opportunities
@@ -18,6 +44,8 @@
   translation: 研究
 - id: nav_research-areas
   translation: 研究方向
+- id: nav_landscape-analysis
+  translation: 领域分析
 - id: nav_grants
   translation: 科研项目资助
 - id: nav_research-resources
@@ -54,6 +82,70 @@
   translation: 论文
 - id: nav_projects
   translation: 项目
+- id: nav_emoc
+  translation: EMOC
+- id: nav_x-laboratory-seminar-series
+  translation: X-Laboratory 学术报告系列
+- id: events_upcoming_current
+  translation: 即将举行 / 当前活动
+- id: events_agenda_schedule
+  translation: 议程 / 日程
+- id: events_archive
+  translation: 活动归档
+- id: no_upcoming_events
+  translation: 当前暂无已核实并公开发布的近期活动。
+- id: no_scheduled_events
+  translation: 当前暂无已核实并公开发布的活动日程。
+- id: no_archived_events
+  translation: 当前暂无已归档的活动记录。
+- id: event_speaker
+  translation: 报告人
+- id: event_affiliation
+  translation: 所属机构
+- id: event_materials
+  translation: 活动材料
+- id: event_paper
+  translation: 论文
+- id: event_slides
+  translation: 幻灯片
+- id: event_video
+  translation: 视频
+- id: event_website
+  translation: 网站
+- id: event_link
+  translation: 链接
+- id: nav_deadlines
+  translation: 截止日期
+- id: deadlines_upcoming
+  translation: 即将到来
+- id: deadlines_filters
+  translation: 按分类或标签筛选截止日期
+- id: deadlines_all
+  translation: 全部
+- id: deadlines_conferences_ahead
+  translation: 即将举行的会议
+- id: deadlines_archive
+  translation: 归档
+- id: deadlines_show_archive
+  translation: 显示归档
+- id: deadlines_hide_archive
+  translation: 隐藏归档
+- id: no_upcoming_deadlines
+  translation: 当前暂无已核实并公开发布的近期会议截止日期。
+- id: no_matching_deadlines
+  translation: 没有符合当前筛选条件的已发布截止日期。
+- id: no_archived_deadlines
+  translation: 当前暂无已核实并公开发布的历史会议截止日期。
+- id: deadline_date
+  translation: 截止日期
+- id: conference_date
+  translation: 会议日期
+- id: deadline_location
+  translation: 地点
+- id: deadline_link
+  translation: 官方链接
+- id: deadline_categories_and_tags
+  translation: 截止日期分类与标签
 - id: nav_news
   translation: 动态
 - id: nav_join
@@ -70,6 +162,10 @@
   translation: 页脚导航
 - id: language_switch_label
   translation: English
+- id: languages_label
+  translation: 语言
+- id: expand_label
+  translation: 展开
 - id: publication_links
   translation: 论文链接
 - id: paper
@@ -146,10 +242,40 @@
   translation: 学位论文
 - id: publication_type_other
   translation: 其他
+- id: publication_group_to_appear
+  translation: 即将发表
+- id: publication_group_in_press
+  translation: 出版中
+- id: publication_group_technical_report
+  translation: 技术报告
+- id: publication_group_journal
+  translation: 期刊
+- id: publication_group_conference
+  translation: 会议
+- id: publication_group_other
+  translation: 其他成果
+- id: abstract_short
+  translation: 摘要
+- id: supplementary_short
+  translation: 补充材料
+- id: bibtex_short
+  translation: Bib
 - id: back_to_people
-  translation: 团队
+  translation: 成员
+- id: people_group_research_staff
+  translation: 科研人员
+- id: people_member_one
+  translation: 名成员
+- id: people_member_many
+  translation: 名成员
+- id: people_no_published_members
+  translation: 暂无已核实成员信息。
 - id: person_research_interests
   translation: 研究方向
+- id: person_present
+  translation: 至今
+- id: person_role
+  translation: 身份
 - id: person_biography
   translation: 个人简介
 - id: person_publications
@@ -200,6 +326,22 @@
   translation: 外部资源
 - id: project_directory
   translation: 项目目录
+- id: active_projects
+  translation: 在研项目
+- id: completed_projects
+  translation: 已完成项目
+- id: other_projects
+  translation: 其他项目
+- id: no_projects
+  translation: 当前暂无已公开且经过核实的项目。
+- id: project_status_planned
+  translation: 计划中
+- id: project_status_active
+  translation: 进行中
+- id: project_status_completed
+  translation: 已完成
+- id: project_status_archived
+  translation: 已归档
 - id: back_to_projects
   translation: 项目列表
 - id: view_project
@@ -404,3 +546,17 @@
   translation: 查看机会详情
 - id: back_to_opportunities
   translation: 招募机会
+- id: materials_categories_and_tags
+  translation: 分类与标签
+- id: materials_categories
+  translation: 分类
+- id: materials_tags
+  translation: 标签
+- id: materials_list
+  translation: 资料列表
+- id: no_material_taxonomy
+  translation: 当前暂无已核实并公开发布的资料分类或标签。
+- id: no_materials
+  translation: 当前暂无已核实并公开发布的资料。
+- id: material_link
+  translation: 打开资料

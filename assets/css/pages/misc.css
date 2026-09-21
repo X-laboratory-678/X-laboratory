@@ -1,0 +1,238 @@
+.misc-document__header {
+  padding-bottom: var(--space-10);
+}
+
+.misc-document__header .container,
+.misc-document__body .container {
+  max-width: var(--content-max);
+}
+
+.misc-document__header h1,
+.misc-document__header .prose > :last-child,
+.misc-document__section h2,
+.misc-document__section h3,
+.deadline-entry h4,
+.material-entry h3,
+.deadline-entry p,
+.material-entry p,
+.deadline-entry__facts,
+.material-entry__taxonomy,
+.deadline-entry__taxonomy {
+  margin: 0;
+}
+
+.misc-document__header h1 {
+  font-size: 1.5rem;
+}
+
+.misc-document__header .prose {
+  max-width: 44rem;
+  color: var(--color-muted);
+}
+
+.misc-document__body {
+  padding-top: 0;
+}
+
+.misc-document__section {
+  display: grid;
+  gap: var(--space-6);
+  padding-top: var(--space-8);
+  border-top: 1px solid var(--color-border);
+}
+
+.misc-document__section h2 {
+  font-size: var(--font-size-xl);
+}
+
+.misc-document__section h3 {
+  font-size: var(--font-size-lg);
+}
+
+.deadline-filters,
+.taxonomy-list,
+.deadline-entry__taxonomy,
+.material-entry__taxonomy {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.deadline-filter,
+.deadline-entry__taxonomy li,
+.material-entry__taxonomy li,
+.taxonomy-list li {
+  padding: var(--space-1) var(--space-3);
+  border: 1px solid var(--color-border-strong);
+  border-radius: 999px;
+  background: var(--color-background);
+  color: var(--color-foreground);
+  font-size: var(--font-size-sm);
+}
+
+.deadline-filter {
+  cursor: pointer;
+}
+
+.deadline-filter:hover,
+.deadline-filter:focus-visible,
+.deadline-filter.is-active {
+  border-color: var(--color-accent);
+  background: var(--color-accent-soft);
+  color: var(--color-accent-strong);
+}
+
+.deadline-group {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.deadline-list,
+.material-list {
+  display: grid;
+  gap: 0;
+  border-top: 1px solid var(--color-border);
+}
+
+.deadline-entry,
+.material-entry {
+  display: grid;
+  gap: var(--space-3);
+  padding-block: var(--space-6);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.deadline-grid {
+  display: grid;
+  gap: var(--space-4);
+  border-top: 0;
+}
+
+.deadline-grid .deadline-entry {
+  min-width: 0;
+  padding: var(--space-4);
+  border: 1px solid var(--color-border);
+  border-left: 0.3rem solid var(--color-accent);
+  border-radius: var(--radius-sm);
+  background: var(--color-background);
+  box-shadow: 0 0.35rem 1rem rgb(0 0 0 / 6%);
+}
+
+.deadline-entry__header,
+.material-entry__header {
+  display: grid;
+  gap: var(--space-1);
+}
+
+.deadline-entry h4,
+.material-entry h3 {
+  font-size: var(--font-size-lg);
+  font-weight: 400;
+}
+
+.deadline-entry__acronym,
+.deadline-entry__facts,
+.material-entry__date {
+  color: var(--color-muted);
+  font-size: var(--font-size-sm);
+}
+
+.deadline-entry__countdown {
+  width: fit-content;
+  padding: var(--space-1) var(--space-2);
+  border: 1px solid var(--color-notice-warning-border);
+  border-radius: var(--radius-sm);
+  color: var(--color-notice-warning-border);
+  font-size: var(--font-size-sm);
+}
+
+.deadline-entry__facts {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.deadline-entry__facts > div {
+  display: grid;
+  grid-template-columns: minmax(8rem, 0.3fr) 1fr;
+  gap: var(--space-3);
+}
+
+.deadline-entry__facts dt {
+  color: var(--color-muted);
+}
+
+.deadline-entry__facts dd {
+  margin: 0;
+}
+
+.deadline-entry p.deadline-entry__link,
+.material-entry p.material-entry__link {
+  margin: var(--space-1) 0 0;
+}
+
+.deadline-archive {
+  border-top: 1px solid var(--color-border);
+}
+
+.deadline-archive summary {
+  width: fit-content;
+  padding-block: var(--space-4);
+  cursor: pointer;
+  color: var(--color-accent);
+}
+
+.deadline-archive summary:hover {
+  color: var(--color-accent-strong);
+}
+
+.deadline-empty,
+.misc-empty {
+  color: var(--color-muted);
+}
+
+.materials-taxonomy__groups {
+  display: grid;
+  gap: var(--space-6);
+}
+
+.materials-layout {
+  display: grid;
+  gap: var(--space-10);
+}
+
+.materials-taxonomy__groups > div {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.material-entry__summary {
+  color: var(--color-muted);
+}
+
+.book-post {
+  display: grid;
+  gap: var(--space-3);
+}
+
+@media (min-width: 56rem) {
+  .deadline-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 56rem) {
+  .materials-layout {
+    grid-template-columns: minmax(0, 1fr) minmax(12rem, 16rem);
+    align-items: start;
+  }
+}
+
+@media (max-width: 35rem) {
+  .deadline-entry__facts > div {
+    grid-template-columns: 1fr;
+    gap: var(--space-1);
+  }
+}

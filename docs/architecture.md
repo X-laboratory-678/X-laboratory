@@ -121,3 +121,19 @@ These decisions define the initial architecture. A future change that conflicts 
 **Reason:** A grant is not a project, an event is not news, and a downloadable resource is not a publication. Separate entities avoid duplicated facts and support reliable reverse aggregation.
 
 **Consequences:** Controlled values live in small YAML vocabularies. New production records require provenance, valid IDs, valid dates, resolved relationships, and matching invariant fields across translations. Missing facts remain in `docs/missing-information.md`, never public output.
+
+## ADR-016 — Use an Original Documentation-Style Site Shell
+
+**Decision:** Present the existing X-Laboratory content through a custom documentation-style shell: a persistent hierarchical sidebar on desktop, a compact sticky header and disclosure navigation on smaller screens, a central content column, and generated breadcrumbs on interior pages.
+
+**Reason:** The laboratory has a growing hierarchy of people, research, outputs, opportunities, and future resources. A documentation-style shell makes those relationships visible and supports direct, stable links without replacing Hugo's content architecture or adding a theme dependency.
+
+**Consequences:** Navigation remains sourced from Hugo menus and localized through `i18n/`. Current groups are expanded by default, all links remain available without JavaScript, and the mobile disclosure is a progressive enhancement. The shell, tokens, mark, typography, and component CSS are X-Laboratory-owned implementations; reference-site CSS, templates, branding, prose, and media are not copied.
+
+## ADR-017 — Expose Empty Top-Level Directories Without Inventing Records
+
+**Decision:** Publish bilingual top-level directories for Events, Resources, and Tools with factual empty states while keeping their record-level child destinations disabled until verified content exists.
+
+**Reason:** The documentation-style information architecture should make planned laboratory areas discoverable, but missing events, resources, software, datasets, benchmarks, and deadlines must not be represented by fabricated records or copied reference content.
+
+**Consequences:** The directories are stable, base-path-safe Hugo routes with localized explanatory copy. New records still require the relevant schema, provenance, permissions, and build validation before publication; the empty states can be replaced by real Page Bundles without changing the top-level URLs.

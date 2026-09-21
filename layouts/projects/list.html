@@ -1,21 +1,42 @@
 {{ define "main" }}
   {{- $pages := where .Pages "Draft" false -}}
-  {{- $pages = sort $pages "Title" "asc" -}}
-  {{- $pages = sort $pages "Params.endYear" "desc" -}}
   {{- $pages = sort $pages "Params.startYear" "desc" -}}
-  <header class="directory-header section">
+  {{- $active := where $pages "Params.status" "active" -}}
+  {{- $completed := where $pages "Params.status" "in" (slice "completed" "archived") -}}
+  {{- $other := slice -}}
+  {{- range $pages -}}
+    {{- if and (ne .Params.status "active") (not (in (slice "completed" "archived") .Params.status)) -}}
+      {{- $other = $other | append . -}}
+    {{- end -}}
+  {{- end -}}
+  <header class="research-directory-header section">
     <div class="container stack">
-      <p class="eyebrow">{{ i18n "nav_projects" }}</p>
       <h1>{{ .Title }}</h1>
       <div class="prose">{{ .Content }}</div>
     </div>
   </header>
-  <section class="project-directory section" aria-labelledby="project-directory-heading">
-    <div class="container">
+  <section class="research-record-directory project-board section" aria-labelledby="project-directory-heading">
+    <div class="container stack">
       <h2 id="project-directory-heading" class="visually-hidden">{{ i18n "project_directory" }}</h2>
-      <div class="grid project-directory__grid">
-        {{- range $pages }}{{ partial "cards/project.html" . }}{{ end -}}
-      </div>
+      {{- if $active }}
+        <section class="research-record-section" aria-labelledby="active-projects-heading">
+          <div class="research-record-section__heading"><h2 id="active-projects-heading">{{ i18n "active_projects" }}</h2><span>{{ len $active }}</span></div>
+          <div class="research-record-list project-grid">{{ range $active }}<div>{{ partial "project/directory-item.html" . }}</div>{{ end }}</div>
+        </section>
+      {{- end -}}
+      {{- if $completed }}
+        <section class="research-record-section" aria-labelledby="completed-projects-heading">
+          <div class="research-record-section__heading"><h2 id="completed-projects-heading">{{ i18n "completed_projects" }}</h2><span>{{ len $completed }}</span></div>
+          <div class="research-record-list project-grid">{{ range $completed }}<div>{{ partial "project/directory-item.html" . }}</div>{{ end }}</div>
+        </section>
+      {{- end -}}
+      {{- if $other }}
+        <section class="research-record-section" aria-labelledby="other-projects-heading">
+          <div class="research-record-section__heading"><h2 id="other-projects-heading">{{ i18n "other_projects" }}</h2><span>{{ len $other }}</span></div>
+          <div class="research-record-list project-grid">{{ range $other }}<div>{{ partial "project/directory-item.html" . }}</div>{{ end }}</div>
+        </section>
+      {{- end -}}
+      {{- if not $pages }}<p class="research-empty">{{ i18n "no_projects" }}</p>{{ end -}}
     </div>
   </section>
 {{ end }}

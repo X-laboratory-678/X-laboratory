@@ -1,40 +1,73 @@
 {{ define "main" }}
   {{- $people := where .Pages "Draft" false -}}
-  {{- $categories := sort hugo.Data.people_categories "weight" "asc" -}}
-  <div class="people-directory">
+  {{- $groups := slice
+    (dict "id" "faculty" "categories" (slice "pi" "faculty") "labelKey" "people_category_faculty" "variant" "faculty")
+    (dict "id" "research-staff" "categories" (slice "postdoc" "ra") "labelKey" "people_group_research_staff" "variant" "standard")
+    (dict "id" "phd-students" "categories" (slice "phd") "labelKey" "people_category_phd" "variant" "standard")
+    (dict "id" "alumni" "categories" (slice "alumni") "labelKey" "people_category_alumni" "variant" "alumni")
+  -}}
+
+  <div class="people-directory people-board members-board">
     <header class="people-directory__intro container stack">
-      <p class="eyebrow">{{ site.Params.labName }}</p>
       <h1>{{ .Title }}</h1>
       <div class="prose">{{ .Content }}</div>
     </header>
 
-    {{- range $categories -}}
-      {{- $category := . -}}
-      {{- $members := where $people "Params.category" $category.id -}}
+    {{- range $groups -}}
+      {{- $group := . -}}
+      {{- $members := slice -}}
+      {{- range $people -}}
+        {{- if in $group.categories .Params.category -}}
+          {{- $members = $members | append . -}}
+        {{- end -}}
+      {{- end -}}
       {{- $members = sort $members "Title" "asc" -}}
       {{- $members = sort $members "Params.weight" "asc" -}}
-      {{- with $members }}
-        <section class="people-group section" aria-labelledby="people-group-{{ $category.id }}">
-          <div class="container">
-            <header class="people-group__header">
-              <h2 id="people-group-{{ $category.id }}">{{ i18n (printf "people_category_%s" $category.id) | default $category.label }}</h2>
-              <span aria-hidden="true">{{ len . }}</span>
-            </header>
-            {{- if eq $category.id "alumni" }}
-              <div class="alumni-list">
-                {{- range . }}{{ partial "person/alumni-row.html" . }}{{ end }}
+      {{- $count := len $members -}}
+
+      <section class="people-group members-section members-section--{{ $group.id }}" aria-labelledby="people-group-{{ $group.id }}">
+        <div class="container">
+          <header class="people-group__header members-section__header">
+            <h2 id="people-group-{{ $group.id }}">
+              <svg class="people-group__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                {{- if eq $group.id "faculty" -}}
+                  <circle cx="12" cy="8" r="3" />
+                  <path d="M5 20c.7-4 2.9-6 7-6s6.3 2 7 6" />
+                {{- else if eq $group.id "research-staff" -}}
+                  <rect x="4" y="4" width="16" height="16" rx="1" />
+                  <path d="M8 8h8M8 12h5M8 16h8" />
+                {{- else if eq $group.id "phd-students" -}}
+                  <path d="m3 9 9-5 9 5-9 5-9-5Z" />
+                  <path d="M7 11v5c2.6 2 7.4 2 10 0v-5M21 9v6" />
+                {{- else -}}
+                  <path d="M4 5h16v14H4zM8 9h8M8 13h5" />
+                {{- end -}}
+              </svg>
+              <span>{{ i18n $group.labelKey }}</span>
+            </h2>
+            <span class="people-group__count members-section__count">
+              {{ $count }}
+              {{- if eq $count 1 }} {{ i18n "people_member_one" }}{{ else }} {{ i18n "people_member_many" }}{{ end -}}
+            </span>
+          </header>
+
+          {{- if $members -}}
+            {{- if eq $group.id "alumni" -}}
+              <div class="alumni-list members-alumni">
+                {{- range $members }}{{ partial "person/alumni-row.html" . }}{{ end -}}
               </div>
-            {{- else }}
-              <div class="people-grid{{ if eq $category.id "pi" }} people-grid--featured{{ end }}">
-                {{- range . }}
-                  {{- $variant := cond (eq $category.id "pi") "featured" "standard" -}}
-                  {{ partial "person/card.html" (dict "page" . "variant" $variant) }}
-                {{- end }}
+            {{- else -}}
+              <div class="people-grid members-grid{{ if eq $group.id "faculty" }} people-grid--single{{ end }}">
+                {{- range $members }}
+                  {{ partial "person/member-card.html" (dict "page" . "variant" $group.variant) }}
+                {{- end -}}
               </div>
-            {{- end }}
-          </div>
-        </section>
-      {{- end }}
-    {{- end }}
+            {{- end -}}
+          {{- else -}}
+            <p class="people-empty">{{ i18n "people_no_published_members" }}</p>
+          {{- end -}}
+        </div>
+      </section>
+    {{- end -}}
   </div>
 {{ end }}

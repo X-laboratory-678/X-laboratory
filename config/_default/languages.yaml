@@ -6,6 +6,7 @@ en:
     openGraphLocale: en_US
     universityName: Shanghai University of Electric Power
     departmentName: Division of Electrical Engineering
+    brandSubtitle: AI · Smart Grids · Data-Driven Systems
     description: Research at the intersection of artificial intelligence and modern power systems.
 
 # The language key controls the public /zh/ path. The locale controls standards-
@@ -18,4 +19,5 @@ zh:
     openGraphLocale: zh_CN
     universityName: 上海电力大学
     departmentName: 电气工程学部
+    brandSubtitle: 人工智能 · 智能电网 · 数据驱动系统
     description: 聚焦人工智能与新型电力系统交叉研究。

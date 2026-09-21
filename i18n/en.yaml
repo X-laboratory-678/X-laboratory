@@ -2,6 +2,30 @@
   translation: Skip to content
 - id: primary_navigation
   translation: Primary navigation
+- id: search_label
+  translation: Search this site
+- id: search_placeholder
+  translation: Search
+- id: home_notice_label
+  translation: Research inquiries
+- id: home_update_label
+  translation: Site update
+- id: home_recent_news
+  translation: Recent News
+- id: home_welcome
+  translation: Welcome to {{ .Lab }}
+- id: home_year
+  translation: Year
+- id: home_news_months
+  translation: News by month
+- id: home_news_archive_intro
+  translation: Previous news can be found in the
+- id: home_news_archive
+  translation: news archive
+- id: nav_misc
+  translation: Misc
+- id: breadcrumbs
+  translation: Breadcrumbs
 - id: submenu_toggle
   translation: "Toggle {{ .Name }} submenu"
 - id: nav_home
@@ -10,6 +34,8 @@
   translation: People
 - id: nav_members
   translation: Members
+- id: nav_vacancies
+  translation: Vacancies
 - id: nav_alumni
   translation: Alumni
 - id: nav_opportunities
@@ -18,6 +44,8 @@
   translation: Research
 - id: nav_research-areas
   translation: Research Areas
+- id: nav_landscape-analysis
+  translation: Landscape Analysis
 - id: nav_grants
   translation: Grants
 - id: nav_research-resources
@@ -54,6 +82,70 @@
   translation: Publications
 - id: nav_projects
   translation: Projects
+- id: nav_emoc
+  translation: EMOC
+- id: nav_x-laboratory-seminar-series
+  translation: X-Laboratory Seminar Series
+- id: events_upcoming_current
+  translation: Upcoming / Current
+- id: events_agenda_schedule
+  translation: Agenda / Schedule
+- id: events_archive
+  translation: Archive
+- id: no_upcoming_events
+  translation: No verified upcoming events are currently published.
+- id: no_scheduled_events
+  translation: No verified schedule is currently published.
+- id: no_archived_events
+  translation: No archived event records are currently published.
+- id: event_speaker
+  translation: Speaker
+- id: event_affiliation
+  translation: Affiliation
+- id: event_materials
+  translation: Event materials
+- id: event_paper
+  translation: Paper
+- id: event_slides
+  translation: Slides
+- id: event_video
+  translation: Video
+- id: event_website
+  translation: Website
+- id: event_link
+  translation: Link
+- id: nav_deadlines
+  translation: Deadlines
+- id: deadlines_upcoming
+  translation: Upcoming
+- id: deadlines_filters
+  translation: Filter deadlines by category or tag
+- id: deadlines_all
+  translation: All
+- id: deadlines_conferences_ahead
+  translation: Conferences Ahead
+- id: deadlines_archive
+  translation: Archive
+- id: deadlines_show_archive
+  translation: Show archive
+- id: deadlines_hide_archive
+  translation: Hide archive
+- id: no_upcoming_deadlines
+  translation: No verified upcoming conference deadlines are currently published.
+- id: no_matching_deadlines
+  translation: No published deadlines match this filter.
+- id: no_archived_deadlines
+  translation: No verified archived conference deadlines are currently published.
+- id: deadline_date
+  translation: Deadline
+- id: conference_date
+  translation: Conference date
+- id: deadline_location
+  translation: Location
+- id: deadline_link
+  translation: Official link
+- id: deadline_categories_and_tags
+  translation: Deadline categories and tags
 - id: nav_news
   translation: News
 - id: nav_join
@@ -70,6 +162,10 @@
   translation: Footer navigation
 - id: language_switch_label
   translation: 中文
+- id: languages_label
+  translation: Languages
+- id: expand_label
+  translation: Expand
 - id: publication_links
   translation: Publication links
 - id: paper
@@ -146,10 +242,40 @@
   translation: Thesis
 - id: publication_type_other
   translation: Other
+- id: publication_group_to_appear
+  translation: To appear
+- id: publication_group_in_press
+  translation: In press
+- id: publication_group_technical_report
+  translation: Technical Report
+- id: publication_group_journal
+  translation: Journal
+- id: publication_group_conference
+  translation: Conference
+- id: publication_group_other
+  translation: Other outputs
+- id: abstract_short
+  translation: Abs
+- id: supplementary_short
+  translation: Supp
+- id: bibtex_short
+  translation: Bib
 - id: back_to_people
-  translation: People
+  translation: Members
+- id: people_group_research_staff
+  translation: Research Staff
+- id: people_member_one
+  translation: member
+- id: people_member_many
+  translation: members
+- id: people_no_published_members
+  translation: No verified members are currently published.
 - id: person_research_interests
   translation: Research Interests
+- id: person_present
+  translation: present
+- id: person_role
+  translation: Role
 - id: person_biography
   translation: Biography
 - id: person_publications
@@ -200,6 +326,22 @@
   translation: External Resources
 - id: project_directory
   translation: Project directory
+- id: active_projects
+  translation: Active Projects
+- id: completed_projects
+  translation: Completed Projects
+- id: other_projects
+  translation: Other Projects
+- id: no_projects
+  translation: No verified projects are currently published.
+- id: project_status_planned
+  translation: Planned
+- id: project_status_active
+  translation: Active
+- id: project_status_completed
+  translation: Completed
+- id: project_status_archived
+  translation: Archived
 - id: back_to_projects
   translation: Projects
 - id: view_project
@@ -404,3 +546,17 @@
   translation: View opportunity
 - id: back_to_opportunities
   translation: Opportunities
+- id: materials_categories_and_tags
+  translation: Categories and tags
+- id: materials_categories
+  translation: Categories
+- id: materials_tags
+  translation: Tags
+- id: materials_list
+  translation: Materials
+- id: no_material_taxonomy
+  translation: No verified material categories or tags are currently published.
+- id: no_materials
+  translation: No verified materials are currently published.
+- id: material_link
+  translation: Open material

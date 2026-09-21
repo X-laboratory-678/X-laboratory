@@ -7,8 +7,21 @@
     {{- with $page.Params.pdf -}}
       {{- $href := . -}}
       {{- $external := or (hasPrefix . "https://") (hasPrefix . "http://") -}}
-      {{- if not $external -}}{{- with $page.Resources.GetMatch . -}}{{- $href = .RelPermalink -}}{{- end -}}{{- end -}}
-      <a href="{{ $href }}"{{ if $external }} rel="external"{{ end }}>{{ i18n "pdf" }}</a>
+      {{- if $external -}}
+        <a href="{{ $href }}" rel="external">{{ i18n "pdf" }}</a>
+      {{- else -}}
+        {{- with $page.Resources.GetMatch . }}<a href="{{ .RelPermalink }}">{{ i18n "pdf" }}</a>{{ end -}}
+      {{- end -}}
+    {{- end -}}
+    {{- $supplementary := $page.Params.supp | default $page.Params.supplementary -}}
+    {{- with $supplementary -}}
+      {{- $href := . -}}
+      {{- $external := or (hasPrefix . "https://") (hasPrefix . "http://") -}}
+      {{- if $external -}}
+        <a href="{{ $href }}" rel="external">{{ i18n "supplementary_short" }}</a>
+      {{- else -}}
+        {{- with $page.Resources.GetMatch . }}<a href="{{ .RelPermalink }}">{{ i18n "supplementary_short" }}</a>{{ end -}}
+      {{- end -}}
     {{- end -}}
     {{- with $page.Params.code }}<a href="{{ . }}" rel="external">{{ i18n "code" }}</a>{{ end -}}
     {{- with $page.Params.projectPage -}}

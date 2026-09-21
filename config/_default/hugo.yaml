@@ -21,6 +21,9 @@ permalinks:
     contact: /docs/home/contact/
     grants: /docs/research/grants/:contentbasename/
     opportunities: /docs/home/opportunities/:contentbasename/
+    events: /docs/events/:contentbasename/
+    resources: /docs/resources/:contentbasename/
+    tools: /docs/tools/:contentbasename/
   section:
     people: /docs/home/members/
     research: /docs/research/
@@ -29,6 +32,9 @@ permalinks:
     news: /docs/home/news/
     grants: /docs/research/grants/
     opportunities: /docs/home/opportunities/
+    events: /docs/events/
+    resources: /docs/resources/
+    tools: /docs/tools/
 
 markup:
   goldmark:

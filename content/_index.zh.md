@@ -2,6 +2,9 @@
 title: X-Laboratory
 description: 聚焦人工智能与新型电力系统交叉研究。
 translationKey: home
+notices:
+  recruitment: 欢迎对人工智能、智能电网与数据驱动能源系统感兴趣的学生和合作伙伴联系实验室。已确认的招募信息将通过联系方式页面发布。
+  update: 实验室网站正在根据已核实的实验室资料逐步完善。尚未发布记录的栏目会明确标注为占位内容，信息确认后再更新。
 hero:
   eyebrow: 科研实验室
   title: 面向新型电力系统的智能技术。

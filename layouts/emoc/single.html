@@ -1,0 +1,11 @@
+{{ define "main" }}
+  <article class="research-document section">
+    <div class="container stack">
+      <header class="research-document__header stack">
+        <h1>{{ .Title }}</h1>
+        {{- with .Description }}<p class="research-document__description">{{ . }}</p>{{ end }}
+      </header>
+      <div class="prose research-document__body">{{ .Content }}</div>
+    </div>
+  </article>
+{{ end }}

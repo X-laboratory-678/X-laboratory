@@ -1,0 +1,23 @@
+{{- $page := . -}}
+<article class="event-entry">
+  {{- if not $page.Date.IsZero }}<time class="event-entry__date" datetime="{{ $page.Date.Format "2006-01-02" }}">{{ $page.Date | time.Format ":date_long" }}</time>{{ end -}}
+  <h3><a href="{{ $page.RelPermalink }}">{{ $page.Title }}</a></h3>
+  {{- with $page.Params.topic }}<p class="event-entry__topic">{{ . }}</p>{{ end -}}
+  <dl class="event-entry__facts">
+    {{- with $page.Params.speaker }}<div><dt>{{ i18n "event_speaker" }}</dt><dd>{{ . }}</dd></div>{{ end -}}
+    {{- with $page.Params.presenters }}
+      <div><dt>{{ i18n "event_speaker" }}</dt><dd>{{ range $index, $personID := . }}{{ if $index }}, {{ end }}{{ with partial "content/resolve-by-id.html" (dict "site" $page.Site "section" "people" "id" $personID) }}<a href="{{ .RelPermalink }}">{{ .Title }}</a>{{ else }}{{ $personID }}{{ end }}{{ end }}</dd></div>
+    {{- end -}}
+    {{- with $page.Params.affiliation }}<div><dt>{{ i18n "event_affiliation" }}</dt><dd>{{ . }}</dd></div>{{ end -}}
+  </dl>
+  {{- with $page.Params.summary }}<p class="event-entry__summary">{{ . }}</p>{{ end -}}
+  {{- if or $page.Params.paperUrl $page.Params.slides $page.Params.video $page.Params.website $page.Params.link }}
+    <nav class="event-entry__links" aria-label="{{ i18n "event_materials" }}">
+      {{- with $page.Params.paperUrl }}<a href="{{ . }}" rel="external">{{ i18n "event_paper" }}</a>{{ end -}}
+      {{- with $page.Params.slides }}<a href="{{ . }}" rel="external">{{ i18n "event_slides" }}</a>{{ end -}}
+      {{- with $page.Params.video }}<a href="{{ . }}" rel="external">{{ i18n "event_video" }}</a>{{ end -}}
+      {{- with $page.Params.website }}<a href="{{ . }}" rel="external">{{ i18n "event_website" }}</a>{{ end -}}
+      {{- with $page.Params.link }}<a href="{{ . }}" rel="external">{{ i18n "event_link" }}</a>{{ end -}}
+    </nav>
+  {{- end -}}
+</article>

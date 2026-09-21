@@ -1,0 +1,43 @@
+{{ define "main" }}
+  {{- $events := where .Pages "Draft" false -}}
+  {{- $upcoming := where $events "Params.status" "upcoming" -}}
+  {{- $scheduled := where $events "Params.status" "scheduled" -}}
+  {{- $archive := where $events "Params.status" "in" (slice "completed" "cancelled") -}}
+  <article class="event-document events-board section">
+    <div class="container stack">
+      <header class="event-document__header stack">
+        <h1>{{ .Title }}</h1>
+        {{- with .Description }}<p class="event-document__description">{{ . }}</p>{{ end }}
+      </header>
+
+      <div class="prose event-document__intro">{{ .Content }}</div>
+
+      <section class="event-document__section events-section events-section--upcoming" aria-labelledby="events-upcoming-heading">
+        <h2 id="events-upcoming-heading">{{ i18n "events_upcoming_current" }}</h2>
+        {{- if $upcoming }}
+          <ol class="event-list">{{ range sort $upcoming "Date" "asc" }}<li>{{ partial "event/entry.html" . }}</li>{{ end }}</ol>
+        {{- else }}
+          <p class="event-empty">{{ i18n "no_upcoming_events" }}</p>
+        {{- end }}
+      </section>
+
+      <section class="event-document__section events-section events-section--agenda" aria-labelledby="events-agenda-heading">
+        <h2 id="events-agenda-heading">{{ i18n "events_agenda_schedule" }}</h2>
+        {{- if $scheduled }}
+          <ol class="event-list">{{ range sort $scheduled "Date" "asc" }}<li>{{ partial "event/entry.html" . }}</li>{{ end }}</ol>
+        {{- else }}
+          <p class="event-empty">{{ i18n "no_scheduled_events" }}</p>
+        {{- end }}
+      </section>
+
+      <details class="event-archive">
+        <summary>{{ i18n "events_archive" }}{{ with $archive }} <span>({{ len . }})</span>{{ end }}</summary>
+        {{- if $archive }}
+          <ol class="event-list">{{ range sort $archive "Date" "desc" }}<li>{{ partial "event/entry.html" . }}</li>{{ end }}</ol>
+        {{- else }}
+          <p class="event-empty">{{ i18n "no_archived_events" }}</p>
+        {{- end }}
+      </details>
+    </div>
+  </article>
+{{ end }}

@@ -1,20 +1,50 @@
-<header class="site-header">
-  <div class="container site-header__inner">
-    <div class="site-header__bar">
-      <a class="site-brand" href="{{ site.Home.RelPermalink }}">{{ site.Params.labName }}</a>
-      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-navigation" data-nav-toggle data-close-label="{{ i18n "close_menu" }}">
-        <span data-nav-label>{{ i18n "open_menu" }}</span>
-      </button>
-    </div>
-    <nav class="site-nav" id="primary-navigation" aria-label="{{ i18n "primary_navigation" }}" data-nav data-open="false">
-      <ul class="site-nav__list">
-        {{- range site.Menus.main }}
-          {{- if ne .Params.enabled false }}
-            {{- partial "navigation/menu-item.html" (dict "page" $ "entry" .) }}
-          {{- end }}
-        {{- end }}
-        <li class="site-nav__item site-nav__item--language">{{ partial "language-switch.html" $ }}</li>
-      </ul>
-    </nav>
+<nav>
+  <h2 class="book-brand">
+    <a class="flex align-center" href="{{ site.Home.RelPermalink }}">
+      <img src="{{ "favicon.svg" | relURL }}" alt="{{ site.Params.labName }}" width="64" height="64">
+      <span class="book-brand__text">
+        <strong>{{ site.Params.labName }}</strong>
+        <small>{{ site.Params.brandSubtitle }}</small>
+      </span>
+    </a>
+  </h2>
+
+  <div class="book-search">
+    <label class="visually-hidden" for="book-search-input">{{ i18n "search_label" }}</label>
+    <input id="book-search-input" type="search" placeholder="{{ i18n "search_placeholder" }}" aria-label="{{ i18n "search_label" }}" maxlength="64" data-search-input data-hotkeys="s/">
+    <div class="book-search-spinner hidden" aria-hidden="true"></div>
+    <ul id="book-search-results" aria-live="polite"></ul>
   </div>
-</header>
+
+  {{- $searchEntries := slice -}}
+  {{- range site.RegularPages -}}
+    {{- if not .Draft -}}
+      {{- $searchEntries = $searchEntries | append (dict "title" .Title "href" .RelPermalink "content" (.Plain | plainify | truncate 500)) -}}
+    {{- end -}}
+  {{- end -}}
+  <script id="book-search-data" type="application/json">{{ $searchEntries | jsonify | safeJS }}</script>
+
+  <ul class="book-languages">
+    <li>
+      <input type="checkbox" id="languages" class="toggle">
+      <label for="languages" class="flex">
+        <a role="button" tabindex="0">
+          <img src="{{ "icons/translate.svg" | relURL }}" class="book-icon" width="24" height="24" alt="{{ i18n "languages_label" }}">
+          {{ .Language.Label | default .Language.Lang }}
+        </a>
+        <img src="{{ "icons/chevron-right.svg" | relURL }}" class="book-icon" width="24" height="24" alt="{{ i18n "expand_label" }}">
+      </label>
+      <ul>
+        {{ partial "language-switch.html" . }}
+      </ul>
+    </li>
+  </ul>
+
+  <ul class="book-menu-list">
+    {{- range site.Menus.main -}}
+      {{- if ne .Params.enabled false -}}
+        {{- partial "navigation/menu-item.html" (dict "page" $ "entry" .) -}}
+      {{- end -}}
+    {{- end -}}
+  </ul>
+</nav>

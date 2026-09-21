@@ -23,6 +23,13 @@
           <div>
             <h1>{{ .Title }}</h1>
             <p class="person-profile__role">{{ .Params.role }}</p>
+            {{- if or .Params.joined .Params.left }}
+              <p class="person-profile__period">
+                {{- with .Params.joined }}{{ . }}{{ end -}}
+                {{- if or .Params.joined .Params.left }}–{{ end -}}
+                {{- with .Params.left }}{{ . }}{{ else }}{{ i18n "person_present" }}{{ end -}}
+              </p>
+            {{- end }}
           </div>
           {{ partial "person/links.html" (dict "page" .) }}
         </div>

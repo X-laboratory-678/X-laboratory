@@ -1,5 +1,5 @@
 ---
-title: People
+title: Members
 description: Meet the researchers and students of X-Laboratory.
 translationKey: section-people
 aliases:

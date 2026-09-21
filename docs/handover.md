@@ -13,7 +13,7 @@ The site uses Hugo Extended with custom layouts, Markdown Leaf Page Bundles, sma
 
 English is published at `/`; Simplified Chinese is published at `/zh/`. Content-specific resources remain inside their Page Bundle. Shared categories, status values, research IDs, and ordering live under `data/`.
 
-V2 uses a hierarchical Hugo menu. People and Research are currently enabled groups; Events, Resources, Tools, and not-yet-built child destinations remain registered but disabled until their routes ship. The disclosure behavior is progressively enhanced with native JavaScript and retains a complete no-JavaScript link fallback.
+V2 uses a hierarchical Hugo menu. People, Research, Events, Resources, and Tools are enabled top-level groups. Events, Resources, and Tools currently render bilingual empty-state directories; their record-level child destinations remain disabled until verified routes and content ship. The disclosure behavior is progressively enhanced with native JavaScript and retains a complete no-JavaScript link fallback.
 
 ## Content Authority
 

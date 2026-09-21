@@ -1,0 +1,57 @@
+{{- $page := . -}}
+<article class="publication-item publication-entry">
+  <h3><a href="{{ $page.RelPermalink }}">{{ $page.Title }}</a></h3>
+  <p class="publication-item__authors">{{ partial "publication/authors.html" $page }}</p>
+  <p class="publication-item__citation">
+    {{- with $page.Params.venue }}{{ . }}{{ end -}}
+    {{- with $page.Params.venueShort }} <span aria-hidden="true">({{ . }})</span>{{ end -}}
+    {{- with $page.Params.volume }}<span aria-hidden="true">, </span>{{ . }}{{ end -}}
+    {{- with $page.Params.issue }}<span aria-hidden="true">({{ . }})</span>{{ end -}}
+    {{- with $page.Params.number }}<span aria-hidden="true">({{ . }})</span>{{ end -}}
+    {{- with $page.Params.pages }}<span aria-hidden="true">: </span>{{ . }}{{ end -}}
+    {{- with $page.Params.year }}<span aria-hidden="true"> · </span>{{ . }}{{ end -}}
+  </p>
+
+  <nav class="publication-links" aria-label="{{ i18n "publication_links" }}">
+    {{- with $page.Params.doi }}<a href="https://doi.org/{{ . }}" rel="external">{{ i18n "doi" }}</a>{{ end -}}
+    {{- with $page.Params.pdf -}}
+      {{- $external := or (hasPrefix . "https://") (hasPrefix . "http://") -}}
+      {{- if $external -}}
+        <a href="{{ . }}" rel="external">{{ i18n "pdf" }}</a>
+      {{- else -}}
+        {{- with $page.Resources.GetMatch . }}<a href="{{ .RelPermalink }}">{{ i18n "pdf" }}</a>{{ end -}}
+      {{- end -}}
+    {{- end -}}
+    {{- $supplementary := $page.Params.supp | default $page.Params.supplementary -}}
+    {{- with $supplementary -}}
+      {{- $external := or (hasPrefix . "https://") (hasPrefix . "http://") -}}
+      {{- if $external -}}
+        <a href="{{ . }}" rel="external">{{ i18n "supplementary_short" }}</a>
+      {{- else -}}
+        {{- with $page.Resources.GetMatch . }}<a href="{{ .RelPermalink }}">{{ i18n "supplementary_short" }}</a>{{ end -}}
+      {{- end -}}
+    {{- end -}}
+    {{- with $page.Params.code }}<a href="{{ . }}" rel="external">{{ i18n "code" }}</a>{{ end -}}
+    {{- with $page.Content -}}
+      <details class="publication-disclosure publication-disclosure--abstract" id="abstract-{{ $page.Params.id }}">
+        <summary>{{ i18n "abstract_short" }}</summary>
+        <div class="publication-disclosure__body prose">{{ . }}</div>
+      </details>
+    {{- end -}}
+    {{- with $page.Params.bibtex -}}
+      {{- with $page.Resources.GetMatch . -}}
+        <details class="publication-disclosure publication-disclosure--bibtex" id="bibtex-{{ $page.Params.id }}" data-bibtex>
+          <summary>{{ i18n "bibtex_short" }}</summary>
+          <div class="publication-disclosure__body">
+            <pre><code>{{ .Content }}</code></pre>
+            <div class="publication-bibtex__actions">
+              <a href="{{ .RelPermalink }}">{{ i18n "raw_bibtex" }}</a>
+              <button class="publication-bibtex__copy" type="button" hidden data-bibtex-copy data-copied-label="{{ i18n "bibtex_copied" }}" data-copy-error-label="{{ i18n "bibtex_copy_failed" }}">{{ i18n "copy_bibtex" }}</button>
+              <span class="publication-bibtex__status" aria-live="polite" data-bibtex-status></span>
+            </div>
+          </div>
+        </details>
+      {{- end -}}
+    {{- end -}}
+  </nav>
+</article>

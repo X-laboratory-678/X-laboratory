@@ -1,15 +1,10 @@
 .container {
-  width: min(calc(100% - (2 * var(--gutter))), var(--content-max));
-  margin-inline: auto;
-}
-
-.container--wide {
-  width: min(calc(100% - (2 * var(--gutter))), var(--content-wide));
+  width: min(100%, var(--content-max));
   margin-inline: auto;
 }
 
 .section {
-  padding-block: var(--space-16);
+  padding-block: var(--space-8);
 }
 
 .stack {
@@ -30,7 +25,8 @@
   gap: var(--grid-space, var(--space-6));
 }
 
-.visually-hidden {
+.visually-hidden,
+.skip-link {
   position: absolute;
   width: 1px;
   height: 1px;
@@ -42,38 +38,37 @@
   border: 0;
 }
 
-.skip-link {
-  position: fixed;
-  z-index: 10;
+.skip-link:focus {
+  z-index: 100;
   top: var(--space-2);
   left: var(--space-2);
+  width: auto;
+  height: auto;
+  margin: 0;
   padding: var(--space-2) var(--space-4);
-  border-radius: var(--radius-sm);
+  clip: auto;
   background: var(--color-foreground);
   color: var(--color-background);
-  transform: translateY(calc(-100% - var(--space-4)));
 }
 
-.skip-link:focus {
-  color: var(--color-background);
-  transform: translateY(0);
+.markdown {
+  min-width: 0;
+  width: min(100%, 80rem);
+  max-width: 100%;
+  margin-inline: auto;
 }
 
-.site-main {
-  min-height: 55vh;
+.markdown > :first-child {
+  margin-top: 0;
 }
 
-.foundation-message {
-  max-width: 44rem;
-  padding-block: var(--space-16);
-}
-
-.prose > :last-child {
+.prose > :last-child,
+.markdown > :last-child {
   margin-bottom: 0;
 }
 
 @media (min-width: 48rem) {
   .section {
-    padding-block: var(--space-20);
+    padding-block: var(--space-10);
   }
 }

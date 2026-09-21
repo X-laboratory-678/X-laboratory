@@ -1,0 +1,15 @@
+{{- $page := . -}}
+<article class="material-entry book-post">
+  <header class="material-entry__header">
+    {{- if not $page.Date.IsZero -}}<time class="material-entry__date" datetime="{{ $page.Date.Format "2006-01-02" }}">{{ $page.Date | time.Format ":date_long" }}</time>{{- end -}}
+    <h3><a href="{{ $page.RelPermalink }}">{{ $page.Title }}</a></h3>
+  </header>
+  {{- with $page.Params.summary -}}<p class="material-entry__summary">{{ . }}</p>{{- end -}}
+  {{- if or $page.Params.categories $page.Params.tags -}}
+    <ul class="material-entry__taxonomy" aria-label="{{ i18n "materials_categories_and_tags" }}">
+      {{- range $page.Params.categories -}}<li>{{ . }}</li>{{- end -}}
+      {{- range $page.Params.tags -}}<li>{{ . }}</li>{{- end -}}
+    </ul>
+  {{- end -}}
+  {{- with $page.Params.link -}}<p class="material-entry__link"><a href="{{ . }}" rel="external">{{ i18n "material_link" }}</a></p>{{- end -}}
+</article>

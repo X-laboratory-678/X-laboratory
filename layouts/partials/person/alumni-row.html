@@ -1,14 +1,19 @@
 {{- $page := . -}}
-<article class="alumni-row">
+<article class="alumni-row members-alumni__row">
   <div>
     <h3><a href="{{ $page.RelPermalink }}">{{ $page.Title }}</a></h3>
-    <p class="alumni-row__role">{{ $page.Params.role }}</p>
+    {{- if or $page.Params.joined $page.Params.left }}
+      <p class="alumni-row__tenure">
+        {{- with $page.Params.joined }}{{ . }}{{ end -}}
+        {{- if or $page.Params.joined $page.Params.left }}–{{ end -}}
+        {{- with $page.Params.left }}{{ . }}{{ end -}}
+      </p>
+    {{- end }}
+    {{- with $page.Params.role }}<p class="alumni-row__role">{{ . }}</p>{{ end -}}
   </div>
-  {{- if or $page.Params.left $page.Params.alumniNext }}
+  {{- with $page.Params.alumniNext }}
     <p class="alumni-row__outcome">
-      {{- with $page.Params.left }}<span>{{ . }}</span>{{ end -}}
-      {{- if and $page.Params.left $page.Params.alumniNext }}<span aria-hidden="true"> · </span>{{ end -}}
-      {{- with $page.Params.alumniNext }}<span>{{ . }}</span>{{ end -}}
+      <span>{{ . }}</span>
     </p>
   {{- end }}
 </article>

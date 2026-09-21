@@ -1,6 +1,15 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    @font-face { font-family: "Oxygen Mono"; font-style: normal; font-weight: 400; font-display: swap; src: url("{{ "fonts/oxygen-mono-400.ttf" | relURL }}") format("truetype"); }
+    @font-face { font-family: "Roboto"; font-style: normal; font-weight: 400; font-display: swap; src: url("{{ "fonts/roboto-400.ttf" | relURL }}") format("truetype"); }
+    @font-face { font-family: "Roboto"; font-style: normal; font-weight: 500; font-display: swap; src: url("{{ "fonts/roboto-500.ttf" | relURL }}") format("truetype"); }
+    @font-face { font-family: "Roboto"; font-style: normal; font-weight: 700; font-display: swap; src: url("{{ "fonts/roboto-700.ttf" | relURL }}") format("truetype"); }
+    @font-face { font-family: "Roboto Mono"; font-style: normal; font-weight: 400; font-display: swap; src: url("{{ "fonts/roboto-mono-400.ttf" | relURL }}") format("truetype"); }
+    @font-face { font-family: "Roboto Mono"; font-style: normal; font-weight: 500; font-display: swap; src: url("{{ "fonts/roboto-mono-500.ttf" | relURL }}") format("truetype"); }
+    @font-face { font-family: "Roboto Mono"; font-style: normal; font-weight: 700; font-display: swap; src: url("{{ "fonts/roboto-mono-700.ttf" | relURL }}") format("truetype"); }
+  </style>
 
   {{- $pageTitle := site.Title -}}
   {{- if not .IsHome -}}
@@ -57,6 +66,7 @@
     (resources.Get "css/layout.css")
     (resources.Get "css/components/buttons.css")
     (resources.Get "css/components/navigation.css")
+    (resources.Get "css/components/shell.css")
     (resources.Get "css/components/section.css")
     (resources.Get "css/components/cards.css")
     (resources.Get "css/components/person.css")
@@ -66,6 +76,8 @@
     (resources.Get "css/pages/people.css")
     (resources.Get "css/pages/publications.css")
     (resources.Get "css/pages/research-projects.css")
+    (resources.Get "css/pages/events.css")
+    (resources.Get "css/pages/misc.css")
     (resources.Get "css/pages/news.css")
     (resources.Get "css/pages/join.css")
     (resources.Get "css/pages/contact.css")
@@ -89,13 +101,23 @@
     {{- end }}
   {{- end }}
 
-  {{- if or .IsHome (eq .Section "contact") (eq .Section "join") -}}
+  {{- if and (ne .Kind "404") (or .IsHome (eq .Section "contact") (eq .Section "join")) -}}
     {{- $contactActionsJS := resources.Get "js/contact-actions.js" -}}
     {{- if hugo.IsProduction -}}
       {{- $contactActionsJS = $contactActionsJS | resources.Minify | resources.Fingerprint "sha384" -}}
       <script type="module" src="{{ $contactActionsJS.RelPermalink }}" integrity="{{ $contactActionsJS.Data.Integrity }}" crossorigin="anonymous"></script>
     {{- else -}}
       <script type="module" src="{{ $contactActionsJS.RelPermalink }}"></script>
+    {{- end -}}
+  {{- end -}}
+
+  {{- if and .IsHome (ne .Kind "404") -}}
+    {{- $homeJS := resources.Get "js/home.js" -}}
+    {{- if hugo.IsProduction -}}
+      {{- $homeJS = $homeJS | resources.Minify | resources.Fingerprint "sha384" -}}
+      <script type="module" src="{{ $homeJS.RelPermalink }}" integrity="{{ $homeJS.Data.Integrity }}" crossorigin="anonymous"></script>
+    {{- else -}}
+      <script type="module" src="{{ $homeJS.RelPermalink }}"></script>
     {{- end -}}
   {{- end -}}
 
@@ -109,13 +131,23 @@
     {{- end -}}
   {{- end -}}
 
-  {{- if and (eq .Section "publications") .IsPage .Params.bibtex -}}
+  {{- if and (eq .Section "publications") (or .IsSection .Params.bibtex) -}}
     {{- $bibtexJS := resources.Get "js/bibtex.js" -}}
     {{- if hugo.IsProduction -}}
       {{- $bibtexJS = $bibtexJS | resources.Minify | resources.Fingerprint "sha384" -}}
       <script type="module" src="{{ $bibtexJS.RelPermalink }}" integrity="{{ $bibtexJS.Data.Integrity }}" crossorigin="anonymous"></script>
     {{- else -}}
       <script type="module" src="{{ $bibtexJS.RelPermalink }}"></script>
+    {{- end -}}
+  {{- end -}}
+
+  {{- if and .File (findRE `/deadlines/$` .RelPermalink) (ne .Kind "404") -}}
+    {{- $deadlinesJS := resources.Get "js/deadlines.js" -}}
+    {{- if hugo.IsProduction -}}
+      {{- $deadlinesJS = $deadlinesJS | resources.Minify | resources.Fingerprint "sha384" -}}
+      <script type="module" src="{{ $deadlinesJS.RelPermalink }}" integrity="{{ $deadlinesJS.Data.Integrity }}" crossorigin="anonymous"></script>
+    {{- else -}}
+      <script type="module" src="{{ $deadlinesJS.RelPermalink }}"></script>
     {{- end -}}
   {{- end -}}
 </head>

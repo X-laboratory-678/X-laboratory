@@ -61,7 +61,8 @@
 }
 
 .news-profile__header h1 {
-  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-size: var(--font-size-xl);
+  line-height: 1;
   overflow-wrap: anywhere;
 }
 
