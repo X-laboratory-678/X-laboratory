@@ -20,7 +20,7 @@ Use this checklist before a GitHub Pages release, after binding a custom domain,
 - [x] Confirm the public GitHub Pages or custom-domain URL, including whether a repository subpath is required.
 - [x] Pass the Pages-provided `baseURL` through the deployment build; do not hard-code it in layouts or content.
 - [x] Confirm that no `CNAME` is required for the current Project Pages deployment.
-- [ ] Replace the provisional `static/favicon.svg` only with an approved, original or rights-cleared laboratory identity; do not reuse the university logo without permission.
+- [x] Replace the provisional `static/favicon.svg` with the original X-Laboratory mark created for this site; no university logo or third-party artwork is reused.
 - [x] Review the laboratory name, institution, unit, PI name, role, public email, official admissions link, and all source provenance.
 - [x] Reconfirm that News dates and claims remain source-backed and that Join Us does not imply unconfirmed openings, quotas, funding, scholarships, eligibility, or admission outcomes.
 - [x] Confirm publication titles, author order, venue, DOI, date precision, local PDF rights, and BibTeX against authoritative records.
@@ -62,7 +62,7 @@ Use this checklist before a GitHub Pages release, after binding a custom domain,
 
 ## Open Approval and Environment Items
 
-- [ ] Approve and replace the provisional favicon with a final official, rights-cleared laboratory identity.
+- [x] Approve and replace the provisional favicon with the original X-Laboratory identity; the mark was added on 2026-09-22.
 - [ ] Add a PI portrait only if an approved image and publication permission become available.
 - [ ] Configure a custom domain only if the laboratory chooses one and the DNS/Pages change is reviewed.
 - [ ] Register Search Console only if maintainers want the optional external service.
