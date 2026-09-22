@@ -1,9 +1,11 @@
 {{ define "main" }}
   {{- $people := where .Pages "Draft" false -}}
   {{- $groups := slice
-    (dict "id" "faculty" "categories" (slice "pi" "faculty") "labelKey" "people_category_faculty" "variant" "faculty")
-    (dict "id" "research-staff" "categories" (slice "postdoc" "ra") "labelKey" "people_group_research_staff" "variant" "standard")
-    (dict "id" "phd-students" "categories" (slice "phd") "labelKey" "people_category_phd" "variant" "standard")
+    (dict "id" "faculty" "categories" (slice "pi" "faculty") "cohort" "" "labelKey" "people_category_faculty" "variant" "faculty")
+    (dict "id" "research-staff" "categories" (slice "postdoc" "ra") "cohort" "" "labelKey" "people_group_research_staff" "variant" "standard")
+    (dict "id" "master-year1" "categories" (slice "master") "cohort" "year1" "labelKey" "people_group_master_year1" "variant" "standard")
+    (dict "id" "master-year2" "categories" (slice "master") "cohort" "year2" "labelKey" "people_group_master_year2" "variant" "standard")
+    (dict "id" "master-year3" "categories" (slice "master") "cohort" "year3" "labelKey" "people_group_master_year3" "variant" "standard")
     (dict "id" "alumni" "categories" (slice "alumni") "labelKey" "people_category_alumni" "variant" "alumni")
   -}}
 
@@ -17,7 +19,7 @@
       {{- $group := . -}}
       {{- $members := slice -}}
       {{- range $people -}}
-        {{- if in $group.categories .Params.category -}}
+        {{- if and (in $group.categories .Params.category) (or (eq $group.cohort "") (eq .Params.cohort $group.cohort)) -}}
           {{- $members = $members | append . -}}
         {{- end -}}
       {{- end -}}

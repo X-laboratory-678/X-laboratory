@@ -4,14 +4,32 @@
 {{- $news := where site.RegularPages "Section" "news" -}}
 {{- $news = where $news "Draft" false -}}
 {{- $news = sort $news "Date" "desc" -}}
-{{- $newsYear := now.Year -}}
+{{- $currentYear := now.Year -}}
+{{- $newsYear := $currentYear -}}
 {{- with first 1 $news -}}
   {{- with index . 0 -}}{{- $newsYear = .Date.Year -}}{{- end -}}
 {{- end -}}
+{{- $publicationHighlights := where site.RegularPages "Section" "publications" -}}
+{{- $publicationHighlights = where $publicationHighlights "Draft" false -}}
+{{- $publicationHighlights = where $publicationHighlights "Params.year" $currentYear -}}
+{{- $publicationHighlights = where $publicationHighlights "Params.publicationStatus" "published" -}}
+{{- $unassignedHighlights := slice -}}
+{{- range $publicationHighlights -}}
+  {{- if not .Params.publicationMonth -}}
+    {{- $unassignedHighlights = $unassignedHighlights | append . -}}
+  {{- end -}}
+{{- end -}}
+{{- $hasCurrentYearNews := false -}}
+{{- range $news -}}
+  {{- if eq .Date.Year $currentYear -}}{{- $hasCurrentYearNews = true -}}{{- end -}}
+{{- end -}}
+{{- $usePublicationHighlights := and $publicationHighlights (not $hasCurrentYearNews) -}}
+{{- $feedYear := $newsYear -}}
+{{- if $usePublicationHighlights -}}{{- $feedYear = $currentYear -}}{{- end -}}
 {{- $dateFormat := "Jan 2, 2006" -}}
 {{- if eq site.Language.Lang "zh" -}}{{- $dateFormat = "2006-01-02" -}}{{- end -}}
-{{- $yearLabel := printf "%s %d" (i18n "home_year") $newsYear -}}
-{{- if eq site.Language.Lang "zh" -}}{{- $yearLabel = printf "%d%s" $newsYear (i18n "home_year") -}}{{- end -}}
+{{- $yearLabel := printf "%s %d" (i18n "home_year") $feedYear -}}
+{{- if eq site.Language.Lang "zh" -}}{{- $yearLabel = printf "%d%s" $feedYear (i18n "home_year") -}}{{- end -}}
 
 <div class="cola-home">
   <header class="cola-home__intro">
@@ -33,9 +51,75 @@
         <path d="M5 5.5h14v10H9l-4 3v-13Z" />
         <path d="M8 9h8M8 12h5" />
       </svg>
-      <span>{{ i18n "home_recent_news" }} <span class="cola-news__year">({{ $yearLabel }})</span></span>
+      <span>{{ if $usePublicationHighlights }}{{ i18n "home_recent_results" }}{{ else }}{{ i18n "home_recent_news" }}{{ end }} <span class="cola-news__year">({{ $yearLabel }})</span></span>
     </h2>
-    {{- if $news -}}
+    {{- if $usePublicationHighlights -}}
+      {{- $publicationMonths := slice -}}
+      {{- range $publicationHighlights -}}
+        {{- with .Params.publicationMonth -}}
+          {{- if not (in $publicationMonths .) -}}{{- $publicationMonths = $publicationMonths | append . -}}{{- end -}}
+        {{- end -}}
+      {{- end -}}
+      {{- $publicationMonths = sort $publicationMonths "value" "desc" -}}
+      {{- $monthNames := slice "Jan" "Feb" "Mar" "Apr" "May" "Jun" "Jul" "Aug" "Sep" "Oct" "Nov" "Dec" -}}
+      {{- $isFirstPublicationTab := true -}}
+      <div class="cola-news__tabs book-tabs" role="tablist" aria-label="{{ i18n "home_results_months" }}">
+        {{- range $month := $publicationMonths -}}
+          {{- $monthKey := printf "%d-%02d" $currentYear $month -}}
+          {{- $monthLabel := index $monthNames (sub $month 1) -}}
+          {{- if eq site.Language.Lang "zh" -}}{{- $monthLabel = printf "%d月" $month -}}{{- end -}}
+          <button type="button" class="cola-news__tab{{ if $isFirstPublicationTab }} is-selected{{ end }}" id="news-tab-{{ $monthKey }}" role="tab" aria-selected="{{ if $isFirstPublicationTab }}true{{ else }}false{{ end }}" aria-controls="home-news-list" data-news-tab="{{ $monthKey }}">{{ $monthLabel }}</button>
+          {{- if $isFirstPublicationTab -}}{{- $isFirstPublicationTab = false -}}{{- end -}}
+        {{- end -}}
+      </div>
+      <div class="cola-news__panel" id="home-news-list">
+        {{- range $index, $item := $publicationHighlights -}}
+          {{- with $item.Params.publicationMonth -}}
+            {{- $itemMonth := . -}}
+            {{- $itemKey := printf "%d-%02d" $currentYear $itemMonth -}}
+            {{- $itemLabel := index $monthNames (sub $itemMonth 1) -}}
+            {{- if eq site.Language.Lang "zh" -}}{{- $itemLabel = printf "%d月" $itemMonth -}}{{- end -}}
+            <article class="cola-news__item" id="news-panel-{{ $itemKey }}-{{ $index }}" data-news-item="{{ $itemKey }}" role="tabpanel" aria-labelledby="news-tab-{{ $itemKey }}">
+              <span class="cola-news__bullet" aria-hidden="true"></span>
+              <div>
+                <h3><a href="{{ $item.RelPermalink }}">{{ partial "publication/display-title.html" $item }}</a></h3>
+                <p>{{ $item.Params.venue }} · {{ partial "publication/type-label.html" $item.Params.publicationType }}</p>
+                <time datetime="{{ $itemKey }}">
+                  <svg class="cola-inline-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                    <rect x="4" y="5" width="16" height="15" rx="1" />
+                    <path d="M8 3v4M16 3v4M4 10h16" />
+                  </svg>
+                  {{ $itemLabel }} {{ $item.Params.year }}
+                </time>
+              </div>
+            </article>
+          {{- end -}}
+        {{- end -}}
+      </div>
+      {{- with site.GetPage "/publications" -}}
+        <p class="cola-news__archive">
+          <svg class="cola-inline-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="M4 8h16v12H4zM3 5h18v3H3zM9 12h6" />
+          </svg>
+          <span>{{ i18n "home_results_archive_intro" }} <a href="{{ .RelPermalink }}">{{ i18n "home_results_archive" }}</a>.</span>
+        </p>
+      {{- end -}}
+      {{- with $unassignedHighlights -}}
+        <section class="cola-news__unassigned" aria-labelledby="home-unassigned-heading">
+          <h3 id="home-unassigned-heading">{{ i18n "home_results_other" }} <span class="cola-news__year">({{ $yearLabel }})</span></h3>
+          {{- range . -}}
+            <article class="cola-news__item cola-news__item--unassigned">
+              <span class="cola-news__bullet" aria-hidden="true"></span>
+              <div>
+                <h4><a href="{{ .RelPermalink }}">{{ partial "publication/display-title.html" . }}</a></h4>
+                <p>{{ .Params.venue }} · {{ partial "publication/type-label.html" .Params.publicationType }}</p>
+                <span class="cola-news__year-label">{{ .Params.year }}</span>
+              </div>
+            </article>
+          {{- end -}}
+        </section>
+      {{- end -}}
+    {{- else if $news -}}
       {{- $seenMonths := slice -}}
       <div class="cola-news__tabs book-tabs" role="tablist" aria-label="{{ i18n "home_news_months" }}">
         {{- range $index, $item := $news -}}

@@ -1,0 +1,4 @@
+{{- $page := . -}}
+{{- $title := $page.Title -}}
+{{- with $page.Params.displayTitle -}}{{- $title = . -}}{{- end -}}
+{{- $title -}}

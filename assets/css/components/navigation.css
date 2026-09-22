@@ -126,18 +126,19 @@
   cursor: pointer;
 }
 
-.book-languages > li > label > a {
+.book-language-label {
   display: flex;
   align-items: center;
   gap: var(--space-2);
   color: var(--color-foreground);
 }
 
-.book-languages > li > label > a:hover {
+.book-language-toggle:hover .book-language-label,
+.book-language-toggle:focus-visible .book-language-label {
   color: var(--color-accent);
 }
 
-.book-languages > li > label > .book-icon {
+.book-language-toggle > .book-icon {
   width: 1rem;
   height: 1rem;
   transition: transform 160ms ease;
@@ -217,7 +218,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .book-languages > li > label > .book-icon {
+  .book-language-toggle > .book-icon {
     transition: none;
   }
 }

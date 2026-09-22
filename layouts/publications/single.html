@@ -12,7 +12,7 @@
       {{- with $directory }}<a class="publication-profile__back" href="{{ .RelPermalink }}">← {{ i18n "back_to_publications" }}</a>{{ end -}}
       <header class="publication-profile__header stack">
         <p class="eyebrow">{{ partial "publication/type-label.html" .Params.publicationType }}</p>
-        <h1>{{ .Title }}</h1>
+        <h1>{{ partial "publication/display-title.html" . }}</h1>
         <p class="publication-profile__authors">{{ partial "publication/authors.html" . }}</p>
         <p class="publication-profile__venue">{{ with .Params.venue }}{{ . }} · {{ end }}{{ .Params.year }}</p>
         {{ partial "publication/links.html" . }}

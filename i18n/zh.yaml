@@ -12,16 +12,28 @@
   translation: 网站更新
 - id: home_recent_news
   translation: 最新动态
+- id: home_recent_results
+  translation: 最新成果
 - id: home_welcome
   translation: 欢迎来到{{ .Lab }}实验室
 - id: home_year
   translation: 年
 - id: home_news_months
   translation: 按月份查看动态
+- id: home_results_year
+  translation: 查看本年度成果
+- id: home_results_months
+  translation: 按月份查看成果
 - id: home_news_archive_intro
   translation: 更早的动态请查看
 - id: home_news_archive
   translation: 动态归档
+- id: home_results_archive_intro
+  translation: 完整论文信息请查看
+- id: home_results_archive
+  translation: 论文列表
+- id: home_results_other
+  translation: 其他成果
 - id: nav_misc
   translation: 其他
 - id: breadcrumbs
@@ -264,6 +276,12 @@
   translation: 成员
 - id: people_group_research_staff
   translation: 科研人员
+- id: people_group_master_year1
+  translation: 硕士研究生（研一）
+- id: people_group_master_year2
+  translation: 硕士研究生（研二）
+- id: people_group_master_year3
+  translation: 硕士研究生（研三）
 - id: people_member_one
   translation: 名成员
 - id: people_member_many

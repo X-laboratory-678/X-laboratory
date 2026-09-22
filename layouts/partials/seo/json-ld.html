@@ -1,5 +1,6 @@
 {{- $page := .page -}}
 {{- $description := .description -}}
+{{- $title := .title | default $page.Title -}}
 {{- $websiteID := printf "%s#website" site.Home.Permalink -}}
 {{- $organizationID := printf "%s#organization" site.Home.Permalink -}}
 {{- $website := dict
@@ -66,8 +67,8 @@
   {{- $article := dict
     "@context" "https://schema.org"
     "@type" "ScholarlyArticle"
-    "name" $page.Title
-    "headline" $page.Title
+    "name" $title
+    "headline" $title
     "url" $page.Permalink
     "description" $description
     "author" $authors

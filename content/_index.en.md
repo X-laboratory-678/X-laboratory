@@ -31,7 +31,7 @@ sections:
   grants:
     eyebrow: Grants
     title: Research support
-    description: Verified active research grants supporting the laboratory's work.
+    description: Verified research support records will be listed when available.
     actionLabel: View all grants
     pageRef: /grants
   publications:

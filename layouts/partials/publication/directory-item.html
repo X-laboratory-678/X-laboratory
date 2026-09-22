@@ -1,6 +1,6 @@
 {{- $page := . -}}
 <article class="publication-item publication-entry">
-  <h3><a href="{{ $page.RelPermalink }}">{{ $page.Title }}</a></h3>
+  <h3><a href="{{ $page.RelPermalink }}">{{ partial "publication/display-title.html" $page }}</a></h3>
   <p class="publication-item__authors">{{ partial "publication/authors.html" $page }}</p>
   <p class="publication-item__citation">
     {{- with $page.Params.venue }}{{ . }}{{ end -}}

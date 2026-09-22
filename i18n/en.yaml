@@ -12,16 +12,28 @@
   translation: Site update
 - id: home_recent_news
   translation: Recent News
+- id: home_recent_results
+  translation: Recent Results
 - id: home_welcome
   translation: Welcome to {{ .Lab }}
 - id: home_year
   translation: Year
 - id: home_news_months
   translation: News by month
+- id: home_results_year
+  translation: Results from the current year
+- id: home_results_months
+  translation: Results by month
 - id: home_news_archive_intro
   translation: Previous news can be found in the
 - id: home_news_archive
   translation: news archive
+- id: home_results_archive_intro
+  translation: Full publication details can be found in the
+- id: home_results_archive
+  translation: publications archive
+- id: home_results_other
+  translation: Other results
 - id: nav_misc
   translation: Misc
 - id: breadcrumbs
@@ -264,6 +276,12 @@
   translation: Members
 - id: people_group_research_staff
   translation: Research Staff
+- id: people_group_master_year1
+  translation: Master Students (Year 1)
+- id: people_group_master_year2
+  translation: Master Students (Year 2)
+- id: people_group_master_year3
+  translation: Master Students (Year 3)
 - id: people_member_one
   translation: member
 - id: people_member_many

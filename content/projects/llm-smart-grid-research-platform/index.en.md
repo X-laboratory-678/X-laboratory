@@ -27,3 +27,7 @@ draft: false
 This Shanghai Municipal Education Commission artificial-intelligence paradigm-reform project investigates a large-language-model-empowered research and innovation platform for smart grids.
 
 Jiangjiao Xu leads the project. The project period is 2024–2025.
+
+The public university profile identifies this as a Shanghai Municipal Education Commission artificial-intelligence paradigm-reform project. No public grant number, budget, team list, or deployment result is added here.
+
+Source: [Shanghai University of Electric Power faculty profile](https://dqxb.shiep.edu.cn/31/5c/c6639a274780/page.htm).

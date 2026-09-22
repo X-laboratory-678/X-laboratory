@@ -8,14 +8,14 @@
     <input type="checkbox" class="hidden toggle" id="toc-control" aria-hidden="true">
 
     <main class="container flex">
-      <aside class="book-menu" aria-label="{{ i18n "primary_navigation" }}">
+      <aside id="primary-navigation" class="book-menu" aria-label="{{ i18n "primary_navigation" }}">
         {{ partial "header.html" . }}
       </aside>
 
       <div class="book-page">
         <header class="book-header">
           <div class="flex align-center justify-between">
-            <label for="menu-control" class="book-menu-toggle">
+            <label for="menu-control" class="book-menu-toggle" role="button" tabindex="0" aria-controls="primary-navigation" aria-expanded="false">
               <img src="{{ "icons/menu.svg" | relURL }}" class="book-icon" width="24" height="24" alt="{{ i18n "open_menu" }}">
             </label>
             <h3>{{ if .IsHome }}{{ i18n "nav_home" }}{{ else }}{{ .Title }}{{ end }}</h3>

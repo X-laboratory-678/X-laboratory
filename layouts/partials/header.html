@@ -29,14 +29,14 @@
   <ul class="book-languages">
     <li>
       <input type="checkbox" id="languages" class="toggle">
-      <label for="languages" class="flex">
-        <a role="button" tabindex="0">
+      <label for="languages" class="flex book-language-toggle" role="button" tabindex="0" aria-controls="language-options" aria-expanded="false">
+        <span class="book-language-label">
           <img src="{{ "icons/translate.svg" | relURL }}" class="book-icon" width="24" height="24" alt="{{ i18n "languages_label" }}">
           {{ .Language.Label | default .Language.Lang }}
-        </a>
+        </span>
         <img src="{{ "icons/chevron-right.svg" | relURL }}" class="book-icon" width="24" height="24" alt="{{ i18n "expand_label" }}">
       </label>
-      <ul>
+      <ul id="language-options">
         {{ partial "language-switch.html" . }}
       </ul>
     </li>

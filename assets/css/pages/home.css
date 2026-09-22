@@ -173,6 +173,38 @@
   margin: var(--space-4) 0 0;
 }
 
+.cola-news__unassigned {
+  margin-top: var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+}
+
+.cola-news__unassigned > h3 {
+  margin: 0;
+  padding: var(--space-3) var(--space-4);
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.4;
+}
+
+.cola-news__item--unassigned {
+  border-top: 1px solid var(--color-border);
+}
+
+.cola-news__item--unassigned h4 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+.cola-news__year-label {
+  display: inline-block;
+  margin-top: var(--space-2);
+  color: var(--color-muted);
+  font-size: 0.9rem;
+}
+
 .cola-empty {
   padding: var(--space-4);
   border: 1px solid var(--color-border);

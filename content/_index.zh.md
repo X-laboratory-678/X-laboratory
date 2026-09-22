@@ -31,7 +31,7 @@ sections:
   grants:
     eyebrow: 科研资助
     title: 研究支持
-    description: 支持实验室研究工作的已核实在研科研资助。
+    description: 已核实的科研支持记录将在信息确认后发布。
     actionLabel: 查看全部资助
     pageRef: /grants
   publications:

@@ -4,6 +4,8 @@ This document records concise provenance for factual public content. It is not a
 
 ## Principal Investigator
 
+The expanded public research dossier is maintained at [`docs/jiangjiao-xu-research-dossier.md`](jiangjiao-xu-research-dossier.md). It contains the wider paper, conference, project, service, and achievement inventory used for later content imports. This provenance file remains the concise source register for production content; the dossier preserves review boundaries for records that are not yet suitable for public pages.
+
 - Person: Jiangjiao Xu / 许江蛟
 - Stable ID: `jiangjiao-xu`
 - Primary source: Shanghai University of Electric Power, Division of Electrical Engineering official faculty profile
@@ -24,7 +26,7 @@ This document records concise provenance for factual public content. It is not a
 
 - The source field displayed as `职务: Xu Jiangjiao` is treated as a misplaced English-name field, not an administrative role.
 - The biography paraphrases and structures confirmed facts instead of copying the faculty page.
-- Academic service, honors, projects, and publication lists were not imported in this identity update; they require appropriate detail-page or authoritative content-bundle treatment in later milestones.
+- Academic service, honors, projects, and publication records are now imported only where the expanded dossier and authoritative content bundles provide sufficient provenance. The complete inventory and unresolved review notes remain in `docs/jiangjiao-xu-research-dossier.md`.
 - The profile image was not copied because publication rights and a suitable local asset have not been confirmed. The site uses its neutral no-photo presentation.
 - Affiliation and education remain in the Markdown biography for now. No person-specific schema fields were added before the formal People milestone.
 
@@ -62,7 +64,7 @@ Contact and Home use a lazy-loaded OpenStreetMap iframe centered on that marker.
 - Bibliographic authority: DOI registration metadata and the corresponding IEEE DOI landing page
 - Last reviewed: 2026-07-20
 
-The faculty profile is used only to discover the representative-paper seed list. Exact titles, full author names and order, venue, publication year, volume, issue, pages, and DOI values were reviewed against DOI metadata. When these sources conflict, the DOI/publisher record is used and the difference is recorded rather than silently guessed.
+The faculty profile was used to discover the representative-paper seed list. The production site now also includes additional DOI-indexed journal articles, conference papers, one Chinese journal article, and one clearly labelled SSRN preprint from the expanded research dossier. Exact titles, full author names and order, venue, publication year, volume, issue, pages, and DOI values were reviewed against DOI or source metadata. When sources conflict, the DOI/publisher record is used and the difference is recorded rather than silently guessed.
 
 | Stable ID | DOI metadata / IEEE landing page | Review note |
 |---|---|---|
@@ -74,7 +76,7 @@ The faculty profile is used only to discover the representative-paper seed list.
 
 No abstract, citation count, impact factor, ranking, quartile, or local publisher PDF was imported. Exact day-level publication dates were omitted because the reviewed records did not provide reliable day values for all five papers.
 
-The DOI records resolve to the IEEE landing pages listed above. During the 2026-07-20 automated review, IEEE Xplore presented a bot-verification gate, so page-body metadata could not be independently extracted there; the imported fields therefore rely on the DOI registration metadata and are not supplemented with guessed IEEE page values.
+The DOI records resolve to the publisher landing pages recorded in the expanded dossier. During the 2026-07-20 automated review, IEEE Xplore presented a bot-verification gate, so page-body metadata could not be independently extracted there; imported fields therefore rely on DOI registration metadata and are not supplemented with guessed IEEE page values.
 
 ## Research Areas and Projects
 
@@ -92,7 +94,7 @@ The three public Research pages are concise editorial summaries of the profile's
 
 Status is an internal editorial inference from the listed period as reviewed on 2026-07-20: a period ending in or before 2025 is represented as `completed`, while the 2025–2026 project is represented as `active`. Public cards prioritize the verified period and do not display an inferred status badge.
 
-No amount, grant number, expanded team, method, dataset, deployment, outcome, patent, impact statement, hero image, external resource, or project-to-publication relationship was imported. A shared Research Area indicates topic only. The commissioning or funding organization remains part of the official Chinese title; a separate funder schema was intentionally not added because the source set is small and does not provide consistently structured funder metadata.
+No amount, grant number, expanded team, method, dataset, deployment, outcome, patent, impact statement, hero image, or external resource was imported. A shared Research Area indicates topic only. The commissioning or funding organization remains part of the official Chinese title; a separate funder schema was intentionally not added because the source set is small and does not provide consistently structured funder metadata. The East China project does not claim a project-to-publication relationship because the public sources do not explicitly establish it.
 
 ## Grants and Opportunities
 

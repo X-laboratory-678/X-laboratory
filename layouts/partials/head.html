@@ -11,9 +11,11 @@
     @font-face { font-family: "Roboto Mono"; font-style: normal; font-weight: 700; font-display: swap; src: url("{{ "fonts/roboto-mono-700.ttf" | relURL }}") format("truetype"); }
   </style>
 
+  {{- $displayTitle := .Title -}}
+  {{- with .Params.displayTitle -}}{{- $displayTitle = . -}}{{- end -}}
   {{- $pageTitle := site.Title -}}
   {{- if not .IsHome -}}
-    {{- $pageTitle = printf "%s | %s" .Title site.Title -}}
+    {{- $pageTitle = printf "%s | %s" $displayTitle site.Title -}}
   {{- end -}}
   {{- $description := .Description | default site.Params.description -}}
   {{- if and (eq .Section "people") (not .Description) .Params.role -}}
