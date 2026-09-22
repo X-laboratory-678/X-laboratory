@@ -1,14 +1,19 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title desc">
-  <title id="title">X-Laboratory mark</title>
-  <desc id="desc">A geometric X made from connected grid-like strokes with a central energy node.</desc>
-  <rect width="64" height="64" rx="14" fill="#14272b"/>
-  <g fill="#68c8b7">
-    <path d="M15 15h10l7 10 7-10h10L38 32l11 17H39l-7-10-7 10H15l11-17z"/>
-    <rect x="12" y="12" width="6" height="6" rx="1.5"/>
-    <rect x="46" y="12" width="6" height="6" rx="1.5"/>
-    <rect x="12" y="46" width="6" height="6" rx="1.5"/>
-    <rect x="46" y="46" width="6" height="6" rx="1.5"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 88 88" role="img" aria-labelledby="title desc">
+  <title id="title">XLab mark</title>
+  <desc id="desc">A blue square laboratory mark with an uppercase X inside a scientific hexagonal cell.</desc>
+  <rect width="88" height="88" fill="#0b4f9a"/>
+  <g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M44 12 70 27v30L44 72 18 57V27z" stroke="#63d9d1" stroke-width="2.2"/>
+    <path d="M28 28 60 60M60 28 28 60" stroke="#fff" stroke-width="6"/>
+    <path d="M44 8v6M44 72v8M14 42H8M74 42h6" stroke="#fff" stroke-width="2"/>
   </g>
-  <path d="m32 25 7 7-7 7-7-7z" fill="#f2c66d"/>
-  <circle cx="32" cy="32" r="2.5" fill="#14272b"/>
+  <g fill="#63d9d1">
+    <circle cx="44" cy="12" r="3.2"/>
+    <circle cx="44" cy="72" r="3.2"/>
+    <circle cx="14" cy="42" r="3.2"/>
+    <circle cx="74" cy="42" r="3.2"/>
+  </g>
+  <circle cx="44" cy="44" r="5.5" fill="#fff"/>
+  <circle cx="44" cy="44" r="2.3" fill="#0b4f9a"/>
+  <text x="18" y="84" fill="#fff" font-family="Arial, Helvetica, sans-serif" font-size="10.5" font-weight="700" letter-spacing="1.1">XLAB</text>
 </svg>

@@ -21,13 +21,19 @@ project already includes a GitHub Pages workflow in
 
 ## Current logo
 
-The current X-Laboratory mark is based on a 16-cell visual grid:
+The current X-Laboratory mark follows the compact academic-lab layout used in
+the reference direction while remaining original:
 
-- the geometric X represents the laboratory name and cross-disciplinary work;
-- four terminal cells suggest connected research systems and data flow;
-- the central gold node represents energy exchange and coordination;
-- teal and deep blue-green preserve the previous site mark's visual continuity.
+- the blue square and white linework provide a clear mark at small sizes;
+- the cyan hexagonal cell suggests a scientific laboratory and a connected
+  system;
+- the bold white uppercase X makes the laboratory name immediately legible;
+- the central node represents the shared research core, while the four
+  terminals suggest connected data, energy, and learning systems;
+- the `XLab` wordmark and two-line descriptor make the research scope legible
+  in institutional applications.
 
 Use the standalone mark at `static/brand/x-laboratory-mark.svg` or the full
-wordmark at `static/brand/x-laboratory-logo.svg`. The favicon uses the same
-mark so the site identity stays consistent across the header and browser tabs.
+wordmark at `static/brand/x-laboratory-logo.svg`. The site header and favicon
+use the same mark so the identity stays consistent across the page and browser
+tabs.

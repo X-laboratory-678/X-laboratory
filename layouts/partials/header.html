@@ -1,7 +1,7 @@
 <nav>
   <h2 class="book-brand">
     <a class="flex align-center" href="{{ site.Home.RelPermalink }}">
-      <img src="{{ "favicon.svg" | relURL }}" alt="{{ site.Params.labName }}" width="64" height="64">
+      <img src="{{ "brand/x-laboratory-mark.svg" | relURL }}" alt="{{ site.Params.labName }}" width="64" height="64">
       <span class="book-brand__text">
         <strong>{{ site.Params.labName }}</strong>
         <small>{{ site.Params.brandSubtitle }}</small>
@@ -19,7 +19,9 @@
   {{- $searchEntries := slice -}}
   {{- range site.RegularPages -}}
     {{- if not .Draft -}}
-      {{- $searchEntries = $searchEntries | append (dict "title" .Title "href" .RelPermalink "content" (.Plain | plainify | truncate 500)) -}}
+      {{- $searchTitle := .Title -}}
+      {{- with .Params.displayTitle -}}{{- $searchTitle = . -}}{{- end -}}
+      {{- $searchEntries = $searchEntries | append (dict "title" $searchTitle "href" .RelPermalink "content" (.Plain | plainify | truncate 500)) -}}
     {{- end -}}
   {{- end -}}
   <script id="book-search-data" type="application/json">{{ $searchEntries | jsonify | safeJS }}</script>
