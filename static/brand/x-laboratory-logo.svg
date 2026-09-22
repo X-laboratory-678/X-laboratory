@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 104" role="img" aria-labelledby="title desc">
-  <title id="title">XLab — X-Laboratory</title>
+  <title id="title">XLAB — X-Laboratory</title>
   <desc id="desc">Academic laboratory logo with an uppercase X inside a scientific hexagonal cell and the subtitle Artificial Intelligence for Smart Grids and Data-Driven Systems.</desc>
   <g transform="translate(8 8)">
     <rect width="88" height="88" fill="#0b4f9a"/>
@@ -16,10 +16,9 @@
     </g>
     <circle cx="44" cy="44" r="5.5" fill="#fff"/>
     <circle cx="44" cy="44" r="2.3" fill="#0b4f9a"/>
-    <text x="18" y="84" fill="#fff" font-family="Arial, Helvetica, sans-serif" font-size="10.5" font-weight="700" letter-spacing="1.1">XLAB</text>
   </g>
   <g font-family="Arial, Helvetica, sans-serif">
-    <text x="122" y="48" fill="#111820" font-size="38" font-weight="700" letter-spacing="1">X<tspan fill="#0b4f9a">Lab</tspan></text>
+    <text x="122" y="48" fill="#111820" font-size="38" font-weight="700" letter-spacing="1">X<tspan fill="#0b4f9a">LAB</tspan></text>
     <text x="124" y="72" fill="#68727c" font-size="14" font-weight="600">Artificial Intelligence for</text>
     <text x="124" y="90" fill="#68727c" font-size="14" font-weight="600">Smart Grids &amp; Data-Driven Systems</text>
   </g>
