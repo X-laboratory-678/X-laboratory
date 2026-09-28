@@ -103,7 +103,8 @@
     {{- end }}
   {{- end }}
 
-  {{- if and (ne .Kind "404") (or .IsHome (eq .Section "contact") (eq .Section "join")) -}}
+  {{- $hasContactActions := or .IsHome (eq .Type "contact") (eq .Type "join") (eq .Section "contact") (eq .Section "join") (findRE `/docs/home/contact/$` .RelPermalink) (findRE `/docs/home/join-us/$` .RelPermalink) -}}
+  {{- if and (ne .Kind "404") $hasContactActions -}}
     {{- $contactActionsJS := resources.Get "js/contact-actions.js" -}}
     {{- if hugo.IsProduction -}}
       {{- $contactActionsJS = $contactActionsJS | resources.Minify | resources.Fingerprint "sha384" -}}

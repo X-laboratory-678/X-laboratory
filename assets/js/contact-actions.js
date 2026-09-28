@@ -1,18 +1,33 @@
 const copyWithFallback = async (value) => {
-  if (navigator.clipboard?.writeText) {
-    await navigator.clipboard.writeText(value);
-    return;
+  const text = String(value || "").trim();
+  if (!text) throw new Error("Nothing to copy");
+
+  if (navigator.clipboard?.writeText && window.isSecureContext) {
+    try {
+      await navigator.clipboard.writeText(text);
+      return;
+    } catch {
+      // Some browsers expose Clipboard API but reject the permission. Try the
+      // synchronous fallback before reporting an error to the visitor.
+    }
   }
 
   const input = document.createElement("textarea");
-  input.value = value;
+  input.value = text;
   input.setAttribute("readonly", "");
-  input.style.position = "fixed";
-  input.style.opacity = "0";
+  input.setAttribute("aria-hidden", "true");
+  input.style.cssText = "position: fixed; inset: -9999px auto auto -9999px; width: 1px; height: 1px; opacity: 0;";
   document.body.append(input);
+  input.focus({ preventScroll: true });
   input.select();
-  const copied = document.execCommand("copy");
-  input.remove();
+  input.setSelectionRange(0, text.length);
+
+  let copied = false;
+  try {
+    copied = document.queryCommandSupported?.("copy") !== false && document.execCommand("copy");
+  } finally {
+    input.remove();
+  }
 
   if (!copied) throw new Error("Copy command failed");
 };
