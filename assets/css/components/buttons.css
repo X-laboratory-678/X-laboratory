@@ -14,9 +14,18 @@
   transition: background-color 140ms ease, border-color 140ms ease;
 }
 
+.button:link,
+.button:visited {
+  color: var(--color-on-accent);
+}
+
 .button:hover {
   border-color: var(--color-accent-strong);
   background: var(--color-accent-strong);
+  color: var(--color-on-accent);
+}
+
+.button:focus-visible {
   color: var(--color-on-accent);
 }
 
@@ -25,7 +34,16 @@
   color: var(--color-accent);
 }
 
+.button--secondary:link,
+.button--secondary:visited {
+  color: var(--color-accent);
+}
+
 .button--secondary:hover {
+  color: var(--color-on-accent);
+}
+
+.button--secondary:focus-visible {
   color: var(--color-on-accent);
 }
 
