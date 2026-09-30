@@ -1,6 +1,6 @@
 ---
 title: 李深
-description: 李深是 X-Laboratory 硕士研究生二年级学生，研究方向为电池。
+description: 李深是 X-Laboratory 硕士研究生二年级学生，研究方向为数据中心。
 id: li-shen
 translationKey: people-li-shen
 aliases:
@@ -12,9 +12,9 @@ status: current
 photo: portrait.jpg
 photoAlt: 李深的头像
 researchInterests:
-  - 电池
+  - 数据中心
 weight: 21
 draft: false
 ---
 
-硕士研究生二年级，研究方向为电池。
+硕士研究生二年级，研究方向为数据中心。
