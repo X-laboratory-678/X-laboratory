@@ -4,7 +4,7 @@ backend:
   name: github
   repo: X-laboratory-678/X-laboratory
   branch: main
-  base_url: https://sveltia-cms-auth.YOUR-CLOUDFLARE-SUBDOMAIN.workers.dev
+  base_url: https://sveltia-cms-auth.fangx6531.workers.dev
   squash_merges: true
 
 publish_mode: editorial_workflow
