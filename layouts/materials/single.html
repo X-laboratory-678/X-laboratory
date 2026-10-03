@@ -1,51 +1,82 @@
 {{ define "main" }}
-  {{- $materialPages := where site.RegularPages "Section" "materials" -}}
-  {{- $items := slice -}}
-  {{- range $materialPages -}}
-    {{- if ne .File.Path $.File.Path -}}
-      {{- if or (not hugo.IsProduction) (not .Draft) -}}{{- $items = $items | append . -}}{{- end -}}
+  {{- if eq .Params.translationKey "materials" -}}
+    {{- $materialPages := where site.RegularPages "Section" "materials" -}}
+    {{- $items := slice -}}
+    {{- range $materialPages -}}
+      {{- if and (ne .File.Path $.File.Path) (ne .Params.translationKey "materials") (or (not hugo.IsProduction) (not .Draft)) -}}
+        {{- $items = $items | append . -}}
+      {{- end -}}
     {{- end -}}
-  {{- end -}}
-  {{- $items = sort $items "Date" "desc" -}}
-  {{- $categories := slice -}}
-  {{- $tags := slice -}}
-  {{- range $items -}}
-    {{- range .Params.categories -}}{{- $categories = $categories | append . -}}{{- end -}}
-    {{- range .Params.tags -}}{{- $tags = $tags | append . -}}{{- end -}}
-  {{- end -}}
-  {{- $categories = uniq $categories -}}
-  {{- $tags = uniq $tags -}}
-  <article class="misc-document materials-page book-posts">
-    <header class="misc-document__header section">
-      <div class="container stack">
-        <h1>{{ .Title }}</h1>
-        <div class="prose">{{ .Content }}</div>
-      </div>
-    </header>
+    {{- $items = sort $items "Date" "desc" -}}
+    {{- $categories := slice -}}
+    {{- $tags := slice -}}
+    {{- range $items -}}
+      {{- range .Params.categories -}}{{- $categories = $categories | append . -}}{{- end -}}
+      {{- range .Params.tags -}}{{- $tags = $tags | append . -}}{{- end -}}
+    {{- end -}}
+    {{- $categories = uniq $categories -}}
+    {{- $tags = uniq $tags -}}
+    <article class="misc-document materials-page book-posts">
+      <header class="misc-document__header section">
+        <div class="container stack">
+          <h1>{{ .Title }}</h1>
+          <div class="prose">{{ .Content }}</div>
+        </div>
+      </header>
 
-    <section class="misc-document__body section" aria-labelledby="materials-list-heading">
-      <div class="container materials-layout">
-        <section class="materials-list misc-document__section" aria-labelledby="materials-list-heading">
-          <h2 id="materials-list-heading">{{ i18n "materials_list" }}</h2>
-          {{- if $items -}}
-            <div class="material-list">{{ range $items }}{{ partial "material/item.html" . }}{{ end }}</div>
-          {{- else -}}
-            <p class="misc-empty">{{ i18n "no_materials" }}</p>
-          {{- end -}}
-        </section>
+      <section class="misc-document__body section" aria-labelledby="materials-list-heading">
+        <div class="container materials-layout">
+          <section class="materials-list misc-document__section" aria-labelledby="materials-list-heading">
+            <h2 id="materials-list-heading">{{ i18n "materials_list" }}</h2>
+            {{- if $items -}}
+              <div class="material-list">{{ range $items }}{{ partial "material/item.html" . }}{{ end }}</div>
+            {{- else -}}
+              <p class="misc-empty">{{ i18n "no_materials" }}</p>
+            {{- end -}}
+          </section>
 
-        <aside class="materials-taxonomy misc-document__section" aria-labelledby="materials-taxonomy-heading">
-          <h2 id="materials-taxonomy-heading">{{ i18n "materials_categories_and_tags" }}</h2>
-          {{- if or $categories $tags -}}
-            <div class="materials-taxonomy__groups">
-              {{- with $categories -}}<div><h3>{{ i18n "materials_categories" }}</h3><ul class="taxonomy-list">{{ range . }}<li>{{ . }}</li>{{ end }}</ul></div>{{- end -}}
-              {{- with $tags -}}<div><h3>{{ i18n "materials_tags" }}</h3><ul class="taxonomy-list">{{ range . }}<li>{{ . }}</li>{{ end }}</ul></div>{{- end -}}
-            </div>
-          {{- else -}}
-            <p class="misc-empty">{{ i18n "no_material_taxonomy" }}</p>
-          {{- end -}}
-        </aside>
-      </div>
-    </section>
-  </article>
+          <aside class="materials-taxonomy misc-document__section" aria-labelledby="materials-taxonomy-heading">
+            <h2 id="materials-taxonomy-heading">{{ i18n "materials_categories_and_tags" }}</h2>
+            {{- if or $categories $tags -}}
+              <div class="materials-taxonomy__groups">
+                {{- with $categories -}}<div><h3>{{ i18n "materials_categories" }}</h3><ul class="taxonomy-list">{{ range . }}<li>{{ . }}</li>{{ end }}</ul></div>{{- end -}}
+                {{- with $tags -}}<div><h3>{{ i18n "materials_tags" }}</h3><ul class="taxonomy-list">{{ range . }}<li>{{ . }}</li>{{ end }}</ul></div>{{- end -}}
+              </div>
+            {{- else -}}
+              <p class="misc-empty">{{ i18n "no_material_taxonomy" }}</p>
+            {{- end -}}
+          </aside>
+        </div>
+      </section>
+    </article>
+  {{- else -}}
+    {{- $directory := site.GetPage "/materials" -}}
+    <article class="misc-document material-detail">
+      <header class="misc-document__header section">
+        <div class="container stack">
+          {{- with $directory }}<a class="text-link text-link--back" href="{{ .RelPermalink }}">{{ i18n "back_to_materials" }}</a>{{ end }}
+          <h1>{{ .Title }}</h1>
+          {{- if not .Date.IsZero }}<time class="material-entry__date" datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date | time.Format ":date_long" }}</time>{{ end }}
+          {{- with .Params.summary }}<p class="material-entry__summary">{{ . }}</p>{{ end }}
+        </div>
+      </header>
+      <section class="misc-document__body section">
+        <div class="container stack">
+          {{- with .Params.cover }}{{ with $.Resources.GetMatch . }}<img class="material-detail__cover" src="{{ .RelPermalink }}" alt="{{ $.Params.coverAlt }}" loading="lazy" />{{ end }}{{ end }}
+          {{- with .Params.tldr }}<section class="misc-document__section"><h2>{{ i18n "material_takeaway" }}</h2><p>{{ . }}</p></section>{{ end }}
+          {{- if or .Params.categories .Params.tags }}
+            <ul class="material-entry__taxonomy" aria-label="{{ i18n "materials_categories_and_tags" }}">
+              {{- range .Params.categories }}<li>{{ . }}</li>{{ end -}}
+              {{- range .Params.tags }}<li>{{ . }}</li>{{ end -}}
+            </ul>
+          {{- end }}
+          {{- with .Params.authors }}<section class="misc-document__section"><h2>{{ i18n "material_authors" }}</h2><ul>{{ range . }}{{ with partial "content/resolve-by-id.html" (dict "site" site "section" "people" "id" .) }}<li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>{{ end }}{{ end }}</ul></section>{{ end }}
+          {{- with .Content }}<section class="misc-document__section"><div class="prose">{{ . }}</div></section>{{ end }}
+          {{- with .Params.relatedPublication }}<section class="misc-document__section"><h2>{{ i18n "project_publications" }}</h2>{{ with partial "content/resolve-by-id.html" (dict "site" site "section" "publications" "id" .) }}<p><a href="{{ .RelPermalink }}">{{ .Title }}</a></p>{{ end }}</section>{{ end }}
+          {{- with .Params.relatedProject }}<section class="misc-document__section"><h2>{{ i18n "related_projects" }}</h2>{{ with partial "content/resolve-by-id.html" (dict "site" site "section" "projects" "id" .) }}<p><a href="{{ .RelPermalink }}">{{ .Title }}</a></p>{{ end }}</section>{{ end }}
+          {{- with .Params.relatedResources }}<section class="misc-document__section"><h2>{{ i18n "resource_links" }}</h2><ul>{{ range . }}{{ with partial "content/resolve-by-id.html" (dict "site" site "section" "resources" "id" .) }}<li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>{{ end }}{{ end }}</ul></section>{{ end }}
+        </div>
+      </section>
+    </article>
+  {{- end -}}
 {{ end }}

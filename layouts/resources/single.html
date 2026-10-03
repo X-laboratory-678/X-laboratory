@@ -1,0 +1,34 @@
+{{ define "main" }}
+  {{- $directory := site.GetPage "/resources" -}}
+  <article class="record-profile section">
+    <div class="container stack">
+      {{- with $directory }}<a class="text-link text-link--back" href="{{ .RelPermalink }}">{{ i18n "back_to_resources" }}</a>{{ end }}
+      <header class="record-profile__header stack">
+        <p class="eyebrow">{{ i18n "resource_type" }} · {{ partial "resource/type-label.html" . }}</p>
+        <h1>{{ .Title }}</h1>
+        <p class="record-profile__summary">{{ .Params.summary }}</p>
+        {{- with .Params.license }}<p><strong>{{ i18n "resource_license" }}:</strong> {{ . }}</p>{{ end }}
+      </header>
+      {{- with .Content }}<section><h2>{{ i18n "overview" }}</h2><div class="prose">{{ . }}</div></section>{{ end }}
+      {{- if or .Params.code .Params.dataset .Params.pdf .Params.video .Params.demo .Params.repository .Params.externalLinks }}
+        <section><h2>{{ i18n "resource_links" }}</h2><ul class="editorial-list">
+          {{- with .Params.code }}<li><a href="{{ . }}" rel="external">{{ i18n "resource_code" }}</a></li>{{ end -}}
+          {{- with .Params.dataset }}<li><a href="{{ . }}" rel="external">{{ i18n "resource_dataset" }}</a></li>{{ end -}}
+          {{- with .Params.pdf }}
+            {{- $pdf := . -}}
+            {{- $external := or (strings.HasPrefix $pdf "https://") (strings.HasPrefix $pdf "http://") -}}
+            {{- if not $external }}{{- with $.Resources.GetMatch $pdf }}{{- $pdf = .RelPermalink -}}{{- else }}{{- $pdf = "" -}}{{- end }}{{- end }}
+            {{- with $pdf }}<li><a href="{{ . }}"{{ if $external }} rel="external"{{ end }}>{{ i18n "resource_pdf" }}</a></li>{{ end }}
+          {{- end -}}
+          {{- with .Params.video }}<li><a href="{{ . }}" rel="external">{{ i18n "resource_video" }}</a></li>{{ end -}}
+          {{- with .Params.demo }}<li><a href="{{ . }}" rel="external">{{ i18n "resource_demo" }}</a></li>{{ end -}}
+          {{- with .Params.repository }}<li><a href="{{ . }}" rel="external">{{ i18n "resource_repository" }}</a></li>{{ end -}}
+          {{- range .Params.externalLinks }}<li><a href="{{ .url }}" rel="external">{{ .label }}</a></li>{{ end -}}
+        </ul></section>
+      {{- end }}
+      {{- with .Params.people }}<section><h2>{{ i18n "project_people" }}</h2><ul>{{ range . }}{{ with partial "content/resolve-by-id.html" (dict "site" site "section" "people" "id" .) }}<li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>{{ end }}{{ end }}</ul></section>{{ end }}
+      {{- with .Params.relatedPublication }}<section><h2>{{ i18n "project_publications" }}</h2>{{ with partial "content/resolve-by-id.html" (dict "site" site "section" "publications" "id" .) }}<p><a href="{{ .RelPermalink }}">{{ .Title }}</a></p>{{ end }}</section>{{ end }}
+      {{- with .Params.relatedProject }}<section><h2>{{ i18n "related_projects" }}</h2>{{ with partial "content/resolve-by-id.html" (dict "site" site "section" "projects" "id" .) }}<p><a href="{{ .RelPermalink }}">{{ .Title }}</a></p>{{ end }}</section>{{ end }}
+    </div>
+  </article>
+{{ end }}

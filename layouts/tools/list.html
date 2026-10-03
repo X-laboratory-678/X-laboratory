@@ -1,0 +1,22 @@
+{{ define "main" }}
+  {{- $tools := slice -}}
+  {{- range where site.RegularPages "Section" "projects" -}}
+    {{- if and (eq .Params.projectType "tool") (or (not hugo.IsProduction) (not .Draft)) -}}{{- $tools = $tools | append . -}}{{- end -}}
+  {{- end -}}
+  <header class="directory-header section">
+    <div class="container stack">
+      <h1>{{ .Title }}</h1>
+      <div class="prose">{{ .Content }}</div>
+    </div>
+  </header>
+  <section class="research-record-directory section" aria-labelledby="tools-list-heading">
+    <div class="container stack">
+      <h2 id="tools-list-heading" class="visually-hidden">{{ .Title }}</h2>
+      {{- if $tools }}
+        <div class="research-record-list project-grid">{{ range sort $tools "Title" }}<div>{{ partial "project/directory-item.html" . }}</div>{{ end }}</div>
+      {{- else }}
+        <p class="research-empty">{{ i18n "no_tools" }}</p>
+      {{- end }}
+    </div>
+  </section>
+{{ end }}

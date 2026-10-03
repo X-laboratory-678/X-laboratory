@@ -1,0 +1,35 @@
+{{ define "main" }}
+  {{- $seriesPages := slice -}}
+  {{- $events := slice -}}
+  {{- range where .Pages "Draft" false -}}
+    {{- if eq .Params.eventType "recurring" -}}
+      {{- $seriesPages = $seriesPages | append . -}}
+    {{- else if .Params.eventType -}}
+      {{- $events = $events | append . -}}
+    {{- end -}}
+  {{- end -}}
+  <header class="directory-header section">
+    <div class="container stack">
+      <h1>{{ .Title }}</h1>
+      <div class="prose">{{ .Content }}</div>
+    </div>
+  </header>
+  <div class="record-directory section">
+    <div class="container stack">
+      {{- if $seriesPages }}
+        <section aria-labelledby="event-series-heading">
+          <h2 id="event-series-heading">{{ i18n "event_series_heading" }}</h2>
+          <ul class="editorial-list">{{ range sort $seriesPages "Title" }}<li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>{{ end }}</ul>
+        </section>
+      {{- end }}
+      <section aria-labelledby="events-list-heading">
+        <h2 id="events-list-heading">{{ i18n "events_list_heading" }}</h2>
+        {{- if $events }}
+          <ol class="event-list">{{ range sort $events "Date" "desc" }}<li>{{ partial "event/entry.html" . }}</li>{{ end }}</ol>
+        {{- else }}
+          <p class="event-empty">{{ i18n "no_events" }}</p>
+        {{- end }}
+      </section>
+    </div>
+  </div>
+{{ end }}

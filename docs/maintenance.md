@@ -13,6 +13,24 @@ This guide covers routine content maintenance for X-Laboratory. Read `CONTRIBUTI
 
 Do not edit Hugo-generated `public/` files or upload them manually.
 
+## Add or Update Content with the CMS
+
+After the external setup in `docs/cms-setup.md` is complete, open:
+
+```text
+https://x-laboratory-678.github.io/X-laboratory/admin/
+```
+
+Sign in with a GitHub account that has Write access to the repository. Create, edit, or delete an entry in its collection; the CMS opens a pull request instead of publishing directly. Every entry needs English and Chinese content. Check the generated files are `index.en.md` and `index.zh.md`, then wait for the bilingual audit, strict Hugo build, generated-site audit, and the content-owner review before merge. GitHub Pages deploys after the approved merge to `main`.
+
+- Keep the stable ID, slug, and `translationKey` aligned across translations. Published slugs are permanent.
+- Use only the controlled category, status, type, and research-area options in the editor. Adding or changing a vocabulary still requires a code change.
+- Event series pages are maintained as site structure. Create a specific event in the Events collection, choose its series, and use an event type other than the reserved `recurring` value.
+- Add a tool through Projects and set `projectType: tool`; it will also appear in Tools.
+- Record authoritative sources and review dates in `docs/content-sources.md`. The CMS does not replace factual review, privacy consent, or asset-rights checks.
+
+The CMS is a repository editor, not a sandboxed role system. Anyone granted the required GitHub Write access can also inspect and modify repository source files outside the CMS. Invite only trusted collaborators.
+
 ## Update the Principal Investigator
 
 The PI content is maintained in:

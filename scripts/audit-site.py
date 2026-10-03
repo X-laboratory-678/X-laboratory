@@ -76,6 +76,15 @@ APPROVED_EXTERNAL_IFRAMES = {
     ("https", "www.openstreetmap.org", "/export/embed.html"),
 }
 
+APPROVED_EXTERNAL_RUNTIME_ASSETS = {
+    (
+        "admin/index.html",
+        "https",
+        "unpkg.com",
+        "/@sveltia/cms@0.227.2/dist/sveltia-cms.js",
+    ),
+}
+
 REQUIRED_HTML = (
     "docs/research/grants/index.html",
     "zh/docs/research/grants/index.html",
@@ -301,6 +310,11 @@ class Audit:
                     self.error(f"{document.relative}: redirect alias must have one canonical")
                 continue
 
+            if not document.indexable and not document.is_404:
+                if document.relative != "admin/index.html":
+                    self.error(f"{document.relative}: unexpected noindex page")
+                continue
+
             expected_lang = "zh-CN" if document.relative.startswith("zh/") else "en"
             if document.lang != expected_lang:
                 self.error(f"{document.relative}: html lang is {document.lang!r}, expected {expected_lang!r}")
@@ -455,7 +469,13 @@ class Audit:
                 if parsed_direct.scheme in {"http", "https"} and f"{parsed_direct.scheme}://{parsed_direct.netloc}" != self.site_origin:
                     if tag in {"script", "img", "source", "iframe"} or (tag == "link" and "stylesheet" in next((link.get("rel", "") for link in document.links if link.get("href") == value), "")):
                         approved_iframe = tag == "iframe" and (parsed_direct.scheme, parsed_direct.netloc, parsed_direct.path) in APPROVED_EXTERNAL_IFRAMES
-                        if not approved_iframe:
+                        approved_runtime = (
+                            document.relative,
+                            parsed_direct.scheme,
+                            parsed_direct.netloc,
+                            parsed_direct.path,
+                        ) in APPROVED_EXTERNAL_RUNTIME_ASSETS
+                        if not approved_iframe and not approved_runtime:
                             self.error(f"{document.relative}: third-party runtime asset: {value}")
                     continue
                 if value.startswith("/") and self.base_path != "/" and not value.startswith(self.base_path):

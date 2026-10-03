@@ -96,7 +96,7 @@ These decisions define the initial architecture. A future change that conflicts 
 
 **Reason:** GitHub's Pages artifact flow avoids committing generated files or maintaining a `gh-pages` branch. Using the Pages-provided base URL supports repository subpaths and a future configured custom domain without changing templates.
 
-**Consequences:** A failed version check, Hugo warning, build error, or audit error prevents artifact upload and deployment. The workflow runs on pushes to `main` and manual dispatch only. Repository administrators must select GitHub Actions as the Pages source. The authorized repository is `X-laboratory-678/X-laboratory`; it is deployed as Project Pages at `https://x-laboratory-678.github.io/X-laboratory/`. GitHub supplies the base URL at build time, so the repository subpath remains correct without hard-coded deployment URLs in templates. No custom domain or `CNAME` is currently configured.
+**Consequences:** A failed version check, Hugo warning, build error, or audit error prevents artifact upload and deployment. Pull requests targeting `main` run the bilingual content-pair audit and strict site build without uploading or deploying an artifact. Only pushes to `main` and manual dispatches on `main` upload and deploy the artifact. Repository administrators must select GitHub Actions as the Pages source and require the `Build and audit` check before merging content. The authorized repository is `X-laboratory-678/X-laboratory`; it is deployed as Project Pages at `https://x-laboratory-678.github.io/X-laboratory/`. GitHub supplies the base URL at build time, so the repository subpath remains correct without hard-coded deployment URLs in templates. No custom domain or `CNAME` is currently configured.
 
 ## ADR-013 — Group Public Routes by Documentation Area
 
@@ -130,10 +130,18 @@ These decisions define the initial architecture. A future change that conflicts 
 
 **Consequences:** Navigation remains sourced from Hugo menus and localized through `i18n/`. Current groups are expanded by default, all links remain available without JavaScript, and the mobile disclosure is a progressive enhancement. The shell, tokens, mark, typography, and component CSS are X-Laboratory-owned implementations; reference-site CSS, templates, branding, prose, and media are not copied.
 
-## ADR-017 — Expose Empty Top-Level Directories Without Inventing Records
+## ADR-017 — Expose Content Directories Without Inventing Records (Superseded by ADR-018)
 
-**Decision:** Publish bilingual top-level directories for Events, Resources, and Tools with factual empty states while keeping their record-level child destinations disabled until verified content exists.
+**Decision:** Publish bilingual top-level directories for Events, Resources, and Tools with factual empty states while keeping their record-level child destinations disabled until verified content exists. This decision's restriction on record-level destinations is superseded by ADR-018.
 
 **Reason:** The documentation-style information architecture should make planned laboratory areas discoverable, but missing events, resources, software, datasets, benchmarks, and deadlines must not be represented by fabricated records or copied reference content.
 
 **Consequences:** The directories are stable, base-path-safe Hugo routes with localized explanatory copy. New records still require the relevant schema, provenance, permissions, and build validation before publication; the empty states can be replaced by real Page Bundles without changing the top-level URLs.
+
+## ADR-018 — Add Sveltia CMS as a GitHub Editorial Interface
+
+**Decision:** Use Sveltia CMS at `/admin/` to create, edit, and delete existing bilingual content bundles stored in Git. Configure collections for People, Publications, Projects and Tools, Research (edit-only), News, Grants, Opportunities, Events, Resources, and Materials. Use the GitHub backend with editorial workflow so CMS edits become pull requests. Require paired English and Chinese files, the content-pair audit, the strict Hugo build, generated-site audit, and owner review before changes reach `main`. Keep controlled vocabularies, site settings, and new content types outside the CMS.
+
+**Reason:** Routine factual updates should be manageable through a form-based interface while retaining Markdown as the authoritative source, normal Git history, Hugo's existing page-bundle model, and review before publication. A static CMS interface and a small OAuth Worker avoid adding a content database or site application server.
+
+**Consequences:** The CMS JavaScript is pinned to a version and loaded from unpkg; that external dependency must be upgraded deliberately. GitHub CMS users need repository Write access, which also grants source-code access and write capability outside the CMS. The OAuth Worker URL and secret configuration, Pages source, CODEOWNERS enforcement, required CI checks, and repository rulesets require owner-side setup and are documented in `docs/cms-setup.md`. Until those external settings are completed, `/admin/` is present but sign-in is unavailable. Hugo includes future-dated entries in production so events can be published before their scheduled date; merging the PR is the publication action, not the front matter date. Existing event-series pages are site structure and excluded from event editing; Tools are Projects with `projectType: tool`.

@@ -1,0 +1,20 @@
+{{ define "main" }}
+  {{- $pages := .Pages -}}
+  {{- if hugo.IsProduction }}{{ $pages = where $pages "Draft" false }}{{ end -}}
+  <header class="directory-header section">
+    <div class="container stack">
+      <h1>{{ .Title }}</h1>
+      <div class="prose">{{ .Content }}</div>
+    </div>
+  </header>
+  <section class="record-directory section" aria-labelledby="resources-list-heading">
+    <div class="container stack">
+      <h2 id="resources-list-heading">{{ .Title }}</h2>
+      {{- if $pages }}
+        <ol class="editorial-list">{{ range sort $pages "Title" }}<li>{{ partial "resource/item.html" . }}</li>{{ end }}</ol>
+      {{- else }}
+        <p class="empty-state">{{ i18n "no_resources" }}</p>
+      {{- end }}
+    </div>
+  </section>
+{{ end }}
