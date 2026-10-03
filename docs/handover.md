@@ -9,11 +9,13 @@
 
 ## Architecture
 
-The site uses Hugo Extended with custom layouts, Markdown Leaf Page Bundles, small YAML controlled vocabularies, native CSS, and minimal native JavaScript. It has no database, application server, Node frontend toolchain, or third-party theme.
+The public site uses Hugo Extended with custom layouts, Markdown Leaf Page Bundles, small YAML controlled vocabularies, native CSS, and minimal native JavaScript. Sveltia CMS provides a GitHub-authenticated editor over those Markdown files; content remains in Git, with no database, site application server, Node frontend toolchain, or third-party theme.
 
 English is published at `/`; Simplified Chinese is published at `/zh/`. Content-specific resources remain inside their Page Bundle. Shared categories, status values, research IDs, and ordering live under `data/`.
 
-V2 uses a hierarchical Hugo menu. People, Research, Events, Resources, and Tools are enabled top-level groups. Events, Resources, and Tools currently render bilingual empty-state directories; their record-level child destinations remain disabled until verified routes and content ship. The disclosure behavior is progressively enhanced with native JavaScript and retains a complete no-JavaScript link fallback.
+V2 uses a hierarchical Hugo menu. People, Research, Events, Resources, and Tools are enabled top-level groups. Events, Resources, Tools, and Materials now have layouts that list verified CMS-managed records. Event series pages remain site structure; specific event records are selected by their `series` field. Tools are Projects with `projectType: tool`. The disclosure behavior is progressively enhanced with native JavaScript and retains a complete no-JavaScript link fallback.
+
+CMS source files are in `static/admin/`; the pinned Sveltia release is loaded from unpkg. `static/admin/config.yml` still needs the actual Cloudflare Worker URL before sign-in works. Cloudflare OAuth credentials and GitHub branch rulesets are external setup; follow `docs/cms-setup.md`. Do not commit OAuth secrets.
 
 ## Content Authority
 
@@ -29,7 +31,7 @@ V2 uses a hierarchical Hugo menu. People, Research, Events, Resources, and Tools
 
 ## Deployment
 
-`.github/workflows/pages.yml` runs on pushes to `main`. It reads the pinned Hugo version, obtains the actual URL from GitHub Pages, performs the strict production build and `scripts/audit-site.py`, uploads `public/` as a Pages artifact, and deploys it to the `github-pages` environment.
+`.github/workflows/pages.yml` runs on pull requests targeting `main`, pushes to `main`, and manual dispatch. It first checks bilingual content bundles, then reads the pinned Hugo version and runs the strict production build and `scripts/audit-site.py`. Pull requests do not upload or deploy an artifact. Only pushes to `main` and manual dispatches against `main` upload `public/` as a Pages artifact and deploy it to the `github-pages` environment.
 
 The dynamic Pages URL is important: templates and content must not hard-code the domain or `/X-laboratory/` base path. Do not create a `gh-pages` branch or manually upload generated files.
 
@@ -56,7 +58,8 @@ Required result: zero Hugo warnings and zero audit critical errors. Also review 
 - The favicon is an original provisional mark; final official logo/favicon approval is pending.
 - No approved PI portrait is available; the site intentionally uses its neutral fallback.
 - No custom domain is configured.
-- There is no CMS or analytics by design.
+- The CMS sign-in remains inactive until the OAuth Worker URL and repository rulesets are configured. Repository editors need Write access and therefore can also read and modify source code.
+- No analytics are configured.
 - Search Console registration is optional and has not been performed.
 - Firefox, WebKit, and Safari were not available for direct testing on the final Windows environment. Edge and Chrome were tested; Safari must not be inferred from Chromium results.
 - The external Durham repository blocks automated access to one cited record, and the cited event report may reset automated connections. Their provenance is retained in `docs/content-sources.md`.
@@ -64,6 +67,7 @@ Required result: zero Hugo warnings and zero audit critical errors. Also review 
 ## Maintenance Entry Points
 
 - Routine content procedures: `docs/maintenance.md`
+- CMS authentication and repository rules: `docs/cms-setup.md`
 - Contributor rules and archetype commands: `CONTRIBUTING.md`
 - Content schemas and relationship rules: `docs/content-models.md`
 - Factual provenance: `docs/content-sources.md`

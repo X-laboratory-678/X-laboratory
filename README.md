@@ -5,9 +5,9 @@ Official website source for **X-Laboratory** at Shanghai University of Electric 
 - Live site: <https://x-laboratory-678.github.io/X-laboratory/>
 - Repository: <https://github.com/X-laboratory-678/X-laboratory>
 - Production branch: `main`
-- Status: V2 Phase B — Grants and Opportunities completed
+- Status: Sveltia CMS editorial workflow configured; external OAuth and GitHub rules remain to be enabled
 
-The site is a bilingual, content-driven Hugo website deployed automatically to GitHub Project Pages. It has no database, backend server, CMS, or Node frontend toolchain.
+The public site is a bilingual, content-driven Hugo website deployed automatically to GitHub Project Pages. Sveltia CMS provides a GitHub-authenticated editorial interface over the existing Markdown bundles; the CMS adds no content database, site application server, or Node frontend build pipeline.
 
 ## Technology
 
@@ -51,7 +51,9 @@ data/                  Controlled IDs, labels, categories, and ordering
 i18n/                  Shared interface translations
 ```
 
-The V2 foundation defines draft-safe schemas for Grants, Opportunities, Events, Resources, and Materials. Events, Resources, and Materials remain disabled until their later implementation phases. See `docs/missing-information.md` for facts still needed from the laboratory.
+The content repository includes schemas for Grants, Opportunities, Events, Resources, and Materials. Sveltia CMS manages existing content types, including bilingual Research pages (editing only); it keeps controlled vocabularies and site settings outside the editor. Projects with `projectType: tool` also populate the Tools directory. See `docs/missing-information.md` for facts still needed from the laboratory.
+
+The CMS is served at `/admin/`. Before sign-in is available, deploy the Sveltia OAuth Worker and configure the GitHub repository rulesets using [the CMS setup guide](docs/cms-setup.md). Every entry requires both English and Chinese files and goes through a pull request.
 
 Grants and Opportunities now have bilingual public directories with honest empty states. Draft example bundles exercise their layouts locally but are excluded from production; they are not evidence of funding or recruitment.
 
@@ -105,12 +107,16 @@ The local production configuration intentionally uses a reserved `example.invali
 The supported deployment flow is:
 
 ```text
-push or merge to main
+CMS content change → pull request
+→ bilingual bundle audit
+→ pinned Hugo strict build and generated-site audit
+→ content owner review
+→ merge to main
 → GitHub Actions installs the pinned Hugo Extended release
 → strict production build with the Pages-provided base URL
 → scripts/audit-site.py
 → Pages artifact upload
-→ automatic GitHub Pages deployment
+→ automatic GitHub Pages deployment (main branch only)
 ```
 
 Do not create a `gh-pages` branch or manually upload `public/`. The current site has no custom domain or `CNAME`.
@@ -118,6 +124,7 @@ Do not create a `gh-pages` branch or manually upload `public/`. The current site
 ## Documentation
 
 - [Routine maintenance](docs/maintenance.md)
+- [CMS setup and repository protection](docs/cms-setup.md)
 - [Project handover](docs/handover.md)
 - [Contribution guide](CONTRIBUTING.md)
 - [Content models](docs/content-models.md)

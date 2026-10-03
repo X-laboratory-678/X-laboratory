@@ -1,0 +1,448 @@
+# yaml-language-server: $schema=https://unpkg.com/@sveltia/cms/schema/sveltia-cms.json
+# Before deployment, replace base_url with the URL of the Cloudflare Worker.
+backend:
+  name: github
+  repo: X-laboratory-678/X-laboratory
+  branch: main
+  base_url: https://sveltia-cms-auth.YOUR-CLOUDFLARE-SUBDOMAIN.workers.dev
+  squash_merges: true
+
+publish_mode: editorial_workflow
+
+i18n:
+  structure: multiple_files
+  locales: [en, zh]
+  default_locale: en
+  initial_locales: all
+
+media_folder: static/uploads
+public_folder: /uploads
+
+collections:
+  - name: people
+    label: 人员
+    label_singular: 人员
+    folder: content/people
+    path: '{{slug}}/index'
+    identifier_field: id
+    slug:
+      template: '{{id}}'
+      editable: [create]
+      pattern: ['^[a-z0-9]+(-[a-z0-9]+)*$', '请使用小写英文字母、数字和连字符']
+      hint: 稳定 ID，同时用于页面地址；发布后不要更改。
+    media_folder: ''
+    public_folder: ''
+    i18n: true
+    create: true
+    publish_mode: editorial_workflow
+    fields:
+      - { label: 中文/英文姓名, name: title, widget: string, required: true, i18n: true }
+      - { label: 搜索摘要, name: description, widget: text, required: false, i18n: true }
+      - { label: 稳定 ID, name: id, widget: string, required: true, i18n: duplicate, pattern: ['^[a-z0-9]+(-[a-z0-9]+)*$', '请使用小写英文字母、数字和连字符'] }
+      - { label: 翻译标识, name: translationKey, widget: string, required: true, i18n: duplicate, hint: 通常使用 people-稳定ID }
+      - { label: 角色, name: role, widget: string, required: true, i18n: true }
+      - label: 成员类别
+        name: category
+        widget: select
+        required: true
+        i18n: duplicate
+        options: [pi, faculty, postdoc, phd, master, ra, undergraduate, visitor, alumni]
+      - { label: 年级/届别, name: cohort, widget: string, required: false, i18n: duplicate }
+      - { label: 状态, name: status, widget: select, required: true, i18n: duplicate, options: [current, alumni] }
+      - { label: 头像文件, name: photo, widget: image, required: false, i18n: duplicate }
+      - { label: 头像说明, name: photoAlt, widget: string, required: false, i18n: true }
+      - { label: 公开邮箱, name: email, widget: string, required: false, i18n: duplicate }
+      - { label: 个人主页, name: homepage, widget: string, required: false, i18n: duplicate }
+      - { label: GitHub, name: github, widget: string, required: false, i18n: duplicate }
+      - { label: 旧网址别名, name: aliases, widget: list, required: false, i18n: duplicate, hint: 保留已有别名；仅在需要保留旧网址时添加，不要随意删除。 }
+      - { label: Google Scholar, name: googleScholar, widget: string, required: false, i18n: duplicate }
+      - { label: ORCID, name: orcid, widget: string, required: false, i18n: duplicate }
+      - { label: 研究兴趣, name: researchInterests, widget: list, required: false, i18n: true }
+      - { label: 加入时间, name: joined, widget: string, required: false, i18n: duplicate }
+      - { label: 离开时间, name: left, widget: string, required: false, i18n: duplicate }
+      - { label: 后续去向, name: alumniNext, widget: string, required: false, i18n: true }
+      - { label: 排序权重, name: weight, widget: number, value_type: int, required: false, i18n: duplicate }
+      - { label: 页面正文, name: body, widget: markdown, required: false, i18n: true }
+      - { label: Hugo 草稿, name: draft, widget: hidden, default: false, i18n: duplicate }
+
+  - name: publications
+    label: 论文
+    label_singular: 论文
+    folder: content/publications
+    path: '{{slug}}/index'
+    identifier_field: id
+    slug:
+      template: '{{id}}'
+      editable: [create]
+      pattern: ['^[a-z0-9]+(-[a-z0-9]+)*$', '请使用小写英文字母、数字和连字符']
+      hint: 稳定论文 ID，同时用于页面地址；发布后不要更改。
+    media_folder: ''
+    public_folder: ''
+    i18n: true
+    create: true
+    publish_mode: editorial_workflow
+    fields:
+      - { label: 论文标题, name: title, widget: string, required: true, i18n: duplicate }
+      - { label: 搜索摘要, name: description, widget: text, required: false, i18n: true }
+      - { label: 展示标题, name: displayTitle, widget: string, required: false, i18n: true }
+      - { label: 稳定 ID, name: id, widget: string, required: true, i18n: duplicate, pattern: ['^[a-z0-9]+(-[a-z0-9]+)*$', '请使用小写英文字母、数字和连字符'] }
+      - { label: 翻译标识, name: translationKey, widget: string, required: true, i18n: duplicate, hint: 通常使用 publication-稳定ID }
+      - label: 作者（按论文原顺序）
+        name: authors
+        widget: list
+        required: true
+        min: 1
+        i18n: duplicate
+        fields:
+          - { label: 作者姓名, name: name, widget: string, required: true }
+          - { label: 实验室成员 ID（如适用）, name: person, widget: relation, collection: people, value_field: id, display_fields: [title], required: false }
+      - { label: 实验室成员, name: labMembers, widget: relation, collection: people, value_field: id, display_fields: [title], multiple: true, required: false, i18n: duplicate }
+      - { label: 期刊/会议, name: venue, widget: string, required: false, i18n: duplicate }
+      - { label: 期刊/会议简称, name: venueShort, widget: string, required: false, i18n: duplicate }
+      - { label: 年份, name: year, widget: number, value_type: int, required: true, i18n: duplicate }
+      - { label: 发表月份, name: publicationMonth, widget: number, value_type: int, required: false, i18n: duplicate }
+      - { label: 发表日期, name: date, widget: datetime, type: date, required: false, i18n: duplicate }
+      - label: 论文类型
+        name: publicationType
+        widget: select
+        required: true
+        i18n: duplicate
+        options: [conference, journal, preprint, workshop, book-chapter, thesis, other]
+      - label: 发表状态
+        name: publicationStatus
+        widget: select
+        required: false
+        i18n: duplicate
+        options: [preprint, submitted, accepted, in-press, published]
+      - { label: DOI（不含 doi.org）, name: doi, widget: string, required: false, i18n: duplicate }
+      - { label: 论文链接, name: paperUrl, widget: string, required: false, i18n: duplicate }
+      - { label: PDF 文件或链接, name: pdf, widget: string, required: false, i18n: duplicate }
+      - { label: 代码链接, name: code, widget: string, required: false, i18n: duplicate }
+      - { label: 项目页 ID 或链接, name: projectPage, widget: string, required: false, i18n: duplicate }
+      - { label: 数据集链接, name: dataset, widget: string, required: false, i18n: duplicate }
+      - { label: 视频链接, name: video, widget: string, required: false, i18n: duplicate }
+      - { label: BibTeX 文件名, name: bibtex, widget: string, required: false, i18n: duplicate }
+      - { label: 缩略图, name: thumbnail, widget: image, required: false, i18n: duplicate }
+      - { label: 精选论文, name: selected, widget: boolean, default: false, required: false, i18n: duplicate }
+      - { label: 研究方向, name: researchAreas, widget: relation, collection: research, value_field: id, display_fields: [title], multiple: true, required: false, i18n: duplicate }
+      - { label: 标签, name: tags, widget: list, required: false, i18n: duplicate }
+      - label: 补充链接
+        name: links
+        widget: list
+        required: false
+        i18n: duplicate
+        fields:
+          - { label: 链接名称, name: label, widget: string, required: true }
+          - { label: URL, name: url, widget: string, required: true }
+      - { label: 接收率, name: acceptanceRate, widget: number, value_type: float, required: false, i18n: duplicate }
+      - { label: 接收率来源, name: acceptanceRateSource, widget: string, required: false, i18n: duplicate }
+      - { label: 荣誉/奖项, name: distinctions, widget: list, required: false, i18n: duplicate }
+      - { label: 指标数据 ID, name: metricsId, widget: string, required: false, i18n: duplicate }
+      - { label: 补充资源 ID, name: supplementary, widget: relation, collection: resources, value_field: id, display_fields: [title], multiple: true, required: false, i18n: duplicate }
+      - { label: 相关博客 URL, name: blog, widget: string, required: false, i18n: duplicate }
+      - { label: 旧网址别名, name: aliases, widget: list, required: false, i18n: duplicate, hint: 保留已有别名；仅在需要保留旧网址时添加，不要随意删除。 }
+      - { label: 摘要或论文说明, name: body, widget: markdown, required: false, i18n: true }
+      - { label: Hugo 草稿, name: draft, widget: hidden, default: false, i18n: duplicate }
+
+  - name: projects
+    label: 项目与工具
+    label_singular: 项目或工具
+    folder: content/projects
+    path: '{{slug}}/index'
+    identifier_field: id
+    slug:
+      template: '{{id}}'
+      editable: [create]
+      pattern: ['^[a-z0-9]+(-[a-z0-9]+)*$', '请使用小写英文字母、数字和连字符']
+      hint: 稳定项目 ID，同时用于页面地址；工具按项目类型 tool 管理。
+    media_folder: ''
+    public_folder: ''
+    i18n: true
+    create: true
+    publish_mode: editorial_workflow
+    fields:
+      - { label: 项目名称, name: title, widget: string, required: true, i18n: true }
+      - { label: 稳定 ID, name: id, widget: string, required: true, i18n: duplicate, pattern: ['^[a-z0-9]+(-[a-z0-9]+)*$', '请使用小写英文字母、数字和连字符'] }
+      - { label: 翻译标识, name: translationKey, widget: string, required: true, i18n: duplicate, hint: 通常使用 project-稳定ID }
+      - { label: 摘要, name: summary, widget: text, required: true, i18n: true }
+      - { label: 主图, name: hero, widget: image, required: false, i18n: duplicate }
+      - { label: 主图说明, name: heroAlt, widget: string, required: false, i18n: true }
+      - { label: 项目状态, name: status, widget: select, required: true, i18n: duplicate, options: [planned, active, completed, archived] }
+      - { label: 项目类型, name: projectType, widget: select, required: false, i18n: duplicate, options: [research, software, platform, dataset, benchmark, initiative, competition, tool] }
+      - { label: 开始年份, name: startYear, widget: number, value_type: int, required: true, i18n: duplicate }
+      - { label: 结束年份, name: endYear, widget: number, value_type: int, required: false, i18n: duplicate }
+      - { label: 参与人员, name: people, widget: relation, collection: people, value_field: id, display_fields: [title], multiple: true, required: false, i18n: duplicate }
+      - { label: 研究方向, name: researchAreas, widget: relation, collection: research, value_field: id, display_fields: [title], multiple: true, required: false, i18n: duplicate }
+      - { label: 相关论文, name: publications, widget: relation, collection: publications, value_field: id, display_fields: [title], multiple: true, required: false, i18n: duplicate }
+      - { label: 代码链接, name: code, widget: string, required: false, i18n: duplicate }
+      - { label: 数据集链接, name: dataset, widget: string, required: false, i18n: duplicate }
+      - { label: 演示链接, name: demo, widget: string, required: false, i18n: duplicate }
+      - { label: 仓库链接, name: repository, widget: string, required: false, i18n: duplicate }
+      - { label: 文档链接, name: documentation, widget: string, required: false, i18n: duplicate }
+      - label: 其他链接
+        name: links
+        widget: list
+        required: false
+        i18n: duplicate
+        fields:
+          - { label: 链接名称, name: label, widget: string, required: true }
+          - { label: URL, name: url, widget: string, required: true }
+      - { label: 首页精选, name: featured, widget: boolean, default: false, required: false, i18n: duplicate }
+      - { label: 排序权重, name: weight, widget: number, value_type: int, required: false, i18n: duplicate }
+      - { label: 旧网址别名, name: aliases, widget: list, required: false, i18n: duplicate, hint: 保留已有别名；仅在需要保留旧网址时添加，不要随意删除。 }
+      - { label: 项目介绍, name: body, widget: markdown, required: false, i18n: true }
+      - { label: Hugo 草稿, name: draft, widget: hidden, default: false, i18n: duplicate }
+
+  - name: research
+    label: 研究方向
+    label_singular: 研究方向
+    folder: content/research
+    path: '{{slug}}/index'
+    identifier_field: id
+    slug:
+      template: '{{id}}'
+      editable: false
+    media_folder: ''
+    public_folder: ''
+    i18n: true
+    create: false
+    delete: false
+    publish_mode: editorial_workflow
+    fields:
+      - { label: 方向名称（须与词表标签一致）, name: title, widget: string, required: true, i18n: true }
+      - { label: 稳定 ID（须与词表一致）, name: id, widget: string, required: true, i18n: duplicate }
+      - { label: 翻译标识, name: translationKey, widget: string, required: true, i18n: duplicate }
+      - { label: 简介, name: description, widget: text, required: true, i18n: true }
+      - { label: 排序权重, name: weight, widget: number, value_type: int, required: false, i18n: duplicate }
+      - { label: 旧网址别名, name: aliases, widget: list, required: false, i18n: duplicate, hint: 保留已有别名；仅在需要保留旧网址时添加，不要随意删除。 }
+      - { label: 页面正文, name: body, widget: markdown, required: false, i18n: true }
+      - { label: Hugo 草稿, name: draft, widget: hidden, default: false, i18n: duplicate }
+
+  - name: news
+    label: 新闻
+    label_singular: 新闻
+    folder: content/news
+    path: '{{slug}}/index'
+    slug:
+      editable: [create]
+      pattern: ['^[0-9]{4}-[0-9]{2}-[0-9]{2}-[a-z0-9]+(-[a-z0-9]+)*$', '请使用 YYYY-MM-DD-英文短标题']
+      hint: 固定 URL；新条目使用日期前缀，例如 2026-10-03-project-update。
+    media_folder: ''
+    public_folder: ''
+    i18n: true
+    create: true
+    publish_mode: editorial_workflow
+    fields:
+      - { label: 新闻标题, name: title, widget: string, required: true, i18n: true }
+      - { label: 翻译标识, name: translationKey, widget: string, required: true, i18n: duplicate, hint: 使用 news-加完整页面 slug }
+      - { label: 日期, name: date, widget: datetime, type: date, required: true, i18n: duplicate }
+      - { label: 最后修改日期, name: lastmod, widget: datetime, type: date, required: false, i18n: duplicate }
+      - { label: 摘要, name: summary, widget: text, required: false, i18n: true }
+      - { label: 封面图, name: image, widget: image, required: false, i18n: duplicate }
+      - { label: 图片说明, name: imageAlt, widget: string, required: false, i18n: true }
+      - { label: 类别, name: category, widget: select, required: true, i18n: duplicate, options: [publication, award, event, announcement, media, other] }
+      - { label: 关联论文, name: relatedPublication, widget: relation, collection: publications, value_field: id, display_fields: [title], required: false, i18n: duplicate }
+      - { label: 关联项目, name: relatedProject, widget: relation, collection: projects, value_field: id, display_fields: [title], required: false, i18n: duplicate }
+      - { label: 关联资助, name: relatedGrant, widget: relation, collection: grants, value_field: id, display_fields: [title], required: false, i18n: duplicate }
+      - { label: 关联活动, name: relatedEvent, widget: relation, collection: events, value_field: id, display_fields: [title], required: false, i18n: duplicate }
+      - { label: 关联机会, name: relatedOpportunity, widget: relation, collection: opportunities, value_field: id, display_fields: [title], required: false, i18n: duplicate }
+      - { label: 首页精选, name: featured, widget: boolean, default: false, required: false, i18n: duplicate }
+      - { label: 旧网址别名, name: aliases, widget: list, required: false, i18n: duplicate }
+      - { label: 正文, name: body, widget: markdown, required: false, i18n: true }
+      - { label: Hugo 草稿, name: draft, widget: hidden, default: false, i18n: duplicate }
+
+  - name: grants
+    label: 资助项目
+    label_singular: 资助项目
+    folder: content/grants
+    path: '{{slug}}/index'
+    identifier_field: id
+    slug:
+      template: '{{id}}'
+      editable: [create]
+      pattern: ['^[a-z0-9]+(-[a-z0-9]+)*$', '请使用小写英文字母、数字和连字符']
+    media_folder: ''
+    public_folder: ''
+    i18n: true
+    create: true
+    publish_mode: editorial_workflow
+    fields:
+      - { label: 资助名称, name: title, widget: string, required: true, i18n: true }
+      - { label: 稳定 ID, name: id, widget: string, required: true, i18n: duplicate, pattern: ['^[a-z0-9]+(-[a-z0-9]+)*$', '请使用小写英文字母、数字和连字符'] }
+      - { label: 翻译标识, name: translationKey, widget: string, required: true, i18n: duplicate }
+      - { label: 计划/项目名称, name: program, widget: string, required: false, i18n: true }
+      - { label: 资助方, name: funder, widget: string, required: true, i18n: duplicate }
+      - { label: 项目编号, name: grantNumber, widget: string, required: false, i18n: duplicate }
+      - { label: 实验室承担角色, name: role, widget: string, required: true, i18n: true }
+      - { label: 金额, name: amount, widget: number, value_type: float, required: false, i18n: duplicate }
+      - { label: 币种, name: currency, widget: string, required: false, i18n: duplicate, hint: 填写 ISO 4217 代码，例如 CNY 或 USD }
+      - { label: 开始年份, name: startYear, widget: number, value_type: int, required: true, i18n: duplicate }
+      - { label: 结束年份, name: endYear, widget: number, value_type: int, required: false, i18n: duplicate }
+      - { label: 状态, name: status, widget: select, required: true, i18n: duplicate, options: [active, completed, archived] }
+      - { label: 参与人员, name: people, widget: relation, collection: people, value_field: id, display_fields: [title], multiple: true, required: false, i18n: duplicate }
+      - { label: 研究方向, name: researchAreas, widget: relation, collection: research, value_field: id, display_fields: [title], multiple: true, required: false, i18n: duplicate }
+      - { label: 关联项目, name: projects, widget: relation, collection: projects, value_field: id, display_fields: [title], multiple: true, required: false, i18n: duplicate }
+      - { label: 官方链接, name: officialUrl, widget: string, required: false, i18n: duplicate }
+      - { label: 资助方标识图, name: logo, widget: image, required: false, i18n: duplicate }
+      - { label: 标识图说明, name: logoAlt, widget: string, required: false, i18n: true }
+      - { label: 摘要, name: summary, widget: text, required: true, i18n: true }
+      - { label: 首页精选, name: featured, widget: boolean, default: false, required: false, i18n: duplicate }
+      - { label: 正文, name: body, widget: markdown, required: false, i18n: true }
+      - { label: Hugo 草稿, name: draft, widget: hidden, default: false, i18n: duplicate }
+
+  - name: opportunities
+    label: 招募机会
+    label_singular: 招募机会
+    folder: content/opportunities
+    path: '{{slug}}/index'
+    identifier_field: id
+    slug:
+      template: '{{id}}'
+      editable: [create]
+      pattern: ['^[a-z0-9]+(-[a-z0-9]+)*$', '请使用小写英文字母、数字和连字符']
+    media_folder: ''
+    public_folder: ''
+    i18n: true
+    create: true
+    publish_mode: editorial_workflow
+    fields:
+      - { label: 机会名称, name: title, widget: string, required: true, i18n: true }
+      - { label: 稳定 ID, name: id, widget: string, required: true, i18n: duplicate, pattern: ['^[a-z0-9]+(-[a-z0-9]+)*$', '请使用小写英文字母、数字和连字符'] }
+      - { label: 翻译标识, name: translationKey, widget: string, required: true, i18n: duplicate }
+      - { label: 机会类型, name: type, widget: select, required: true, i18n: duplicate, options: [phd, postdoc, research-fellow, research-assistant, visiting-scholar, internship, other] }
+      - { label: 状态, name: status, widget: select, required: true, i18n: duplicate, options: [upcoming, open, closed, archived] }
+      - { label: 摘要, name: summary, widget: text, required: true, i18n: true }
+      - { label: 申请截止时间（中国标准时间）, name: deadline, widget: datetime, input_timezone: Asia/Shanghai, required: false, i18n: duplicate }
+      - { label: 预计开始日期, name: startDate, widget: datetime, type: date, required: false, i18n: duplicate }
+      - { label: 资助类型, name: fundingType, widget: string, required: false, i18n: duplicate }
+      - { label: 资助说明, name: fundingDescription, widget: text, required: false, i18n: true }
+      - { label: 申请资格, name: eligibility, widget: text, required: false, i18n: true }
+      - { label: 研究方向, name: researchAreas, widget: relation, collection: research, value_field: id, display_fields: [title], multiple: true, required: false, i18n: duplicate }
+      - { label: 相关人员, name: people, widget: relation, collection: people, value_field: id, display_fields: [title], multiple: true, required: false, i18n: duplicate }
+      - { label: 申请链接, name: applicationUrl, widget: string, required: false, i18n: duplicate }
+      - { label: 官方来源链接, name: officialUrl, widget: string, required: false, i18n: duplicate }
+      - { label: 联系人 ID, name: contactPerson, widget: relation, collection: people, value_field: id, display_fields: [title], required: false, i18n: duplicate }
+      - { label: 首页精选, name: featured, widget: boolean, default: false, required: false, i18n: duplicate }
+      - { label: 正文, name: body, widget: markdown, required: false, i18n: true }
+      - { label: Hugo 草稿, name: draft, widget: hidden, default: false, i18n: duplicate }
+
+  - name: events
+    label: 活动
+    label_singular: 活动
+    folder: content/events
+    path: '{{slug}}/index'
+    identifier_field: id
+    filter: { field: eventType, pattern: '^(?!recurring$).+' }
+    slug:
+      template: '{{id}}'
+      editable: [create]
+      pattern: ['^[a-z0-9]+(-[a-z0-9]+)*$', '请使用小写英文字母、数字和连字符']
+    media_folder: ''
+    public_folder: ''
+    i18n: true
+    create: true
+    publish_mode: editorial_workflow
+    fields:
+      - { label: 活动名称, name: title, widget: string, required: true, i18n: true }
+      - { label: 稳定 ID, name: id, widget: string, required: true, i18n: duplicate, pattern: ['^[a-z0-9]+(-[a-z0-9]+)*$', '请使用小写英文字母、数字和连字符'] }
+      - { label: 翻译标识, name: translationKey, widget: string, required: true, i18n: duplicate }
+      - { label: 活动系列, name: series, widget: select, required: true, i18n: duplicate, options: [seminar, reading-group, study-group] }
+      - { label: 活动类型, name: eventType, widget: select, required: true, i18n: duplicate, options: [talk, meeting, workshop, conference-talk, defense, tutorial, other], hint: 活动系列页由网站结构维护；这里只管理具体活动。 }
+      - { label: 活动摘要, name: summary, widget: text, required: true, i18n: true }
+      - { label: 开始时间（中国标准时间）, name: date, widget: datetime, input_timezone: Asia/Shanghai, required: true, i18n: duplicate }
+      - { label: 结束时间（中国标准时间）, name: endDate, widget: datetime, input_timezone: Asia/Shanghai, required: false, i18n: duplicate }
+      - { label: 地点或线上方式, name: location, widget: string, required: false, i18n: true }
+      - { label: 实验室报告人, name: presenters, widget: relation, collection: people, value_field: id, display_fields: [title], multiple: true, required: false, i18n: duplicate }
+      - { label: 主持人 ID, name: moderator, widget: relation, collection: people, value_field: id, display_fields: [title], required: false, i18n: duplicate }
+      - { label: 论文题目, name: paperTitle, widget: string, required: false, i18n: true }
+      - { label: 论文链接, name: paperUrl, widget: string, required: false, i18n: duplicate }
+      - { label: 幻灯片链接, name: slides, widget: string, required: false, i18n: duplicate }
+      - { label: 视频链接, name: video, widget: string, required: false, i18n: duplicate }
+      - { label: 官方活动链接, name: website, widget: string, required: false, i18n: duplicate }
+      - { label: 研究方向, name: researchAreas, widget: relation, collection: research, value_field: id, display_fields: [title], multiple: true, required: false, i18n: duplicate }
+      - { label: 关联论文, name: relatedPublication, widget: relation, collection: publications, value_field: id, display_fields: [title], required: false, i18n: duplicate }
+      - { label: 关联项目, name: relatedProject, widget: relation, collection: projects, value_field: id, display_fields: [title], required: false, i18n: duplicate }
+      - { label: 外部报告人, name: externalSpeakers, widget: list, required: false, i18n: true }
+      - { label: 状态, name: status, widget: select, required: true, i18n: duplicate, options: [upcoming, completed, cancelled] }
+      - { label: 首页精选, name: featured, widget: boolean, default: false, required: false, i18n: duplicate }
+      - { label: 活动说明, name: body, widget: markdown, required: false, i18n: true }
+      - { label: Hugo 草稿, name: draft, widget: hidden, default: false, i18n: duplicate }
+
+  - name: resources
+    label: 研究资源
+    label_singular: 研究资源
+    folder: content/resources
+    path: '{{slug}}/index'
+    identifier_field: id
+    slug:
+      template: '{{id}}'
+      editable: [create]
+      pattern: ['^[a-z0-9]+(-[a-z0-9]+)*$', '请使用小写英文字母、数字和连字符']
+    media_folder: ''
+    public_folder: ''
+    i18n: true
+    create: true
+    publish_mode: editorial_workflow
+    fields:
+      - { label: 资源名称, name: title, widget: string, required: true, i18n: true }
+      - { label: 稳定 ID, name: id, widget: string, required: true, i18n: duplicate, pattern: ['^[a-z0-9]+(-[a-z0-9]+)*$', '请使用小写英文字母、数字和连字符'] }
+      - { label: 翻译标识, name: translationKey, widget: string, required: true, i18n: duplicate }
+      - { label: 资源类型, name: resourceType, widget: select, required: true, i18n: duplicate, options: [supplementary, software, dataset, benchmark, demo, tutorial, code, appendix, visualization] }
+      - { label: 摘要, name: summary, widget: text, required: true, i18n: true }
+      - { label: 关联论文, name: relatedPublication, widget: relation, collection: publications, value_field: id, display_fields: [title], required: false, i18n: duplicate }
+      - { label: 关联项目, name: relatedProject, widget: relation, collection: projects, value_field: id, display_fields: [title], required: false, i18n: duplicate }
+      - { label: 研究方向, name: researchAreas, widget: relation, collection: research, value_field: id, display_fields: [title], multiple: true, required: false, i18n: duplicate }
+      - { label: 负责人, name: people, widget: relation, collection: people, value_field: id, display_fields: [title], multiple: true, required: false, i18n: duplicate }
+      - { label: 代码链接, name: code, widget: string, required: false, i18n: duplicate }
+      - { label: 数据集链接, name: dataset, widget: string, required: false, i18n: duplicate }
+      - { label: PDF 文件或链接, name: pdf, widget: string, required: false, i18n: duplicate }
+      - { label: 视频链接, name: video, widget: string, required: false, i18n: duplicate }
+      - { label: 演示链接, name: demo, widget: string, required: false, i18n: duplicate }
+      - { label: 仓库链接, name: repository, widget: string, required: false, i18n: duplicate }
+      - label: 其他链接
+        name: externalLinks
+        widget: list
+        required: false
+        i18n: duplicate
+        fields:
+          - { label: 链接名称, name: label, widget: string, required: true }
+          - { label: URL, name: url, widget: string, required: true }
+      - { label: 许可协议, name: license, widget: string, required: false, i18n: duplicate }
+      - { label: 资源说明, name: body, widget: markdown, required: false, i18n: true }
+      - { label: Hugo 草稿, name: draft, widget: hidden, default: false, i18n: duplicate }
+
+  - name: materials
+    label: 学习材料
+    label_singular: 学习材料
+    folder: content/materials
+    path: '{{slug}}/index'
+    identifier_field: id
+    filter: { field: translationKey, pattern: '^(?!materials$).+' }
+    slug:
+      template: '{{id}}'
+      editable: [create]
+      pattern: ['^[a-z0-9]+(-[a-z0-9]+)*$', '请使用小写英文字母、数字和连字符']
+    media_folder: ''
+    public_folder: ''
+    i18n: true
+    create: true
+    publish_mode: editorial_workflow
+    fields:
+      - { label: 材料标题, name: title, widget: string, required: true, i18n: true }
+      - { label: 稳定 ID, name: id, widget: string, required: true, i18n: duplicate, pattern: ['^[a-z0-9]+(-[a-z0-9]+)*$', '请使用小写英文字母、数字和连字符'] }
+      - { label: 翻译标识, name: translationKey, widget: string, required: true, i18n: duplicate }
+      - { label: 发布日期, name: date, widget: datetime, type: date, required: false, i18n: duplicate }
+      - { label: 摘要, name: summary, widget: text, required: true, i18n: true }
+      - { label: 核心要点, name: tldr, widget: text, required: false, i18n: true }
+      - { label: 分类, name: categories, widget: select, multiple: true, required: true, i18n: duplicate, options: [research-notes, paper-explainers, tutorials, lab-rules, latex, writing, tools, datasets, engineering-practice] }
+      - { label: 标签 ID, name: tags, widget: list, required: false, i18n: duplicate, hint: 只能使用 data/material_tags.yaml 中已存在的 ID；新增标签需先修改词表和配置。 }
+      - { label: 作者, name: authors, widget: relation, collection: people, value_field: id, display_fields: [title], multiple: true, required: false, i18n: duplicate }
+      - { label: 研究方向, name: researchAreas, widget: relation, collection: research, value_field: id, display_fields: [title], multiple: true, required: false, i18n: duplicate }
+      - { label: 关联论文, name: relatedPublication, widget: relation, collection: publications, value_field: id, display_fields: [title], required: false, i18n: duplicate }
+      - { label: 关联项目, name: relatedProject, widget: relation, collection: projects, value_field: id, display_fields: [title], required: false, i18n: duplicate }
+      - { label: 关联资源, name: relatedResources, widget: relation, collection: resources, value_field: id, display_fields: [title], multiple: true, required: false, i18n: duplicate }
+      - { label: 封面图, name: cover, widget: image, required: false, i18n: duplicate }
+      - { label: 封面图说明, name: coverAlt, widget: string, required: false, i18n: true }
+      - { label: 首页精选, name: featured, widget: boolean, default: false, required: false, i18n: duplicate }
+      - { label: 正文, name: body, widget: markdown, required: false, i18n: true }
+      - { label: Hugo 草稿, name: draft, widget: hidden, default: false, i18n: duplicate }

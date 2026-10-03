@@ -17,20 +17,13 @@
   {{- if not .IsHome -}}
     {{- $pageTitle = printf "%s | %s" $displayTitle site.Title -}}
   {{- end -}}
-  {{- $description := .Description | default site.Params.description -}}
+  {{- $description := .Description | default .Params.summary | default site.Params.description -}}
   {{- if and (eq .Section "people") (not .Description) .Params.role -}}
     {{- $description = printf "%s — %s, %s" .Params.role site.Params.labName site.Params.universityName -}}
   {{- end -}}
   {{- if and (eq .Section "publications") (not .Description) .Params.year -}}
     {{- $description = printf "%s · %v — %s" (.Params.venue | default (i18n "publication")) .Params.year site.Params.labName -}}
   {{- end -}}
-  {{- if and (eq .Section "projects") (not .Description) .Params.summary -}}
-    {{- $description = .Params.summary -}}
-  {{- end -}}
-  {{- if and (eq .Section "news") (not .Description) .Params.summary -}}
-    {{- $description = .Params.summary -}}
-  {{- end -}}
-
   <title>{{ $pageTitle }}</title>
   <meta name="description" content="{{ $description | plainify }}">
   <link rel="icon" href="{{ "brand/x-laboratory-mark.svg" | relURL }}" type="image/svg+xml">

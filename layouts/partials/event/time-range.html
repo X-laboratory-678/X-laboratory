@@ -1,0 +1,14 @@
+{{- $page := .page -}}
+{{- $class := .class -}}
+<time class="{{ $class }}" datetime="{{ $page.Date.Format "2006-01-02T15:04:05Z07:00" }}">{{ $page.Date | time.Format ":date_long" }} · {{ $page.Date.Format "15:04" }}</time>
+{{- with $page.Params.endDate -}}
+  {{- $endDate := time.AsTime . -}}
+  <span aria-hidden="true">–</span>
+  <time class="{{ $class }}" datetime="{{ $endDate.Format "2006-01-02T15:04:05Z07:00" }}">
+    {{- if eq ($page.Date.Format "2006-01-02") ($endDate.Format "2006-01-02") -}}
+      {{- $endDate.Format "15:04" -}}
+    {{- else -}}
+      {{- $endDate | time.Format ":date_long" }} · {{ $endDate.Format "15:04" -}}
+    {{- end -}}
+  </time>
+{{- end -}}
