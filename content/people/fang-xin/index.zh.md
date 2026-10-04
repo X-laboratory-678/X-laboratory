@@ -18,6 +18,7 @@ googleScholar: ''
 orcid: ''
 researchInterests:
   - 大模型
+  - 网页开发
 joined: ''
 left: ''
 alumniNext: ''
