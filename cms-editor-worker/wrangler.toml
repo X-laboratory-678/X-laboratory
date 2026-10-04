@@ -10,7 +10,7 @@ run_worker_first = ["/api/*", "/auth/*", "/webhooks/*", "/health"]
 [[d1_databases]]
 binding = "DB"
 database_name = "x-lab-cms-editor"
-database_id = "REPLACE_WITH_CLOUDFLARE_D1_DATABASE_ID"
+database_id = "7b75d8aa-3d32-4dc8-8297-8166325c3e71"
 migrations_dir = "migrations"
 
 [vars]
@@ -18,4 +18,3 @@ REPOSITORY = "X-laboratory-678/X-laboratory"
 MAIN_BRANCH = "main"
 ADMIN_GITHUB_USERS = "X-laboratory-678"
 PUBLIC_SITE_URL = "https://x-laboratory-678.github.io/X-laboratory/"
-
