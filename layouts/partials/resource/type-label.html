@@ -1,0 +1,8 @@
+{{- $page := . -}}
+{{- $label := $page.Params.resourceType -}}
+{{- range hugo.Data.resource_types -}}
+  {{- if eq .id $page.Params.resourceType -}}
+    {{- if eq $page.Language.Lang "zh" -}}{{- $label = .labelZh -}}{{- else -}}{{- $label = .label -}}{{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- $label -}}

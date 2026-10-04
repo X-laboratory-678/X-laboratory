@@ -313,7 +313,7 @@ The canonical bilingual directories are `/docs/home/opportunities/` and `/zh/doc
 
 ### Events
 
-`content/events/<id>/` is the single model for seminars, reading groups, study groups, workshops, lab meetings, conference talks, defenses, and tutorials. Fields are `title`, `id`, `series`, `eventType`, `date`, optional `endDate`, `location`, internal `presenters`, internal `moderator`, `paperTitle`, `paperUrl`, `slides`, `video`, `website`, `researchAreas`, `relatedPublication`, `relatedProject`, `externalSpeakers`, `status`, `featured`, and `draft`. End dates cannot precede start dates.
+`content/events/<id>/` is the single model for seminars, reading groups, study groups, workshops, lab meetings, conference talks, defenses, and tutorials. Fields are `title`, `id`, `series`, `eventType`, bilingual `summary`, `date`, optional `endDate`, `location`, internal `presenters`, internal `moderator`, `paperTitle`, `paperUrl`, `slides`, `video`, `website`, `researchAreas`, `relatedPublication`, `relatedProject`, `externalSpeakers`, `status`, `featured`, and `draft`. End dates cannot precede start dates.
 
 ### Resources
 

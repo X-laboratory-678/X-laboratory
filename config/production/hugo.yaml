@@ -3,4 +3,4 @@
 baseURL: https://example.invalid/lab-site/
 buildDrafts: false
 buildExpired: false
-buildFuture: false
+buildFuture: true

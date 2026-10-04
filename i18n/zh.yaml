@@ -126,6 +126,22 @@
   translation: 网站
 - id: event_link
   translation: 链接
+- id: event_location
+  translation: 地点
+- id: event_paper_title
+  translation: 研讨论文
+- id: event_external_speakers
+  translation: 外部报告人
+- id: event_moderator
+  translation: 主持人
+- id: event_series_heading
+  translation: 活动系列
+- id: events_list_heading
+  translation: 已核实的活动
+- id: back_to_events
+  translation: 活动
+- id: no_events
+  translation: 当前暂无已核实并公开发布的活动。
 - id: nav_deadlines
   translation: 截止日期
 - id: deadlines_upcoming
@@ -578,3 +594,33 @@
   translation: 当前暂无已核实并公开发布的资料。
 - id: material_link
   translation: 打开资料
+- id: material_takeaway
+  translation: 核心要点
+- id: material_authors
+  translation: 作者
+- id: back_to_materials
+  translation: 学习材料
+- id: resource_type
+  translation: 资源类型
+- id: resource_license
+  translation: 许可协议
+- id: resource_links
+  translation: 资源链接
+- id: resource_code
+  translation: 代码
+- id: resource_dataset
+  translation: 数据集
+- id: resource_pdf
+  translation: PDF
+- id: resource_video
+  translation: 视频
+- id: resource_demo
+  translation: 演示
+- id: resource_repository
+  translation: 代码仓库
+- id: back_to_resources
+  translation: 研究资源
+- id: no_resources
+  translation: 当前暂无已核实并公开发布的研究资源。
+- id: no_tools
+  translation: 当前暂无已核实并公开发布的工具。

@@ -126,6 +126,22 @@
   translation: Website
 - id: event_link
   translation: Link
+- id: event_location
+  translation: Location
+- id: event_paper_title
+  translation: Discussed paper
+- id: event_external_speakers
+  translation: Guest speakers
+- id: event_moderator
+  translation: Moderator
+- id: event_series_heading
+  translation: Event series
+- id: events_list_heading
+  translation: Verified activities
+- id: back_to_events
+  translation: Events
+- id: no_events
+  translation: No verified activities are currently published.
 - id: nav_deadlines
   translation: Deadlines
 - id: deadlines_upcoming
@@ -578,3 +594,33 @@
   translation: No verified materials are currently published.
 - id: material_link
   translation: Open material
+- id: material_takeaway
+  translation: Key takeaways
+- id: material_authors
+  translation: Authors
+- id: back_to_materials
+  translation: Materials
+- id: resource_type
+  translation: Resource type
+- id: resource_license
+  translation: License
+- id: resource_links
+  translation: Resource links
+- id: resource_code
+  translation: Code
+- id: resource_dataset
+  translation: Dataset
+- id: resource_pdf
+  translation: PDF
+- id: resource_video
+  translation: Video
+- id: resource_demo
+  translation: Demo
+- id: resource_repository
+  translation: Repository
+- id: back_to_resources
+  translation: Resources
+- id: no_resources
+  translation: No verified research resources are currently published.
+- id: no_tools
+  translation: No verified tools are currently published.

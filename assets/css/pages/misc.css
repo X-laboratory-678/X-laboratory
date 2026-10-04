@@ -217,6 +217,12 @@
   gap: var(--space-3);
 }
 
+.material-detail__cover {
+  width: min(100%, 48rem);
+  height: auto;
+  border-radius: var(--radius-sm);
+}
+
 @media (min-width: 56rem) {
   .deadline-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
