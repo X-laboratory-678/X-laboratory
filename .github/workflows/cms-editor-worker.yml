@@ -6,6 +6,7 @@ on:
     paths:
       - 'cms-editor-worker/**'
       - 'static/editor/**'
+      - 'static/zh/editor/**'
       - 'static/admin/config.yml'
       - '.github/workflows/cms-editor-worker.yml'
   push:
@@ -13,6 +14,7 @@ on:
     paths:
       - 'cms-editor-worker/**'
       - 'static/editor/**'
+      - 'static/zh/editor/**'
       - 'static/admin/config.yml'
       - '.github/workflows/cms-editor-worker.yml'
   workflow_dispatch:

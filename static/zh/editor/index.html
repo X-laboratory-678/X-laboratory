@@ -1,17 +1,17 @@
 <!doctype html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Lab Content Editor · X-Laboratory</title>
-  <meta name="description" content="Sign in to edit X-Laboratory website content in English or Chinese.">
-  <link rel="canonical" href="https://x-laboratory-678.github.io/X-laboratory/editor/">
-  <meta property="og:title" content="Lab Content Editor · X-Laboratory">
-  <meta property="og:description" content="Sign in to edit X-Laboratory website content in English or Chinese.">
-  <meta property="og:url" content="https://x-laboratory-678.github.io/X-laboratory/editor/">
+  <title>实验室内容编辑器 · X-Laboratory</title>
+  <meta name="description" content="使用实验室本地账号编辑 X-Laboratory 网站的中英文内容。">
+  <link rel="canonical" href="https://x-laboratory-678.github.io/X-laboratory/zh/editor/">
+  <meta property="og:title" content="实验室内容编辑器 · X-Laboratory">
+  <meta property="og:description" content="使用实验室本地账号编辑 X-Laboratory 网站的中英文内容。">
+  <meta property="og:url" content="https://x-laboratory-678.github.io/X-laboratory/zh/editor/">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="X-Laboratory">
-  <meta property="og:locale" content="en_US">
+  <meta property="og:locale" content="zh_CN">
   <style>
     :root { color-scheme: light; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; color: #182434; background: #f5f7fa; }
     body { margin: 0; min-height: 100vh; display: grid; place-items: center; padding: 24px; box-sizing: border-box; }
@@ -20,15 +20,15 @@
     a, button { display: inline-block; border: 0; border-radius: 9px; padding: 12px 18px; font: inherit; font-weight: 650; color: white; background: #1769aa; text-decoration: none; cursor: pointer; }
     .muted { font-size: .9rem; } .secondary { color: #1769aa; background: #edf5fc; margin-left: 7px; }
   </style>
-  <script src="./config.js"></script>
+  <script src="../../editor/config.js"></script>
 </head>
 <body>
   <main>
-    <h1>Lab Content Editor</h1>
-    <p>Edit X-Laboratory website content in English or Chinese. Local editor accounts are separate from GitHub.</p>
+    <h1>实验室内容编辑器</h1>
+    <p>使用实验室分配的本地账号编辑网站的中文和英文内容，不需要个人 GitHub 账号。</p>
     <div id="launch"></div>
-    <p><a class="secondary" href="/X-laboratory/zh/editor/">中文</a></p>
-    <p class="muted">The editor service is hosted by a Cloudflare Worker. Ask a site administrator if the service is not connected.</p>
+    <p><a class="secondary" href="/X-laboratory/editor/">English</a></p>
+    <p class="muted">编辑器服务由 Cloudflare Worker 提供。如服务尚未连接，请联系网站管理员。</p>
   </main>
   <script>
     const mount = document.querySelector('#launch');
@@ -36,11 +36,11 @@
     if (/^https:\/\/[a-z0-9.-]+$/.test(origin)) {
       const link = document.createElement('a');
       link.href = origin + '/editor/';
-      link.textContent = 'Open content editor';
+      link.textContent = '打开内容编辑器';
       mount.append(link);
     } else {
       const note = document.createElement('p');
-      note.textContent = 'The editor service has not been connected yet.';
+      note.textContent = '编辑器服务尚未连接，请联系网站管理员。';
       mount.append(note);
     }
   </script>
