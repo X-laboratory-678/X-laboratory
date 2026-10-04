@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>实验室内容编辑器 · X-Laboratory</title>
+  <style>
+    :root { color-scheme: light; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; color: #182434; background: #f5f7fa; }
+    body { margin: 0; min-height: 100vh; display: grid; place-items: center; padding: 24px; box-sizing: border-box; }
+    main { box-sizing: border-box; width: min(100%, 560px); padding: 36px; background: #fff; border: 1px solid #dce3ec; border-radius: 18px; box-shadow: 0 14px 50px #13284412; }
+    h1 { font-size: 1.55rem; margin: 0 0 12px; } p { color: #556477; line-height: 1.7; }
+    a, button { display: inline-block; border: 0; border-radius: 9px; padding: 12px 18px; font: inherit; font-weight: 650; color: white; background: #1769aa; text-decoration: none; cursor: pointer; }
+    .muted { font-size: .9rem; }
+  </style>
+  <script src="config.js"></script>
+</head>
+<body>
+  <main>
+    <h1>实验室内容编辑器</h1>
+    <p>本地账号用于编辑实验室网站内容。管理员仍从 <a href="/X-laboratory/admin/">Sveltia 管理后台</a> 登录。</p>
+    <div id="launch"></div>
+    <p class="muted">编辑器服务由 Cloudflare Worker 提供。首次部署后需要由管理员配置服务地址。</p>
+  </main>
+  <script>
+    const mount = document.querySelector('#launch');
+    const origin = (window.LAB_EDITOR_WORKER_URL || '').trim().replace(/\/$/, '');
+    if (/^https:\/\/[a-z0-9.-]+$/.test(origin)) {
+      const link = document.createElement('a');
+      link.href = origin + '/editor/';
+      link.textContent = '打开内容编辑器';
+      mount.append(link);
+    } else {
+      const note = document.createElement('p');
+      note.textContent = '编辑器服务尚未连接。请联系网站管理员完成 Cloudflare Worker 部署。';
+      mount.append(note);
+    }
+  </script>
+</body>
+</html>
+

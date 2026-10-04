@@ -1,0 +1,19 @@
+{
+  "name": "x-lab-cms-editor-worker",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "deploy": "wrangler deploy",
+    "dev": "wrangler dev",
+    "check": "node scripts/check.mjs",
+    "db:migrate:local": "wrangler d1 migrations apply x-lab-cms-editor --local",
+    "db:migrate:remote": "wrangler d1 migrations apply x-lab-cms-editor --remote"
+  },
+  "dependencies": {
+    "yaml": "2.9.1"
+  },
+  "devDependencies": {
+    "wrangler": "4.147.0"
+  }
+}
+
