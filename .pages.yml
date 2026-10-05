@@ -1,0 +1,1518 @@
+# PILOT CONFIGURATION ONLY: do not point production editors at this file yet.
+# Image fields are intentionally read-only; do not add a media source until bundle-relative uploads are proven safe.
+# Each language file is edited as a separate entry. Create, rename, and delete stay disabled during the pilot.
+settings:
+  content: true
+content:
+  - name: people
+    label: 人员
+    type: collection
+    path: content/people
+    format: yaml-frontmatter
+    subfolders: true
+    exclude:
+      - _index.en.md
+      - _index.zh.md
+    operations:
+      create: false
+      rename: false
+      delete: false
+    view:
+      layout: tree
+      primary: title
+      fields:
+        - title
+        - id
+        - translationKey
+    fields:
+      - name: title
+        label: 中文/英文姓名
+        required: true
+        type: string
+      - name: description
+        label: 搜索摘要
+        required: false
+        type: text
+      - name: id
+        label: 稳定 ID
+        required: true
+        type: string
+        readonly: true
+        pattern:
+          regex: ^[a-z0-9]+(-[a-z0-9]+)*$
+          message: 请使用小写英文字母、数字和连字符
+      - name: translationKey
+        label: 翻译标识
+        required: true
+        description: 通常使用 people-稳定ID
+        type: string
+        readonly: true
+      - name: role
+        label: 角色
+        required: true
+        type: string
+      - name: category
+        label: 成员类别
+        required: true
+        type: select
+        options:
+          values:
+            - pi
+            - faculty
+            - postdoc
+            - phd
+            - master
+            - ra
+            - undergraduate
+            - visitor
+            - alumni
+      - name: cohort
+        label: 年级/届别
+        required: false
+        type: string
+      - name: status
+        label: 状态
+        required: true
+        type: select
+        options:
+          values:
+            - current
+            - alumni
+      - name: photo
+        label: 头像文件
+        required: false
+        type: string
+        readonly: true
+        description: 试点阶段仅保留原有页面包图片路径，禁止改动。Pages CMS 的固定媒体目录无法保证按文章页面包上传；图片字段只读。
+      - name: photoAlt
+        label: 头像说明
+        required: false
+        type: string
+      - name: email
+        label: 公开邮箱
+        required: false
+        type: string
+      - name: homepage
+        label: 个人主页
+        required: false
+        type: string
+      - name: github
+        label: GitHub
+        required: false
+        type: string
+      - name: aliases
+        label: 旧网址别名
+        required: false
+        description: 保留已有别名；仅在需要保留旧网址时添加，不要随意删除。
+        type: string
+        list: true
+      - name: googleScholar
+        label: Google Scholar
+        required: false
+        type: string
+      - name: orcid
+        label: ORCID
+        required: false
+        type: string
+      - name: researchInterests
+        label: 研究兴趣
+        required: false
+        type: string
+        list: true
+      - name: joined
+        label: 加入时间
+        required: false
+        type: string
+      - name: left
+        label: 离开时间
+        required: false
+        type: string
+      - name: alumniNext
+        label: 后续去向
+        required: false
+        type: string
+      - name: weight
+        label: 排序权重
+        required: false
+        type: number
+      - name: body
+        label: 页面正文
+        required: false
+        type: rich-text
+        options:
+          format: markdown
+          media: false
+      - name: draft
+        label: Hugo 草稿
+        type: boolean
+        hidden: true
+        readonly: true
+        default: false
+  - name: publications
+    label: 论文
+    type: collection
+    path: content/publications
+    format: yaml-frontmatter
+    subfolders: true
+    exclude:
+      - _index.en.md
+      - _index.zh.md
+    operations:
+      create: false
+      rename: false
+      delete: false
+    view:
+      layout: tree
+      primary: title
+      fields:
+        - title
+        - id
+        - translationKey
+    fields:
+      - name: title
+        label: 论文标题
+        required: true
+        type: string
+      - name: description
+        label: 搜索摘要
+        required: false
+        type: text
+      - name: displayTitle
+        label: 展示标题
+        required: false
+        type: string
+      - name: id
+        label: 稳定 ID
+        required: true
+        type: string
+        readonly: true
+        pattern:
+          regex: ^[a-z0-9]+(-[a-z0-9]+)*$
+          message: 请使用小写英文字母、数字和连字符
+      - name: translationKey
+        label: 翻译标识
+        required: true
+        description: 通常使用 publication-稳定ID
+        type: string
+        readonly: true
+      - name: authors
+        label: 作者（按论文原顺序）
+        required: true
+        type: object
+        list:
+          min: 1
+        fields:
+          - name: name
+            label: 作者姓名
+            required: true
+            type: string
+          - name: person
+            label: 实验室成员 ID（如适用）
+            required: false
+            type: reference
+            options:
+              collection: people
+              value: "{fields.id}"
+              label: "{fields.title}"
+      - name: labMembers
+        label: 实验室成员
+        required: false
+        type: reference
+        options:
+          collection: people
+          value: "{fields.id}"
+          label: "{fields.title}"
+          multiple: true
+      - name: venue
+        label: 期刊/会议
+        required: false
+        type: string
+      - name: venueShort
+        label: 期刊/会议简称
+        required: false
+        type: string
+      - name: year
+        label: 年份
+        required: true
+        type: number
+      - name: publicationMonth
+        label: 发表月份
+        required: false
+        type: number
+      - name: date
+        label: 发表日期
+        required: false
+        type: date
+        options:
+          time: false
+      - name: publicationType
+        label: 论文类型
+        required: true
+        type: select
+        options:
+          values:
+            - conference
+            - journal
+            - preprint
+            - workshop
+            - book-chapter
+            - thesis
+            - other
+      - name: publicationStatus
+        label: 发表状态
+        required: false
+        type: select
+        options:
+          values:
+            - preprint
+            - submitted
+            - accepted
+            - in-press
+            - published
+      - name: doi
+        label: DOI（不含 doi.org）
+        required: false
+        type: string
+      - name: paperUrl
+        label: 论文链接
+        required: false
+        type: string
+      - name: pdf
+        label: PDF 文件或链接
+        required: false
+        type: string
+      - name: code
+        label: 代码链接
+        required: false
+        type: string
+      - name: projectPage
+        label: 项目页 ID 或链接
+        required: false
+        type: string
+      - name: dataset
+        label: 数据集链接
+        required: false
+        type: string
+      - name: video
+        label: 视频链接
+        required: false
+        type: string
+      - name: bibtex
+        label: BibTeX 文件名
+        required: false
+        type: string
+      - name: thumbnail
+        label: 缩略图
+        required: false
+        type: string
+        readonly: true
+        description: 试点阶段仅保留原有页面包图片路径，禁止改动。Pages CMS 的固定媒体目录无法保证按文章页面包上传；图片字段只读。
+      - name: selected
+        label: 精选论文
+        required: false
+        type: boolean
+        default: false
+      - name: researchAreas
+        label: 研究方向
+        required: false
+        type: reference
+        options:
+          collection: research
+          value: "{fields.id}"
+          label: "{fields.title}"
+          multiple: true
+      - name: tags
+        label: 标签
+        required: false
+        type: string
+        list: true
+      - name: links
+        label: 补充链接
+        required: false
+        type: object
+        list: true
+        fields:
+          - name: label
+            label: 链接名称
+            required: true
+            type: string
+          - name: url
+            label: URL
+            required: true
+            type: string
+      - name: acceptanceRate
+        label: 接收率
+        required: false
+        type: number
+      - name: acceptanceRateSource
+        label: 接收率来源
+        required: false
+        type: string
+      - name: distinctions
+        label: 荣誉/奖项
+        required: false
+        type: string
+        list: true
+      - name: metricsId
+        label: 指标数据 ID
+        required: false
+        type: string
+      - name: supplementary
+        label: 补充资源 ID
+        required: false
+        type: reference
+        options:
+          collection: resources
+          value: "{fields.id}"
+          label: "{fields.title}"
+          multiple: true
+      - name: blog
+        label: 相关博客 URL
+        required: false
+        type: string
+      - name: aliases
+        label: 旧网址别名
+        required: false
+        description: 保留已有别名；仅在需要保留旧网址时添加，不要随意删除。
+        type: string
+        list: true
+      - name: body
+        label: 摘要或论文说明
+        required: false
+        type: rich-text
+        options:
+          format: markdown
+          media: false
+      - name: draft
+        label: Hugo 草稿
+        type: boolean
+        hidden: true
+        readonly: true
+        default: false
+  - name: projects
+    label: 项目与工具
+    type: collection
+    path: content/projects
+    format: yaml-frontmatter
+    subfolders: true
+    exclude:
+      - _index.en.md
+      - _index.zh.md
+    operations:
+      create: false
+      rename: false
+      delete: false
+    view:
+      layout: tree
+      primary: title
+      fields:
+        - title
+        - id
+        - translationKey
+    fields:
+      - name: title
+        label: 项目名称
+        required: true
+        type: string
+      - name: id
+        label: 稳定 ID
+        required: true
+        type: string
+        readonly: true
+        pattern:
+          regex: ^[a-z0-9]+(-[a-z0-9]+)*$
+          message: 请使用小写英文字母、数字和连字符
+      - name: translationKey
+        label: 翻译标识
+        required: true
+        description: 通常使用 project-稳定ID
+        type: string
+        readonly: true
+      - name: summary
+        label: 摘要
+        required: true
+        type: text
+      - name: hero
+        label: 主图
+        required: false
+        type: string
+        readonly: true
+        description: 试点阶段仅保留原有页面包图片路径，禁止改动。Pages CMS 的固定媒体目录无法保证按文章页面包上传；图片字段只读。
+      - name: heroAlt
+        label: 主图说明
+        required: false
+        type: string
+      - name: status
+        label: 项目状态
+        required: true
+        type: select
+        options:
+          values:
+            - planned
+            - active
+            - completed
+            - archived
+      - name: projectType
+        label: 项目类型
+        required: false
+        type: select
+        options:
+          values:
+            - research
+            - software
+            - platform
+            - dataset
+            - benchmark
+            - initiative
+            - competition
+            - tool
+      - name: startYear
+        label: 开始年份
+        required: true
+        type: number
+      - name: endYear
+        label: 结束年份
+        required: false
+        type: number
+      - name: people
+        label: 参与人员
+        required: false
+        type: reference
+        options:
+          collection: people
+          value: "{fields.id}"
+          label: "{fields.title}"
+          multiple: true
+      - name: researchAreas
+        label: 研究方向
+        required: false
+        type: reference
+        options:
+          collection: research
+          value: "{fields.id}"
+          label: "{fields.title}"
+          multiple: true
+      - name: publications
+        label: 相关论文
+        required: false
+        type: reference
+        options:
+          collection: publications
+          value: "{fields.id}"
+          label: "{fields.title}"
+          multiple: true
+      - name: code
+        label: 代码链接
+        required: false
+        type: string
+      - name: dataset
+        label: 数据集链接
+        required: false
+        type: string
+      - name: demo
+        label: 演示链接
+        required: false
+        type: string
+      - name: repository
+        label: 仓库链接
+        required: false
+        type: string
+      - name: documentation
+        label: 文档链接
+        required: false
+        type: string
+      - name: links
+        label: 其他链接
+        required: false
+        type: object
+        list: true
+        fields:
+          - name: label
+            label: 链接名称
+            required: true
+            type: string
+          - name: url
+            label: URL
+            required: true
+            type: string
+      - name: featured
+        label: 首页精选
+        required: false
+        type: boolean
+        default: false
+      - name: weight
+        label: 排序权重
+        required: false
+        type: number
+      - name: aliases
+        label: 旧网址别名
+        required: false
+        description: 保留已有别名；仅在需要保留旧网址时添加，不要随意删除。
+        type: string
+        list: true
+      - name: body
+        label: 项目介绍
+        required: false
+        type: rich-text
+        options:
+          format: markdown
+          media: false
+      - name: draft
+        label: Hugo 草稿
+        type: boolean
+        hidden: true
+        readonly: true
+        default: false
+  - name: research
+    label: 研究方向
+    type: collection
+    path: content/research
+    format: yaml-frontmatter
+    subfolders: true
+    exclude:
+      - _index.en.md
+      - _index.zh.md
+    operations:
+      create: false
+      rename: false
+      delete: false
+    view:
+      layout: tree
+      primary: title
+      fields:
+        - title
+        - id
+        - translationKey
+    fields:
+      - name: title
+        label: 方向名称（须与词表标签一致）
+        required: true
+        type: string
+      - name: id
+        label: 稳定 ID（须与词表一致）
+        required: true
+        type: string
+        readonly: true
+      - name: translationKey
+        label: 翻译标识
+        required: true
+        type: string
+        readonly: true
+      - name: description
+        label: 简介
+        required: true
+        type: text
+      - name: weight
+        label: 排序权重
+        required: false
+        type: number
+      - name: aliases
+        label: 旧网址别名
+        required: false
+        description: 保留已有别名；仅在需要保留旧网址时添加，不要随意删除。
+        type: string
+        list: true
+      - name: body
+        label: 页面正文
+        required: false
+        type: rich-text
+        options:
+          format: markdown
+          media: false
+      - name: draft
+        label: Hugo 草稿
+        type: boolean
+        hidden: true
+        readonly: true
+        default: false
+  - name: news
+    label: 新闻
+    type: collection
+    path: content/news
+    format: yaml-frontmatter
+    subfolders: true
+    exclude:
+      - _index.en.md
+      - _index.zh.md
+    operations:
+      create: false
+      rename: false
+      delete: false
+    view:
+      layout: tree
+      primary: title
+      fields:
+        - title
+        - id
+        - translationKey
+    fields:
+      - name: title
+        label: 新闻标题
+        required: true
+        type: string
+      - name: translationKey
+        label: 翻译标识
+        required: true
+        description: 使用 news-加完整页面 slug
+        type: string
+        readonly: true
+      - name: date
+        label: 日期
+        required: true
+        type: date
+        options:
+          time: false
+      - name: lastmod
+        label: 最后修改日期
+        required: false
+        type: date
+        options:
+          time: false
+      - name: summary
+        label: 摘要
+        required: false
+        type: text
+      - name: image
+        label: 封面图
+        required: false
+        type: string
+        readonly: true
+        description: 试点阶段仅保留原有页面包图片路径，禁止改动。Pages CMS 的固定媒体目录无法保证按文章页面包上传；图片字段只读。
+      - name: imageAlt
+        label: 图片说明
+        required: false
+        type: string
+      - name: category
+        label: 类别
+        required: true
+        type: select
+        options:
+          values:
+            - publication
+            - award
+            - event
+            - announcement
+            - media
+            - other
+      - name: relatedPublication
+        label: 关联论文
+        required: false
+        type: reference
+        options:
+          collection: publications
+          value: "{fields.id}"
+          label: "{fields.title}"
+      - name: relatedProject
+        label: 关联项目
+        required: false
+        type: reference
+        options:
+          collection: projects
+          value: "{fields.id}"
+          label: "{fields.title}"
+      - name: relatedGrant
+        label: 关联资助
+        required: false
+        type: reference
+        options:
+          collection: grants
+          value: "{fields.id}"
+          label: "{fields.title}"
+      - name: relatedEvent
+        label: 关联活动
+        required: false
+        type: reference
+        options:
+          collection: events
+          value: "{fields.id}"
+          label: "{fields.title}"
+      - name: relatedOpportunity
+        label: 关联机会
+        required: false
+        type: reference
+        options:
+          collection: opportunities
+          value: "{fields.id}"
+          label: "{fields.title}"
+      - name: featured
+        label: 首页精选
+        required: false
+        type: boolean
+        default: false
+      - name: aliases
+        label: 旧网址别名
+        required: false
+        type: string
+        list: true
+      - name: body
+        label: 正文
+        required: false
+        type: rich-text
+        options:
+          format: markdown
+          media: false
+      - name: draft
+        label: Hugo 草稿
+        type: boolean
+        hidden: true
+        readonly: true
+        default: false
+  - name: grants
+    label: 资助项目
+    type: collection
+    path: content/grants
+    format: yaml-frontmatter
+    subfolders: true
+    exclude:
+      - _index.en.md
+      - _index.zh.md
+    operations:
+      create: false
+      rename: false
+      delete: false
+    view:
+      layout: tree
+      primary: title
+      fields:
+        - title
+        - id
+        - translationKey
+    fields:
+      - name: title
+        label: 资助名称
+        required: true
+        type: string
+      - name: id
+        label: 稳定 ID
+        required: true
+        type: string
+        readonly: true
+        pattern:
+          regex: ^[a-z0-9]+(-[a-z0-9]+)*$
+          message: 请使用小写英文字母、数字和连字符
+      - name: translationKey
+        label: 翻译标识
+        required: true
+        type: string
+        readonly: true
+      - name: program
+        label: 计划/项目名称
+        required: false
+        type: string
+      - name: funder
+        label: 资助方
+        required: true
+        type: string
+      - name: grantNumber
+        label: 项目编号
+        required: false
+        type: string
+      - name: role
+        label: 实验室承担角色
+        required: true
+        type: string
+      - name: amount
+        label: 金额
+        required: false
+        type: number
+      - name: currency
+        label: 币种
+        required: false
+        description: 填写 ISO 4217 代码，例如 CNY 或 USD
+        type: string
+      - name: startYear
+        label: 开始年份
+        required: true
+        type: number
+      - name: endYear
+        label: 结束年份
+        required: false
+        type: number
+      - name: status
+        label: 状态
+        required: true
+        type: select
+        options:
+          values:
+            - active
+            - completed
+            - archived
+      - name: people
+        label: 参与人员
+        required: false
+        type: reference
+        options:
+          collection: people
+          value: "{fields.id}"
+          label: "{fields.title}"
+          multiple: true
+      - name: researchAreas
+        label: 研究方向
+        required: false
+        type: reference
+        options:
+          collection: research
+          value: "{fields.id}"
+          label: "{fields.title}"
+          multiple: true
+      - name: projects
+        label: 关联项目
+        required: false
+        type: reference
+        options:
+          collection: projects
+          value: "{fields.id}"
+          label: "{fields.title}"
+          multiple: true
+      - name: officialUrl
+        label: 官方链接
+        required: false
+        type: string
+      - name: logo
+        label: 资助方标识图
+        required: false
+        type: string
+        readonly: true
+        description: 试点阶段仅保留原有页面包图片路径，禁止改动。Pages CMS 的固定媒体目录无法保证按文章页面包上传；图片字段只读。
+      - name: logoAlt
+        label: 标识图说明
+        required: false
+        type: string
+      - name: summary
+        label: 摘要
+        required: true
+        type: text
+      - name: featured
+        label: 首页精选
+        required: false
+        type: boolean
+        default: false
+      - name: body
+        label: 正文
+        required: false
+        type: rich-text
+        options:
+          format: markdown
+          media: false
+      - name: draft
+        label: Hugo 草稿
+        type: boolean
+        hidden: true
+        readonly: true
+        default: false
+  - name: opportunities
+    label: 招募机会
+    type: collection
+    path: content/opportunities
+    format: yaml-frontmatter
+    subfolders: true
+    exclude:
+      - _index.en.md
+      - _index.zh.md
+    operations:
+      create: false
+      rename: false
+      delete: false
+    view:
+      layout: tree
+      primary: title
+      fields:
+        - title
+        - id
+        - translationKey
+    fields:
+      - name: title
+        label: 机会名称
+        required: true
+        type: string
+      - name: id
+        label: 稳定 ID
+        required: true
+        type: string
+        readonly: true
+        pattern:
+          regex: ^[a-z0-9]+(-[a-z0-9]+)*$
+          message: 请使用小写英文字母、数字和连字符
+      - name: translationKey
+        label: 翻译标识
+        required: true
+        type: string
+        readonly: true
+      - name: type
+        label: 机会类型
+        required: true
+        type: select
+        options:
+          values:
+            - phd
+            - postdoc
+            - research-fellow
+            - research-assistant
+            - visiting-scholar
+            - internship
+            - other
+      - name: status
+        label: 状态
+        required: true
+        type: select
+        options:
+          values:
+            - upcoming
+            - open
+            - closed
+            - archived
+      - name: summary
+        label: 摘要
+        required: true
+        type: text
+      - name: deadline
+        label: 申请截止时间（中国标准时间）
+        required: false
+        type: date
+        options:
+          time: true
+      - name: startDate
+        label: 预计开始日期
+        required: false
+        type: date
+        options:
+          time: false
+      - name: fundingType
+        label: 资助类型
+        required: false
+        type: string
+      - name: fundingDescription
+        label: 资助说明
+        required: false
+        type: text
+      - name: eligibility
+        label: 申请资格
+        required: false
+        type: text
+      - name: researchAreas
+        label: 研究方向
+        required: false
+        type: reference
+        options:
+          collection: research
+          value: "{fields.id}"
+          label: "{fields.title}"
+          multiple: true
+      - name: people
+        label: 相关人员
+        required: false
+        type: reference
+        options:
+          collection: people
+          value: "{fields.id}"
+          label: "{fields.title}"
+          multiple: true
+      - name: applicationUrl
+        label: 申请链接
+        required: false
+        type: string
+      - name: officialUrl
+        label: 官方来源链接
+        required: false
+        type: string
+      - name: contactPerson
+        label: 联系人 ID
+        required: false
+        type: reference
+        options:
+          collection: people
+          value: "{fields.id}"
+          label: "{fields.title}"
+      - name: featured
+        label: 首页精选
+        required: false
+        type: boolean
+        default: false
+      - name: body
+        label: 正文
+        required: false
+        type: rich-text
+        options:
+          format: markdown
+          media: false
+      - name: draft
+        label: Hugo 草稿
+        type: boolean
+        hidden: true
+        readonly: true
+        default: false
+  - name: events
+    label: 活动
+    type: collection
+    path: content/events
+    format: yaml-frontmatter
+    subfolders: true
+    exclude:
+      - _index.en.md
+      - _index.zh.md
+      - reading-group/index.en.md
+      - reading-group/index.zh.md
+      - study-group/index.en.md
+      - study-group/index.zh.md
+      - x-laboratory-seminar-series/index.en.md
+      - x-laboratory-seminar-series/index.zh.md
+    operations:
+      create: false
+      rename: false
+      delete: false
+    view:
+      layout: tree
+      primary: title
+      fields:
+        - title
+        - id
+        - translationKey
+    fields:
+      - name: title
+        label: 活动名称
+        required: true
+        type: string
+      - name: id
+        label: 稳定 ID
+        required: true
+        type: string
+        readonly: true
+        pattern:
+          regex: ^[a-z0-9]+(-[a-z0-9]+)*$
+          message: 请使用小写英文字母、数字和连字符
+      - name: translationKey
+        label: 翻译标识
+        required: true
+        type: string
+        readonly: true
+      - name: series
+        label: 活动系列
+        required: true
+        type: select
+        options:
+          values:
+            - seminar
+            - reading-group
+            - study-group
+      - name: eventType
+        label: 活动类型
+        required: true
+        description: 活动系列页由网站结构维护；这里只管理具体活动。
+        type: select
+        options:
+          values:
+            - talk
+            - meeting
+            - workshop
+            - conference-talk
+            - defense
+            - tutorial
+            - other
+      - name: summary
+        label: 活动摘要
+        required: true
+        type: text
+      - name: date
+        label: 开始时间（中国标准时间）
+        required: true
+        type: date
+        options:
+          time: true
+      - name: endDate
+        label: 结束时间（中国标准时间）
+        required: false
+        type: date
+        options:
+          time: true
+      - name: location
+        label: 地点或线上方式
+        required: false
+        type: string
+      - name: presenters
+        label: 实验室报告人
+        required: false
+        type: reference
+        options:
+          collection: people
+          value: "{fields.id}"
+          label: "{fields.title}"
+          multiple: true
+      - name: moderator
+        label: 主持人 ID
+        required: false
+        type: reference
+        options:
+          collection: people
+          value: "{fields.id}"
+          label: "{fields.title}"
+      - name: paperTitle
+        label: 论文题目
+        required: false
+        type: string
+      - name: paperUrl
+        label: 论文链接
+        required: false
+        type: string
+      - name: slides
+        label: 幻灯片链接
+        required: false
+        type: string
+      - name: video
+        label: 视频链接
+        required: false
+        type: string
+      - name: website
+        label: 官方活动链接
+        required: false
+        type: string
+      - name: researchAreas
+        label: 研究方向
+        required: false
+        type: reference
+        options:
+          collection: research
+          value: "{fields.id}"
+          label: "{fields.title}"
+          multiple: true
+      - name: relatedPublication
+        label: 关联论文
+        required: false
+        type: reference
+        options:
+          collection: publications
+          value: "{fields.id}"
+          label: "{fields.title}"
+      - name: relatedProject
+        label: 关联项目
+        required: false
+        type: reference
+        options:
+          collection: projects
+          value: "{fields.id}"
+          label: "{fields.title}"
+      - name: externalSpeakers
+        label: 外部报告人
+        required: false
+        type: string
+        list: true
+      - name: status
+        label: 状态
+        required: true
+        type: select
+        options:
+          values:
+            - upcoming
+            - completed
+            - cancelled
+      - name: featured
+        label: 首页精选
+        required: false
+        type: boolean
+        default: false
+      - name: body
+        label: 活动说明
+        required: false
+        type: rich-text
+        options:
+          format: markdown
+          media: false
+      - name: draft
+        label: Hugo 草稿
+        type: boolean
+        hidden: true
+        readonly: true
+        default: false
+  - name: resources
+    label: 研究资源
+    type: collection
+    path: content/resources
+    format: yaml-frontmatter
+    subfolders: true
+    exclude:
+      - _index.en.md
+      - _index.zh.md
+    operations:
+      create: false
+      rename: false
+      delete: false
+    view:
+      layout: tree
+      primary: title
+      fields:
+        - title
+        - id
+        - translationKey
+    fields:
+      - name: title
+        label: 资源名称
+        required: true
+        type: string
+      - name: id
+        label: 稳定 ID
+        required: true
+        type: string
+        readonly: true
+        pattern:
+          regex: ^[a-z0-9]+(-[a-z0-9]+)*$
+          message: 请使用小写英文字母、数字和连字符
+      - name: translationKey
+        label: 翻译标识
+        required: true
+        type: string
+        readonly: true
+      - name: resourceType
+        label: 资源类型
+        required: true
+        type: select
+        options:
+          values:
+            - supplementary
+            - software
+            - dataset
+            - benchmark
+            - demo
+            - tutorial
+            - code
+            - appendix
+            - visualization
+      - name: summary
+        label: 摘要
+        required: true
+        type: text
+      - name: relatedPublication
+        label: 关联论文
+        required: false
+        type: reference
+        options:
+          collection: publications
+          value: "{fields.id}"
+          label: "{fields.title}"
+      - name: relatedProject
+        label: 关联项目
+        required: false
+        type: reference
+        options:
+          collection: projects
+          value: "{fields.id}"
+          label: "{fields.title}"
+      - name: researchAreas
+        label: 研究方向
+        required: false
+        type: reference
+        options:
+          collection: research
+          value: "{fields.id}"
+          label: "{fields.title}"
+          multiple: true
+      - name: people
+        label: 负责人
+        required: false
+        type: reference
+        options:
+          collection: people
+          value: "{fields.id}"
+          label: "{fields.title}"
+          multiple: true
+      - name: code
+        label: 代码链接
+        required: false
+        type: string
+      - name: dataset
+        label: 数据集链接
+        required: false
+        type: string
+      - name: pdf
+        label: PDF 文件或链接
+        required: false
+        type: string
+      - name: video
+        label: 视频链接
+        required: false
+        type: string
+      - name: demo
+        label: 演示链接
+        required: false
+        type: string
+      - name: repository
+        label: 仓库链接
+        required: false
+        type: string
+      - name: externalLinks
+        label: 其他链接
+        required: false
+        type: object
+        list: true
+        fields:
+          - name: label
+            label: 链接名称
+            required: true
+            type: string
+          - name: url
+            label: URL
+            required: true
+            type: string
+      - name: license
+        label: 许可协议
+        required: false
+        type: string
+      - name: body
+        label: 资源说明
+        required: false
+        type: rich-text
+        options:
+          format: markdown
+          media: false
+      - name: draft
+        label: Hugo 草稿
+        type: boolean
+        hidden: true
+        readonly: true
+        default: false
+  - name: materials
+    label: 学习材料
+    type: collection
+    path: content/materials
+    format: yaml-frontmatter
+    subfolders: true
+    exclude:
+      - _index.en.md
+      - _index.zh.md
+      - index.en.md
+      - index.zh.md
+    operations:
+      create: false
+      rename: false
+      delete: false
+    view:
+      layout: tree
+      primary: title
+      fields:
+        - title
+        - id
+        - translationKey
+    fields:
+      - name: title
+        label: 材料标题
+        required: true
+        type: string
+      - name: id
+        label: 稳定 ID
+        required: true
+        type: string
+        readonly: true
+        pattern:
+          regex: ^[a-z0-9]+(-[a-z0-9]+)*$
+          message: 请使用小写英文字母、数字和连字符
+      - name: translationKey
+        label: 翻译标识
+        required: true
+        type: string
+        readonly: true
+      - name: date
+        label: 发布日期
+        required: false
+        type: date
+        options:
+          time: false
+      - name: summary
+        label: 摘要
+        required: true
+        type: text
+      - name: tldr
+        label: 核心要点
+        required: false
+        type: text
+      - name: categories
+        label: 分类
+        required: true
+        type: select
+        options:
+          values:
+            - research-notes
+            - paper-explainers
+            - tutorials
+            - lab-rules
+            - latex
+            - writing
+            - tools
+            - datasets
+            - engineering-practice
+          multiple: true
+      - name: tags
+        label: 标签 ID
+        required: false
+        description: 只能使用 data/material_tags.yaml 中已存在的 ID；新增标签需先修改词表和配置。
+        type: string
+        list: true
+      - name: authors
+        label: 作者
+        required: false
+        type: reference
+        options:
+          collection: people
+          value: "{fields.id}"
+          label: "{fields.title}"
+          multiple: true
+      - name: researchAreas
+        label: 研究方向
+        required: false
+        type: reference
+        options:
+          collection: research
+          value: "{fields.id}"
+          label: "{fields.title}"
+          multiple: true
+      - name: relatedPublication
+        label: 关联论文
+        required: false
+        type: reference
+        options:
+          collection: publications
+          value: "{fields.id}"
+          label: "{fields.title}"
+      - name: relatedProject
+        label: 关联项目
+        required: false
+        type: reference
+        options:
+          collection: projects
+          value: "{fields.id}"
+          label: "{fields.title}"
+      - name: relatedResources
+        label: 关联资源
+        required: false
+        type: reference
+        options:
+          collection: resources
+          value: "{fields.id}"
+          label: "{fields.title}"
+          multiple: true
+      - name: cover
+        label: 封面图
+        required: false
+        type: string
+        readonly: true
+        description: 试点阶段仅保留原有页面包图片路径，禁止改动。Pages CMS 的固定媒体目录无法保证按文章页面包上传；图片字段只读。
+      - name: coverAlt
+        label: 封面图说明
+        required: false
+        type: string
+      - name: featured
+        label: 首页精选
+        required: false
+        type: boolean
+        default: false
+      - name: body
+        label: 正文
+        required: false
+        type: rich-text
+        options:
+          format: markdown
+          media: false
+      - name: draft
+        label: Hugo 草稿
+        type: boolean
+        hidden: true
+        readonly: true
+        default: false
+
