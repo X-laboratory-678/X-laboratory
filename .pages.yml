@@ -28,8 +28,7 @@ content:
       primary: title
       fields:
         - title
-        - id
-        - translationKey
+        - role
     fields:
       - name: title
         label: 中文/英文姓名
@@ -54,7 +53,8 @@ content:
         type: string
         readonly: true
       - name: role
-        label: 角色
+        label: 职位/角色（用于区分语言）
+        description: 英文条目显示英文职位，中文条目显示中文职位，可用来辨认语言版本。
         required: true
         type: string
       - name: category
