@@ -1,79 +1,54 @@
-# Sveltia CMS Setup
+# Pages CMS Access and Publishing
 
-This guide completes the external account configuration for the CMS implementation in this repository. The repository changes configure the editor and its checks, but they do not deploy an OAuth Worker or change GitHub settings. Sign-in will not work until the owner completes these steps.
+Pages CMS is the active content editor for the X-Laboratory website.
 
-## What the CMS manages
+## Open the editor
 
-Open the editor at:
+Use either entry:
 
-```text
-https://x-laboratory-678.github.io/X-laboratory/admin/
-```
+- Admin landing page: https://x-laboratory-678.github.io/X-laboratory/admin/
+- Pages CMS for the production branch: https://app.pagescms.org/x-laboratory-678/x-laboratory/main
 
-The CMS edits the existing Markdown page bundles in Git. It creates content pull requests; merging a passing pull request into `main` is what publishes the update through GitHub Pages.
+Sign in with GitHub. Check the repository name in the Pages CMS header before editing; it must be X-laboratory-678/X-laboratory. The official Pages CMS GitHub App is installed for this repository only. The old Cloudflare Worker editor remains linked from the admin landing page for rollback.
 
-The configured collections are People, Publications, Projects and Tools, Research, News, Grants, Opportunities, Events, Resources, and Materials. Research is edit-only so its IDs remain aligned with the controlled research vocabulary. Event-series landing pages are maintained as site structure; the Events collection contains specific events. Tools are Projects whose `projectType` is `tool`. Every editable item needs `index.en.md` and `index.zh.md`.
+## Editor access
 
-The site includes future-dated pages in production builds so an event can be published before its scheduled date. A pull request's merge is the publication action; do not use a future date as an embargo.
+A GitHub user needs access to this repository to sign in and edit the repository. GitHub repository write access also permits changes to files outside the content editor, including site code and workflows, so grant it only to trusted maintainers.
 
-## GitHub access
+For content editors who should not receive a GitHub account, a repository maintainer can invite them by email using the Collaborators controls in Pages CMS. Pages CMS collaborators can edit content and media in the invited repository, but they cannot manage the CMS configuration or invite other collaborators. Invite each person only to this repository.
 
-Every CMS user must have **Write** access to `X-laboratory-678/X-laboratory`. GitHub's repository backend grants access at repository level: CMS users can also read and modify source code, workflows, and other repository files outside the CMS. Invite only trusted collaborators. The designated content owner is [@X-laboratory-678](https://github.com/X-laboratory-678).
+## What editors can change
 
-## Deploy the OAuth Worker
+Pages CMS shows ten existing content collections: People, Publications, Projects and Tools, Research, News, Grants, Opportunities, Events, Resources, and Materials. Current records can be edited. Creating, renaming, or deleting records is disabled to protect stable URLs, IDs, and bilingual page bundles. Research records are editable, but their stable IDs and translation keys are read-only.
 
-1. Create a GitHub OAuth App under the account that will own the integration. Set its homepage URL to `https://x-laboratory-678.github.io/X-laboratory/admin/`.
-2. Deploy the official [Sveltia CMS Auth Worker](https://github.com/sveltia/sveltia-cms-auth) to a Cloudflare account. Follow its current deployment instructions and use the URL Cloudflare assigns, for example `https://<worker-name>.<account-subdomain>.workers.dev`.
-3. Set the OAuth App's authorization callback URL to `<worker-url>/callback`.
-4. Configure the Worker variables:
-   - `GITHUB_CLIENT_ID`: the OAuth App client ID.
-   - `GITHUB_CLIENT_SECRET`: the OAuth App secret, stored as an encrypted Worker secret.
-   - `ALLOWED_DOMAINS`: `x-laboratory-678.github.io`.
-5. Keep the client secret in Cloudflare's secret store. Never put it in this repository, `static/admin/config.yml`, or a pull request.
-6. Replace the placeholder `backend.base_url` in `static/admin/config.yml` with the Worker URL, without a trailing slash. Review and merge that change through the normal pull-request checks.
+English and Chinese files are separate entries. Open the same record in each language and make the matching change in both files where appropriate. Keep the existing stable ID, translation key, bundle path, and relationships unchanged.
 
-The Worker URL is intentionally a placeholder in the checked-in config. Do not treat the example hostname as a live authentication service.
+Existing Page Bundle images remain read-only. People portraits have an optional upload field that stores new images in static/uploads/. Use the same uploaded image path in both language files and provide suitable alt text. Other image fields remain read-only. See pages-cms-media-pilot.md for the current media rules.
 
-## Configure GitHub Pages and repository rules
+## Save and publish
 
-In repository settings, select **GitHub Actions** as the Pages build and deployment source. Then configure rulesets for the default branch `main`. Use the separate rules described below so an owner bypass for the CODEOWNERS rule does not bypass CI or the PR-only merge restriction.
+The production link opens the main branch. Saving there creates a Git commit directly on main; it does not create a review pull request. Each commit starts the GitHub Actions workflow:
 
-### Ruleset A: required PR and CI
+1. Check the bilingual content files.
+2. Build the Hugo site using the pinned Hugo version.
+3. Audit the generated website.
+4. Deploy the new site to GitHub Pages if all steps pass.
 
-- Target branch: `main`.
-- Require a pull request before merging.
-- Require at least one approval from someone other than the PR author.
-- Require the `Build and audit` status check from `.github/workflows/pages.yml`.
-- Do not add bypass actors.
+A failed check does not remove the content commit from main. The live website remains on the last successful deployment. If this happens, record the error and affected content, then ask a maintainer to fix or revert the commit. Recheck the live page after a successful deployment.
 
-The workflow checks the bilingual pair audit, Hugo production build, and generated-site audit on pull requests. GitHub displays the job check as `Build and audit`; select the exact check emitted by the workflow if the repository UI shows a qualified name.
+Use GitHub pull requests for changes to code, the CMS configuration, controlled vocabularies, or this publishing setup. Do not edit those files through Pages CMS.
 
-### Ruleset B: owner review of content
+## Safe editing rules
 
-- Target branch: `main`.
-- Require approval from Code Owners.
-- Add `X-laboratory-678` as a bypass actor for pull requests only.
+- Make one content change at a time and wait for the save to finish.
+- Review both language versions before finishing.
+- Do not change stable IDs, translation keys, filenames, or existing relationships.
+- Do not put passwords, API tokens, private keys, webhook secrets, or one-time setup links into content.
+- Ask a maintainer when a field is unclear, a required value is missing, or a publishing check fails.
+- Confirm permission to publish a person's image and use descriptive alt text.
 
-`.github/CODEOWNERS` assigns `/content/` to `@X-laboratory-678`. This makes owner review required for content pull requests under the normal merge path. GitHub ruleset bypass actors cannot be limited to bypassing only their own authored pull requests, so the owner can technically bypass this review requirement on any pull request. Use that bypass only when the owner authored the PR; for everyone else's content PR, the owner should approve it normally. Ruleset A still requires a separate approval and the CI check.
+## Rollback
 
-### Ruleset C: only the owner can update `main`
+The Cloudflare Worker editor remains available from the admin landing page during the observation period. If Pages CMS is unavailable, use the old editor only for content that it supports and avoid editing the same record in both editors at once. A maintainer can repair or revert Git changes and confirm the Pages deployment.
 
-- Target branch: `main`.
-- Enable **Restrict updates**.
-- Add `X-laboratory-678` as the only bypass actor, with pull-request-only bypass.
-- Do not allow direct pushes as a bypass.
-
-Other repository writers can prepare and submit pull requests, but only the owner can merge changes into `main`. The owner must merge through a pull request so Ruleset A's status check and approval requirements still apply. GitHub does not provide a rule that limits an actor's bypass to a particular PR author; this restriction therefore controls who may exercise the bypass, while the owner-review procedure above controls when it should be used.
-
-After setup, verify a non-member cannot sign in, an authorized writer can open a CMS pull request, failing CI blocks merge, a content change requests owner review, and only the owner can merge. Finally, merge an approved change and confirm the Pages deployment completes.
-
-## Routine editor workflow
-
-1. Open `/admin/` and sign in with an authorized GitHub account.
-2. Create or edit an entry, and complete both language versions.
-3. Submit the CMS change as a pull request.
-4. Review the generated paths. New records should use `content/<collection>/<stable-id>/index.en.md` and `index.zh.md`; keep the same stable ID and `translationKey` in both translations.
-5. Wait for the bilingual audit, strict Hugo build, and generated-site audit. Resolve failures before requesting final review.
-6. The owner reviews content changes and merges the passing PR. GitHub Pages deploys from `main`.
-
-Controlled vocabularies and site-wide settings are deliberately not editable in the CMS. Adding a content type, changing a vocabulary, or changing site behavior requires a code change and review.
+The previous Sveltia configuration remains in static/admin/config.yml for reference. It is not the current /admin/ entry and still depends on its former OAuth setup.
