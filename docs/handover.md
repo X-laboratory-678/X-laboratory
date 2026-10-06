@@ -9,13 +9,13 @@
 
 ## Architecture
 
-The public site uses Hugo Extended with custom layouts, Markdown Leaf Page Bundles, small YAML controlled vocabularies, native CSS, and minimal native JavaScript. Sveltia CMS provides a GitHub-authenticated editor over those Markdown files; content remains in Git, with no database, site application server, Node frontend toolchain, or third-party theme.
+The public site uses Hugo Extended with custom layouts, Markdown Leaf Page Bundles, small YAML controlled vocabularies, native CSS, and minimal native JavaScript. Pages CMS edits existing Markdown records through a GitHub App installed only on this repository; content remains in Git, with no database, site application server, Node frontend toolchain, or third-party theme.
 
 English is published at `/`; Simplified Chinese is published at `/zh/`. Content-specific resources remain inside their Page Bundle. Shared categories, status values, research IDs, and ordering live under `data/`.
 
 V2 uses a hierarchical Hugo menu. People, Research, Events, Resources, and Tools are enabled top-level groups. Events, Resources, Tools, and Materials now have layouts that list verified CMS-managed records. Event series pages remain site structure; specific event records are selected by their `series` field. Tools are Projects with `projectType: tool`. The disclosure behavior is progressively enhanced with native JavaScript and retains a complete no-JavaScript link fallback.
 
-CMS source files are in `static/admin/`; the pinned Sveltia release is loaded from unpkg. `static/admin/config.yml` still needs the actual Cloudflare Worker URL before sign-in works. Cloudflare OAuth credentials and GitHub branch rulesets are external setup; follow `docs/cms-setup.md`. Do not commit OAuth secrets.
+`/admin/` is a small landing page that links to the hosted Pages CMS app on the `main` branch and retains the Cloudflare Worker editor as a fallback. The Pages CMS schema is in `.pages.yml`. The former Sveltia configuration remains in `static/admin/config.yml` for reference and is not the active entry. The Pages CMS GitHub App is installed on this repository only. See `docs/cms-setup.md` for permissions, supported operations, and publishing behavior.
 
 ## Content Authority
 
@@ -58,7 +58,9 @@ Required result: zero Hugo warnings and zero audit critical errors. Also review 
 - The favicon is an original provisional mark; final official logo/favicon approval is pending.
 - No approved PI portrait is available; the site intentionally uses its neutral fallback.
 - No custom domain is configured.
-- The CMS sign-in remains inactive until the OAuth Worker URL and repository rulesets are configured. Repository editors need Write access and therefore can also read and modify source code.
+- Pages CMS sign-in is active for authorized GitHub users; email collaborators can be invited by a repository maintainer. GitHub repository writers can read and modify source code outside the editor.
+- The current Pages CMS configuration edits existing records only. Create, rename, and delete are disabled; only People portraits support uploads. Other existing image paths are read-only.
+- Pages CMS saves directly to the selected branch. The production entry selects main, so every save starts the build and deployment workflow. A failed build leaves the commit in Git and the public site on its last successful version.
 - No analytics are configured.
 - Search Console registration is optional and has not been performed.
 - Firefox, WebKit, and Safari were not available for direct testing on the final Windows environment. Edge and Chrome were tested; Safari must not be inferred from Chromium results.

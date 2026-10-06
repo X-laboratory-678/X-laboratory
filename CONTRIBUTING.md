@@ -14,7 +14,7 @@ branch
 → pull request
 ```
 
-Do not push directly to `main` when a pull request workflow is available. Never commit secrets, credentials, private personal data, generated site output, or unrelated local files.
+Do not push directly to `main` when a pull request workflow is available. Pages CMS content saves to the production `main` branch are an intentional exception and trigger the site workflow immediately. Use pull requests for code, configuration, controlled vocabularies, and other maintenance changes. Never commit secrets, credentials, private personal data, generated site output, or unrelated local files.
 
 ## Naming
 

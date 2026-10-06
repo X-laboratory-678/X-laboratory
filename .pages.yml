@@ -1,6 +1,6 @@
-# PILOT CONFIGURATION ONLY: do not point production editors at this file yet.
-# Existing page-bundle image fields remain read-only. This pilot adds a separate static upload field for People portraits only.
-# Each language file is edited as a separate entry. Create, rename, and delete stay disabled during the pilot.
+# Production Pages CMS configuration for the existing bilingual Hugo records.
+# Existing page-bundle images stay read-only; People portraits support uploads through the separate static field.
+# Edit both language files separately. Create, rename, and delete remain disabled to protect existing bundles.
 media:
   input: static/uploads
   output: /uploads
@@ -321,7 +321,7 @@ content:
         required: false
         type: string
         readonly: true
-        description: 试点阶段仅保留原有页面包图片路径，禁止改动。Pages CMS 的固定媒体目录无法保证按文章页面包上传；图片字段只读。
+        description: 现阶段仅保留原有页面包图片路径，禁止改动。Pages CMS 的固定媒体目录无法保证按文章页面包上传；图片字段只读。
       - name: selected
         label: 精选论文
         required: false
@@ -452,7 +452,7 @@ content:
         required: false
         type: string
         readonly: true
-        description: 试点阶段仅保留原有页面包图片路径，禁止改动。Pages CMS 的固定媒体目录无法保证按文章页面包上传；图片字段只读。
+        description: 现阶段仅保留原有页面包图片路径，禁止改动。Pages CMS 的固定媒体目录无法保证按文章页面包上传；图片字段只读。
       - name: heroAlt
         label: 主图说明
         required: false
@@ -693,7 +693,7 @@ content:
         required: false
         type: string
         readonly: true
-        description: 试点阶段仅保留原有页面包图片路径，禁止改动。Pages CMS 的固定媒体目录无法保证按文章页面包上传；图片字段只读。
+        description: 现阶段仅保留原有页面包图片路径，禁止改动。Pages CMS 的固定媒体目录无法保证按文章页面包上传；图片字段只读。
       - name: imageAlt
         label: 图片说明
         required: false
@@ -889,7 +889,7 @@ content:
         required: false
         type: string
         readonly: true
-        description: 试点阶段仅保留原有页面包图片路径，禁止改动。Pages CMS 的固定媒体目录无法保证按文章页面包上传；图片字段只读。
+        description: 现阶段仅保留原有页面包图片路径，禁止改动。Pages CMS 的固定媒体目录无法保证按文章页面包上传；图片字段只读。
       - name: logoAlt
         label: 标识图说明
         required: false
@@ -1512,7 +1512,7 @@ content:
         required: false
         type: string
         readonly: true
-        description: 试点阶段仅保留原有页面包图片路径，禁止改动。Pages CMS 的固定媒体目录无法保证按文章页面包上传；图片字段只读。
+        description: 现阶段仅保留原有页面包图片路径，禁止改动。Pages CMS 的固定媒体目录无法保证按文章页面包上传；图片字段只读。
       - name: coverAlt
         label: 封面图说明
         required: false
