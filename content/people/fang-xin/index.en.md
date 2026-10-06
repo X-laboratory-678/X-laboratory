@@ -24,6 +24,7 @@ left: ''
 alumniNext: ''
 weight: 20
 draft: false
+cmsTitle: "【英文】方鑫"
 ---
 
 Master's student in Year 2. Research direction: large language models.

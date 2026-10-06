@@ -16,6 +16,7 @@ officialUrl: ""
 summary: "[Placeholder]"
 featured: false
 draft: true
+cmsTitle: "【英文】{{GRANT_01_TITLE_EN}}"
 ---
 
 [Placeholder]

@@ -13,6 +13,7 @@ researchInterests:
   - Computing–power coordination with deep and quantum reinforcement learning
 weight: 33
 draft: false
+cmsTitle: "【英文】余婷婷"
 ---
 
 Year 1 master's student. Research direction: computing–power coordination with deep and quantum reinforcement learning.

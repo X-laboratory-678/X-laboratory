@@ -29,6 +29,7 @@ tags:
   - placeholder
 links: []
 draft: true
+cmsTitle: "【英文】Example Publication One"
 ---
 
 Placeholder abstract for validating a publication with multiple authors and internal member relationships.

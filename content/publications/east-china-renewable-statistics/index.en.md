@@ -25,4 +25,5 @@ researchAreas:
 tags: []
 links: []
 draft: false
+cmsTitle: "【英文】Research on Statistical Characteristics of Renewable Energy in East China Power Grid Based on Output Features"
 ---

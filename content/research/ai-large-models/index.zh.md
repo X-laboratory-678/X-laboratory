@@ -7,6 +7,7 @@ aliases:
 description: 探索人工智能及大模型技术在电力系统科研中的应用。
 weight: 10
 draft: false
+cmsTitle: "【中文】人工智能与大模型"
 ---
 
 本方向关注人工智能及大模型技术在电力系统科研中的应用。

@@ -15,6 +15,7 @@ researchInterests:
   - Meta-learning optimization
 weight: 22
 draft: false
+cmsTitle: "【英文】燕广义"
 ---
 
 Master's student in Year 2. Research direction: meta-learning optimization.

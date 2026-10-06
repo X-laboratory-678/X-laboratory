@@ -7,6 +7,7 @@ aliases:
 description: Source-load forecasting and data-informed collaborative optimization for modern power systems.
 weight: 20
 draft: false
+cmsTitle: "【英文】Power Forecasting & Collaborative Optimization"
 ---
 
 This area focuses on source-load forecasting and collaborative optimization for power systems.

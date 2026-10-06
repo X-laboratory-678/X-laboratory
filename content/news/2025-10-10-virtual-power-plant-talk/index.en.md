@@ -13,6 +13,7 @@ relatedPublication: ""
 relatedProject: ""
 featured: true
 draft: false
+cmsTitle: "【英文】Jiangjiao Xu presents research on distribution grid–virtual power plant coordination"
 ---
 
 X-Laboratory principal investigator Jiangjiao Xu presented the thematic talk “Distribution Grid–Virtual Power Plant Coordinated Scheduling for Regional Autonomous Balancing” at the Second International Summit Forum on the New Ecology of Source–Grid–Load–Storage–Hydrogen Power Systems.

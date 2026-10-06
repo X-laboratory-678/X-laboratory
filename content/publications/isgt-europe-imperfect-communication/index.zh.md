@@ -23,4 +23,5 @@ researchAreas:
 tags: []
 links: []
 draft: false
+cmsTitle: "【中文】The Coordinated Voltage Control Meets Imperfect Communication System"
 ---

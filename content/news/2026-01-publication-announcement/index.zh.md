@@ -11,6 +11,7 @@ relatedPublication: example-publication-one
 relatedProject: ""
 featured: false
 draft: true
+cmsTitle: "【中文】示例论文动态"
 ---
 
 用于验证论文关联的占位动态正文。

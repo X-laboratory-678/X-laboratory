@@ -15,6 +15,7 @@ researchInterests:
   - 元学习优化
 weight: 22
 draft: false
+cmsTitle: "【中文】燕广义"
 ---
 
 硕士研究生二年级，研究方向为元学习优化。

@@ -13,6 +13,7 @@ researchInterests:
   - 故障诊断
 weight: 41
 draft: false
+cmsTitle: "【中文】仲家祺"
 ---
 
 硕士研究生三年级，研究方向为故障诊断。

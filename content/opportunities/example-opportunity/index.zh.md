@@ -15,6 +15,7 @@ officialUrl: ""
 contactPerson: ""
 featured: false
 draft: true
+cmsTitle: "【中文】{{OPPORTUNITY_01_TITLE}}"
 ---
 
 [待提供]

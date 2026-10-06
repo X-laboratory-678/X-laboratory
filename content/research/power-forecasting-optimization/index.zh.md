@@ -7,6 +7,7 @@ aliases:
 description: 面向现代电力系统的源荷预测与数据驱动协同优化研究。
 weight: 20
 draft: false
+cmsTitle: "【中文】源荷预测与协同优化"
 ---
 
 本方向关注电力系统源荷预测与协同优化。

@@ -13,6 +13,7 @@ researchInterests:
   - 基于对抗攻击的巡检图像识别技术研究
 weight: 32
 draft: false
+cmsTitle: "【中文】姜钦仁"
 ---
 
 硕士研究生一年级，研究方向：基于对抗攻击的巡检图像识别技术研究。

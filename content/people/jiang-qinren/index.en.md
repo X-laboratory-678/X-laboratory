@@ -13,6 +13,7 @@ researchInterests:
   - Inspection image recognition against adversarial attacks
 weight: 32
 draft: false
+cmsTitle: "【英文】姜钦仁"
 ---
 
 Year 1 master's student. Research direction: inspection image recognition against adversarial attacks.

@@ -13,6 +13,7 @@ researchInterests:
   - Reinforcement learning and heavy-duty trucks
 weight: 42
 draft: false
+cmsTitle: "【英文】水新亮"
 ---
 
 Year 3 master's student. Research direction: reinforcement learning and heavy-duty trucks.

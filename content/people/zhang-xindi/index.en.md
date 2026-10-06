@@ -15,6 +15,7 @@ researchInterests:
   - Fault diagnosis
 weight: 24
 draft: false
+cmsTitle: "【英文】张鑫迪"
 ---
 
 Master's student in Year 2. Research direction: fault diagnosis.

@@ -7,6 +7,7 @@ aliases:
 description: Applications of artificial intelligence and large-model technologies in power-system research.
 weight: 10
 draft: false
+cmsTitle: "【英文】Artificial Intelligence & Large Models"
 ---
 
 This area examines applications of artificial intelligence and large-model technologies in power-system research.

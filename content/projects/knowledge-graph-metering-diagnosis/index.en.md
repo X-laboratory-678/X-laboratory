@@ -22,6 +22,7 @@ links: []
 featured: true
 weight: 10
 draft: false
+cmsTitle: "【英文】Data-Driven Knowledge-Graph-Based Anomaly Diagnosis and Operations Platform for Metering Equipment"
 ---
 
 Commissioned by State Grid Shanghai Municipal Electric Power Company, this project focuses on data-driven knowledge graphs for metering-equipment anomaly diagnosis and an operations platform.

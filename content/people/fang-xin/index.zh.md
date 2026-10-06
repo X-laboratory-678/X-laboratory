@@ -24,6 +24,7 @@ left: ''
 alumniNext: ''
 weight: 20
 draft: false
+cmsTitle: "【中文】方鑫"
 ---
 
 硕士研究生二年级，研究方向为大模型。

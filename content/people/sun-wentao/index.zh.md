@@ -15,5 +15,6 @@ researchInterests:
   - 电算协调
 weight: 23
 draft: false
+cmsTitle: "【中文】孙闻涛"
 ---
 硕士研究生二年级，研究方向为电算协调。擅长打篮球

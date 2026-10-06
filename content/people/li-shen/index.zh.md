@@ -15,6 +15,7 @@ researchInterests:
   - 数据中心
 weight: 21
 draft: false
+cmsTitle: "【中文】李深"
 ---
 
 硕士研究生二年级，研究方向为数据中心。

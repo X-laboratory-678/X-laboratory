@@ -13,6 +13,7 @@ researchInterests:
   - 预测
 weight: 40
 draft: false
+cmsTitle: "【中文】毛绍宇"
 ---
 
 硕士研究生三年级，研究方向为预测。

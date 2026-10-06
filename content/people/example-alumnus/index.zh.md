@@ -18,6 +18,7 @@ left: 2025
 alumniNext: 占位后续职位
 weight: 30
 draft: true
+cmsTitle: "【中文】示例校友"
 ---
 
 示例校友的占位简介。这不是真实人物。

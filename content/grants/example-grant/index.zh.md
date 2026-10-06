@@ -16,6 +16,7 @@ officialUrl: ""
 summary: "[待提供]"
 featured: false
 draft: true
+cmsTitle: "【中文】{{GRANT_01_TITLE_ZH}}"
 ---
 
 [待提供]

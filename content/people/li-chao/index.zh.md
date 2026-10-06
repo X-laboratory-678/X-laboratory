@@ -13,6 +13,7 @@ researchInterests:
   - 基于大模型全自动优化技术研究
 weight: 31
 draft: false
+cmsTitle: "【中文】李超"
 ---
 
 硕士研究生一年级，研究方向：基于大模型全自动优化技术研究。

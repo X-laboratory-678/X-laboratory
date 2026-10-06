@@ -18,6 +18,7 @@ left: 2025
 alumniNext: Placeholder next position
 weight: 30
 draft: true
+cmsTitle: "【英文】Example Alumnus"
 ---
 
 Placeholder alumnus biography. This is not a real person.

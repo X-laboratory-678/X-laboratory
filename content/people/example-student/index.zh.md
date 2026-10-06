@@ -10,6 +10,7 @@ researchInterests:
 joined: 2025
 weight: 20
 draft: true
+cmsTitle: "【中文】示例学生"
 ---
 
 省略了部分可选资料链接的占位简介。

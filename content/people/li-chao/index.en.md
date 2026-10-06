@@ -13,6 +13,7 @@ researchInterests:
   - Fully automated optimization based on large language models
 weight: 31
 draft: false
+cmsTitle: "【英文】李超"
 ---
 
 Year 1 master's student. Research direction: fully automated optimization based on large language models.

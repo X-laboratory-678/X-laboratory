@@ -15,6 +15,7 @@ officialUrl: ""
 contactPerson: ""
 featured: false
 draft: true
+cmsTitle: "【英文】{{OPPORTUNITY_01_TITLE}}"
 ---
 
 [Placeholder]

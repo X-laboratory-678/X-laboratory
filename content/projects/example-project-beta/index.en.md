@@ -21,6 +21,7 @@ links: []
 featured: false
 weight: 20
 draft: true
+cmsTitle: "【英文】Example Project Beta"
 ---
 
 Detailed placeholder description for a completed project with optional links omitted.

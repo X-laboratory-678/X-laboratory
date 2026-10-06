@@ -29,6 +29,7 @@ tags:
   - placeholder
 links: []
 draft: true
+cmsTitle: "【中文】Example Publication One"
 ---
 
 用于验证多位作者和实验室成员关联的占位摘要。

@@ -15,6 +15,7 @@ researchInterests:
   - Quantum computing
 weight: 25
 draft: false
+cmsTitle: "【英文】郑泽阳"
 ---
 
 Master's student in Year 2. Research direction: quantum computing.

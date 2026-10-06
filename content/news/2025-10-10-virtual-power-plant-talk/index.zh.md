@@ -13,6 +13,7 @@ relatedPublication: ""
 relatedProject: ""
 featured: true
 draft: false
+cmsTitle: "【中文】许江蛟在电力系统新生态国际高峰论坛作主题演讲"
 ---
 
 X-Laboratory 负责人许江蛟在第二届电力系统“源网荷储氢”新生态国际高峰论坛作《面向区域自治平衡的配电网——虚拟电厂协同调度》主题演讲。
