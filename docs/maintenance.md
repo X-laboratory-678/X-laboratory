@@ -13,23 +13,19 @@ This guide covers routine content maintenance for X-Laboratory. Read `CONTRIBUTI
 
 Do not edit Hugo-generated `public/` files or upload them manually.
 
-## Add or Update Content with the CMS
+## Add or Update Content with Pages CMS
 
-After the external setup in `docs/cms-setup.md` is complete, open:
+Open `/admin/` or the [Pages CMS production editor](https://app.pagescms.org/x-laboratory-678/x-laboratory/main). Sign in with an authorized GitHub account or use an email invitation from a repository maintainer.
 
-```text
-https://x-laboratory-678.github.io/X-laboratory/admin/
-```
+The production editor opens `main`; saving writes a commit directly to that branch. GitHub Actions then runs the bilingual audit, strict Hugo build, generated-site audit, and Pages deployment. If any check fails, the content commit remains on `main`, but the public site stays on its last successful deployment. A maintainer must correct or revert the commit and verify the next deployment.
 
-Sign in with a GitHub account that has Write access to the repository. Create, edit, or delete an entry in its collection; the CMS opens a pull request instead of publishing directly. Every entry needs English and Chinese content. Check the generated files are `index.en.md` and `index.zh.md`, then wait for the bilingual audit, strict Hugo build, generated-site audit, and the content-owner review before merge. GitHub Pages deploys after the approved merge to `main`.
+The current CMS setup is for editing existing records. Creating, renaming, and deleting records are disabled. Stable IDs, translation keys, filenames, and existing relationships must stay unchanged. Edit English and Chinese files as separate entries and keep shared fields aligned. Only People portraits support new uploads; preserve other existing image paths. See `pages-cms-media-pilot.md` for details.
 
-- Keep the stable ID, slug, and `translationKey` aligned across translations. Published slugs are permanent.
-- Use only the controlled category, status, type, and research-area options in the editor. Adding or changing a vocabulary still requires a code change.
-- Event series pages are maintained as site structure. Create a specific event in the Events collection, choose its series, and use an event type other than the reserved `recurring` value.
-- Add a tool through Projects and set `projectType: tool`; it will also appear in Tools.
-- Record authoritative sources and review dates in `docs/content-sources.md`. The CMS does not replace factual review, privacy consent, or asset-rights checks.
+- Use only the configured category, status, type, and research-area options. Adding or changing a vocabulary requires a reviewed code change.
+- Projects with `projectType: tool` also appear in Tools; do not create a duplicate Tool record.
+- Record authoritative sources and review dates in `docs/content-sources.md`. The CMS does not replace factual review, privacy consent, or image-rights checks.
 
-The CMS is a repository editor, not a sandboxed role system. Anyone granted the required GitHub Write access can also inspect and modify repository source files outside the CMS. Invite only trusted collaborators.
+Repository write access also permits changes outside the content editor. Invite only trusted maintainers to GitHub. Pages CMS email collaborators can edit content and media in their invited repository but cannot manage its configuration or invite other collaborators.
 
 ## Update the Principal Investigator
 
