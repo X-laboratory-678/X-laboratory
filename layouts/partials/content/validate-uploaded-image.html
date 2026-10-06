@@ -1,0 +1,17 @@
+{{- $page := .page -}}
+{{- $field := .field -}}
+{{- $altField := .altField -}}
+{{- with index $page.Params $field -}}
+  {{- if not (findRE `^/uploads/[A-Za-z0-9][A-Za-z0-9._-]*\.(jpg|jpeg|png|webp)$` .) -}}
+    {{- errorf "content validation: %s field %s must use a safe image filename under /uploads/" $page.File.Path $field -}}
+  {{- else -}}
+    {{- $filename := strings.TrimPrefix "/uploads/" . -}}
+    {{- $sourcePath := printf "static/uploads/%s" $filename -}}
+    {{- if not (fileExists $sourcePath) -}}
+      {{- errorf "content validation: %s field %s references missing uploaded image %q" $page.File.Path $field . -}}
+    {{- end -}}
+  {{- end -}}
+  {{- if not (index $page.Params $altField) -}}
+    {{- errorf "content validation: %s requires %s when %s is set" $page.File.Path $altField $field -}}
+  {{- end -}}
+{{- end -}}

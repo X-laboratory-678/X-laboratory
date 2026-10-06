@@ -1,12 +1,31 @@
 <!doctype html>
 <html lang="zh-CN">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="robots" content="noindex" />
-    <title>X-Laboratory 内容管理</title>
-  </head>
-  <body>
-    <script src="https://unpkg.com/@sveltia/cms@0.227.2/dist/sveltia-cms.js"></script>
-  </body>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>X-Laboratory 内容管理</title>
+  <style>
+    :root { color-scheme: light; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; color: #182434; background: #f4f7fb; }
+    body { margin: 0; min-height: 100vh; display: grid; place-items: center; padding: 24px; box-sizing: border-box; }
+    main { box-sizing: border-box; width: min(100%, 620px); padding: 36px; background: #fff; border: 1px solid #dce3ec; border-radius: 18px; box-shadow: 0 14px 50px #13284412; }
+    h1 { margin: 0 0 12px; font-size: 1.8rem; }
+    p { color: #526277; line-height: 1.7; }
+    a { color: #1769aa; font-weight: 650; }
+    .primary { display: inline-block; padding: 12px 18px; border-radius: 9px; color: #fff; background: #1769aa; text-decoration: none; }
+    .note { margin-top: 18px; font-size: .92rem; }
+    hr { margin: 26px 0; border: 0; border-top: 1px solid #dce3ec; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>X-Laboratory 内容管理</h1>
+    <p>内容编辑人员请使用 Pages CMS。请用已获仓库权限的 GitHub 账号登录，并确认打开的是 X-laboratory-678/X-laboratory 仓库。</p>
+    <p><a class="primary" href="https://app.pagescms.org/x-laboratory-678/x-laboratory/main">打开 Pages CMS</a></p>
+    <p class="note">保存后，网站会自动运行内容检查和构建。检查成功后更新网站；检查失败时，线上仍保留上一次成功版本。</p>
+    <hr>
+    <p>旧编辑器暂时保留作回退使用。</p>
+    <p><a href="https://x-lab-cms-editor.fangx6531.workers.dev/editor/">打开旧内容编辑器</a></p>
+  </main>
+</body>
 </html>

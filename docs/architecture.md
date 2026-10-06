@@ -145,3 +145,11 @@ These decisions define the initial architecture. A future change that conflicts 
 **Reason:** Routine factual updates should be manageable through a form-based interface while retaining Markdown as the authoritative source, normal Git history, Hugo's existing page-bundle model, and review before publication. A static CMS interface and a small OAuth Worker avoid adding a content database or site application server.
 
 **Consequences:** The CMS JavaScript is pinned to a version and loaded from unpkg; that external dependency must be upgraded deliberately. GitHub CMS users need repository Write access, which also grants source-code access and write capability outside the CMS. The OAuth Worker URL and secret configuration, Pages source, CODEOWNERS enforcement, required CI checks, and repository rulesets require owner-side setup and are documented in `docs/cms-setup.md`. Until those external settings are completed, `/admin/` is present but sign-in is unavailable. Hugo includes future-dated entries in production so events can be published before their scheduled date; merging the PR is the publication action, not the front matter date. Existing event-series pages are site structure and excluded from event editing; Tools are Projects with `projectType: tool`.
+
+## ADR-013 — Keep Existing Portrait Bundles While Supporting Pages CMS Uploads
+
+**Decision:** Preserve every existing People portrait in its Hugo Page Bundle. For the Pages CMS pilot, add an optional `photoUpload` field whose new files are stored in `static/uploads`; when set, Hugo serves that image using a base-path-aware URL. The existing `photo` field remains read-only and continues to resolve through the page bundle.
+
+**Reason:** Pages CMS currently configures one fixed media destination for an image field and does not derive an upload directory from the selected entry. A separate field and destination allow a safe upload pilot without moving or rewriting existing content assets.
+
+**Consequences:** The new field must reference an existing file under `static/uploads`, must have `photoAlt`, and must use the same path in both language files. Keep other image fields read-only until they receive an equivalent rendering and validation path. This is an additive media exception; it does not authorize bulk migration of existing Page Bundle assets.

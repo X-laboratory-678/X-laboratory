@@ -1,15 +1,22 @@
 {{- $page := .page -}}
 {{- $variant := .variant | default "standard" -}}
 {{- $photo := false -}}
-{{- with $page.Params.photo -}}
-  {{- $photo = $page.Resources.GetMatch . -}}
+{{- $photoURL := "" -}}
+{{- with $page.Params.photoUpload -}}
+  {{- $photoURL = strings.TrimPrefix "/" . | relURL -}}
+{{- else -}}
+  {{- with $page.Params.photo -}}
+    {{- $photo = $page.Resources.GetMatch . -}}
+  {{- end -}}
 {{- end -}}
 <div class="person-portrait person-portrait--{{ $variant }}">
-  {{- with $photo -}}
-    {{- if eq .MediaType.SubType "svg" -}}
-      <img src="{{ .RelPermalink }}" width="480" height="600" loading="lazy" alt="{{ $page.Params.photoAlt }}">
+  {{- if $photoURL -}}
+    <img src="{{ $photoURL }}" width="480" height="600" loading="lazy" alt="{{ $page.Params.photoAlt }}">
+  {{- else if $photo -}}
+    {{- if eq $photo.MediaType.SubType "svg" -}}
+      <img src="{{ $photo.RelPermalink }}" width="480" height="600" loading="lazy" alt="{{ $page.Params.photoAlt }}">
     {{- else -}}
-      {{- $portrait := .Fill "480x600 Center webp q82" -}}
+      {{- $portrait := $photo.Fill "480x600 Center webp q82" -}}
       <img src="{{ $portrait.RelPermalink }}" width="{{ $portrait.Width }}" height="{{ $portrait.Height }}" loading="lazy" alt="{{ $page.Params.photoAlt }}">
     {{- end -}}
   {{- else -}}
