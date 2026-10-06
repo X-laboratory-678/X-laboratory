@@ -1,6 +1,12 @@
 # PILOT CONFIGURATION ONLY: do not point production editors at this file yet.
-# Image fields are intentionally read-only; do not add a media source until bundle-relative uploads are proven safe.
+# Existing page-bundle image fields remain read-only. This pilot adds a separate static upload field for People portraits only.
 # Each language file is edited as a separate entry. Create, rename, and delete stay disabled during the pilot.
+media:
+  input: static/uploads
+  output: /uploads
+  rename: safe
+  extensions: [jpg, jpeg, png, webp]
+
 settings:
   content: true
 content:
@@ -79,11 +85,19 @@ content:
             - current
             - alumni
       - name: photo
-        label: 头像文件
+        label: 现有头像文件（页面包）
         required: false
         type: string
         readonly: true
-        description: 试点阶段仅保留原有页面包图片路径，禁止改动。Pages CMS 的固定媒体目录无法保证按文章页面包上传；图片字段只读。
+        description: 保留现有页面包头像，不要修改。新上传请使用下方的新头像字段。
+      - name: photoUpload
+        label: 新头像（上传）
+        required: false
+        type: image
+        description: 可选。图片上传到公共上传目录；上传后在英文和中文条目中选择同一张图片。留空则继续显示现有页面包头像。
+        options:
+          path: static/uploads
+          extensions: [jpg, jpeg, png, webp]
       - name: photoAlt
         label: 头像说明
         required: false

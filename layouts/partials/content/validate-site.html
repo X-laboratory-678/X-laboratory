@@ -83,6 +83,7 @@
       {{- errorf "content validation: %s id %q must match bundle slug %q" $page.File.Path $id (path.Base $page.File.Dir) -}}
     {{- end -}}
     {{- partial "content/validate-translation-id.html" (dict "page" $page "id" $id) -}}
+    {{- partial "content/validate-translation-fields.html" (dict "page" $page "fields" (slice "photoUpload")) -}}
     {{- if not (partial "content/vocabulary-has.html" (dict "entries" hugo.Data.people_categories "id" $page.Params.category)) -}}
       {{- errorf "content validation: %s has unknown people category %q" $page.File.Path $page.Params.category -}}
     {{- end -}}
@@ -100,6 +101,7 @@
         {{- errorf "content validation: %s requires photoAlt when photo is set" $page.File.Path -}}
       {{- end -}}
     {{- end -}}
+    {{- partial "content/validate-uploaded-image.html" (dict "page" $page "field" "photoUpload" "altField" "photoAlt") -}}
 
   {{- else if eq $section "publications" -}}
     {{- range slice "title" "id" "authors" "year" "publicationType" -}}
