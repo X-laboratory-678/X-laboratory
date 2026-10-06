@@ -15,6 +15,7 @@ researchInterests:
   - Computing–power coordination
 weight: 23
 draft: false
+cmsTitle: "【英文】孙闻涛"
 ---
 
 Master's student in Year 2. Research direction: computing–power coordination.

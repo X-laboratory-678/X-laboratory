@@ -13,6 +13,7 @@ researchInterests:
   - 宽频振荡
 weight: 43
 draft: false
+cmsTitle: "【中文】张钰杰"
 ---
 
 硕士研究生三年级，研究方向为宽频振荡。

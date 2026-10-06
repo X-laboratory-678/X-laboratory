@@ -15,6 +15,7 @@ researchInterests:
   - 能源岛
 weight: 26
 draft: false
+cmsTitle: "【中文】赵杰"
 ---
 
 硕士研究生二年级，研究方向为能源岛。

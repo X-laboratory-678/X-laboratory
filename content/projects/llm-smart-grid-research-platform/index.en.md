@@ -22,6 +22,7 @@ links: []
 featured: true
 weight: 20
 draft: false
+cmsTitle: "【英文】Research on a Large-Language-Model-Empowered Research and Innovation Platform for Smart Grids"
 ---
 
 This Shanghai Municipal Education Commission artificial-intelligence paradigm-reform project investigates a large-language-model-empowered research and innovation platform for smart grids.

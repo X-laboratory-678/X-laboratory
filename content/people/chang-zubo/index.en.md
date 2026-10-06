@@ -13,6 +13,7 @@ researchInterests:
   - Joint thermal–electric–computing modeling and computing–power coordination
 weight: 34
 draft: false
+cmsTitle: "【英文】常祖博"
 ---
 
 Year 1 master's student. Research direction: joint thermal–electric–computing modeling and computing–power coordination.

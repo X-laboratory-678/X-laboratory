@@ -29,4 +29,5 @@ researchAreas:
 tags: []
 links: []
 draft: false
+cmsTitle: "【英文】Smart Generation Control for Interconnected Power System Based on Self-Learning Reward Function"
 ---

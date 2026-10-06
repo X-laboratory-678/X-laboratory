@@ -24,4 +24,5 @@ researchAreas:
 tags: []
 links: []
 draft: false
+cmsTitle: "【英文】Multiscale Feature Fusion Transformer With Hybrid Attention for Insulator Defect Detection"
 ---

@@ -13,6 +13,7 @@ relatedPublication: preference-online-rl-smart-grid
 relatedProject: ""
 featured: true
 draft: false
+cmsTitle: "【中文】研究成果在线发表于 IEEE Transactions on Industrial Informatics"
 ---
 
 许江蛟参与的研究成果于 2024 年 12 月 12 日在线发表于 *IEEE Transactions on Industrial Informatics*。论文最终刊载于该刊 2025 年第 21 卷第 3 期。

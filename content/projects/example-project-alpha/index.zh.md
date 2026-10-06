@@ -21,6 +21,7 @@ links: []
 featured: true
 weight: 10
 draft: true
+cmsTitle: "【中文】示例项目 Alpha"
 ---
 
 进行中项目的详细占位说明。这不是真实研究项目。

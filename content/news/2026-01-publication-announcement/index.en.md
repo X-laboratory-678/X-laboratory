@@ -11,6 +11,7 @@ relatedPublication: example-publication-one
 relatedProject: ""
 featured: false
 draft: true
+cmsTitle: "【英文】Example Publication Announcement"
 ---
 
 Placeholder news body used to validate a publication relationship.

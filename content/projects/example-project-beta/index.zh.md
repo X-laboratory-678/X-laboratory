@@ -21,6 +21,7 @@ links: []
 featured: false
 weight: 20
 draft: true
+cmsTitle: "【中文】示例项目 Beta"
 ---
 
 省略可选链接的已完成项目详细占位说明。

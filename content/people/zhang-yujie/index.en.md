@@ -13,6 +13,7 @@ researchInterests:
   - Wideband oscillation
 weight: 43
 draft: false
+cmsTitle: "【英文】张钰杰"
 ---
 
 Year 3 master's student. Research direction: wideband oscillation.

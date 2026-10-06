@@ -10,6 +10,7 @@ researchInterests:
 joined: 2025
 weight: 20
 draft: true
+cmsTitle: "【英文】Example Student"
 ---
 
 Placeholder biography with intentionally omitted optional profile links.

@@ -13,6 +13,7 @@ researchInterests:
   - Forecasting
 weight: 40
 draft: false
+cmsTitle: "【英文】毛绍宇"
 ---
 
 Year 3 master's student. Research direction: forecasting.

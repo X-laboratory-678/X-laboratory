@@ -15,6 +15,7 @@ researchInterests:
   - 故障诊断
 weight: 24
 draft: false
+cmsTitle: "【中文】张鑫迪"
 ---
 
 硕士研究生二年级，研究方向为故障诊断。

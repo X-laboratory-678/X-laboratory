@@ -13,6 +13,7 @@ researchInterests:
   - 基于热电算联合建模的电算协同技术研究
 weight: 34
 draft: false
+cmsTitle: "【中文】常祖博"
 ---
 
 硕士研究生一年级，研究方向：基于热电算联合建模的电算协同技术研究。

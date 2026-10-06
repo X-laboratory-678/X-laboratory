@@ -21,6 +21,7 @@ links: []
 featured: true
 weight: 10
 draft: true
+cmsTitle: "【英文】Example Project Alpha"
 ---
 
 Detailed placeholder description for an active project. This is not a real research project.

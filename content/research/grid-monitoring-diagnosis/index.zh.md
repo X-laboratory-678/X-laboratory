@@ -7,6 +7,7 @@ aliases:
 description: 面向配电网在线监测、异常识别与故障诊断的研究。
 weight: 30
 draft: false
+cmsTitle: "【中文】电网监测与故障诊断"
 ---
 
 本方向关注配电网在线监测与故障识别。

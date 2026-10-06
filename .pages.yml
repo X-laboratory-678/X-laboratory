@@ -25,11 +25,16 @@ content:
       delete: false
     view:
       layout: tree
-      primary: title
+      primary: cmsTitle
       fields:
-        - title
         - role
     fields:
+      - name: cmsTitle
+        label: false
+        type: string
+        hidden: true
+        readonly: true
+        required: false
       - name: title
         label: 中文/英文姓名
         required: true
@@ -177,12 +182,17 @@ content:
       delete: false
     view:
       layout: tree
-      primary: title
+      primary: cmsTitle
       fields:
-        - title
         - id
         - translationKey
     fields:
+      - name: cmsTitle
+        label: false
+        type: string
+        hidden: true
+        readonly: true
+        required: false
       - name: title
         label: 论文标题
         required: true
@@ -419,12 +429,17 @@ content:
       delete: false
     view:
       layout: tree
-      primary: title
+      primary: cmsTitle
       fields:
-        - title
         - id
         - translationKey
     fields:
+      - name: cmsTitle
+        label: false
+        type: string
+        hidden: true
+        readonly: true
+        required: false
       - name: title
         label: 项目名称
         required: true
@@ -593,12 +608,17 @@ content:
       delete: false
     view:
       layout: tree
-      primary: title
+      primary: cmsTitle
       fields:
-        - title
         - id
         - translationKey
     fields:
+      - name: cmsTitle
+        label: false
+        type: string
+        hidden: true
+        readonly: true
+        required: false
       - name: title
         label: 方向名称（须与词表标签一致）
         required: true
@@ -655,12 +675,17 @@ content:
       delete: false
     view:
       layout: tree
-      primary: title
+      primary: cmsTitle
       fields:
-        - title
         - id
         - translationKey
     fields:
+      - name: cmsTitle
+        label: false
+        type: string
+        hidden: true
+        readonly: true
+        required: false
       - name: title
         label: 新闻标题
         required: true
@@ -788,12 +813,17 @@ content:
       delete: false
     view:
       layout: tree
-      primary: title
+      primary: cmsTitle
       fields:
-        - title
         - id
         - translationKey
     fields:
+      - name: cmsTitle
+        label: false
+        type: string
+        hidden: true
+        readonly: true
+        required: false
       - name: title
         label: 资助名称
         required: true
@@ -931,12 +961,17 @@ content:
       delete: false
     view:
       layout: tree
-      primary: title
+      primary: cmsTitle
       fields:
-        - title
         - id
         - translationKey
     fields:
+      - name: cmsTitle
+        label: false
+        type: string
+        hidden: true
+        readonly: true
+        required: false
       - name: title
         label: 机会名称
         required: true
@@ -1080,12 +1115,17 @@ content:
       delete: false
     view:
       layout: tree
-      primary: title
+      primary: cmsTitle
       fields:
-        - title
         - id
         - translationKey
     fields:
+      - name: cmsTitle
+        label: false
+        type: string
+        hidden: true
+        readonly: true
+        required: false
       - name: title
         label: 活动名称
         required: true
@@ -1256,12 +1296,17 @@ content:
       delete: false
     view:
       layout: tree
-      primary: title
+      primary: cmsTitle
       fields:
-        - title
         - id
         - translationKey
     fields:
+      - name: cmsTitle
+        label: false
+        type: string
+        hidden: true
+        readonly: true
+        required: false
       - name: title
         label: 资源名称
         required: true
@@ -1404,12 +1449,17 @@ content:
       delete: false
     view:
       layout: tree
-      primary: title
+      primary: cmsTitle
       fields:
-        - title
         - id
         - translationKey
     fields:
+      - name: cmsTitle
+        label: false
+        type: string
+        hidden: true
+        readonly: true
+        required: false
       - name: title
         label: 材料标题
         required: true

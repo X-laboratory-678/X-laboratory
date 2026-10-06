@@ -13,6 +13,7 @@ relatedPublication: preference-online-rl-smart-grid
 relatedProject: ""
 featured: true
 draft: false
+cmsTitle: "【英文】Paper published online in IEEE Transactions on Industrial Informatics"
 ---
 
 The study, co-authored by Jiangjiao Xu, was first published online on 12 December 2024 in *IEEE Transactions on Industrial Informatics*. The final issue record appears in volume 21, issue 3, in 2025.

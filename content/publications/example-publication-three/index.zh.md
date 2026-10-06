@@ -18,6 +18,7 @@ researchAreas:
 tags: []
 links: []
 draft: true
+cmsTitle: "【中文】Example Publication Three"
 ---
 
 用于验证年份和论文类型变化的占位期刊论文。

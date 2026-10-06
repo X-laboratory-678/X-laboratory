@@ -18,6 +18,7 @@ researchAreas:
 tags: []
 links: []
 draft: true
+cmsTitle: "【英文】Example Publication Three"
 ---
 
 Placeholder journal article used to verify year and type variation.

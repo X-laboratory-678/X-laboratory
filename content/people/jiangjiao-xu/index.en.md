@@ -15,6 +15,7 @@ researchInterests:
   - Online Monitoring and Fault Diagnosis for Distribution Networks
 weight: 10
 draft: false
+cmsTitle: "【英文】Jiangjiao Xu"
 ---
 
 Jiangjiao Xu is a lecturer and master's supervisor in Electrical Engineering within the Division of Electrical Engineering at Shanghai University of Electric Power. His research connects artificial intelligence with modern power systems, with an emphasis on intelligent forecasting, collaborative optimization, and online monitoring and fault diagnosis for distribution networks.

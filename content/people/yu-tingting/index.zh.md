@@ -13,6 +13,7 @@ researchInterests:
   - 基于深度/量子强化学习的电算协同技术研究
 weight: 33
 draft: false
+cmsTitle: "【中文】余婷婷"
 ---
 
 硕士研究生一年级，研究方向：基于深度/量子强化学习的电算协同技术研究。

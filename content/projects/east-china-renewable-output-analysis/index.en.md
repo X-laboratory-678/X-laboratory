@@ -22,6 +22,7 @@ links: []
 featured: true
 weight: 30
 draft: false
+cmsTitle: "【英文】Statistical Characterization and Application Analysis of Renewable Energy Output in the East China Power Grid"
 ---
 
 Commissioned by the East China Branch of State Grid Corporation of China, this technical-service project focuses on statistical characterization and application analysis of renewable-energy output in the East China power grid.

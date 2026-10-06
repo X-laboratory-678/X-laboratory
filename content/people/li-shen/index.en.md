@@ -15,6 +15,7 @@ researchInterests:
   - Data Centers
 weight: 21
 draft: false
+cmsTitle: "【英文】李深"
 ---
 
 Master's student in Year 2. Research direction: data centers.

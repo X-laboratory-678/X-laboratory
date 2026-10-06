@@ -15,6 +15,7 @@ researchInterests:
   - 量子计算
 weight: 25
 draft: false
+cmsTitle: "【中文】郑泽阳"
 ---
 
 硕士研究生二年级，研究方向为量子计算。

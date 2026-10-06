@@ -11,6 +11,7 @@ relatedPublication: ""
 relatedProject: example-project-alpha
 featured: false
 draft: true
+cmsTitle: "【中文】示例项目动态"
 ---
 
 用于验证项目关联的占位动态正文。

@@ -13,6 +13,7 @@ researchInterests:
   - 基于迁移学习的自适应预测技术研究
 weight: 30
 draft: false
+cmsTitle: "【中文】马俊峰"
 ---
 
 硕士研究生一年级，研究方向：基于迁移学习的自适应预测技术研究。

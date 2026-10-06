@@ -13,6 +13,7 @@ researchInterests:
   - Transfer-learning-based adaptive forecasting
 weight: 30
 draft: false
+cmsTitle: "【英文】马俊峰"
 ---
 
 Year 1 master's student. Research direction: transfer-learning-based adaptive forecasting.

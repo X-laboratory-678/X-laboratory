@@ -13,6 +13,7 @@ researchInterests:
   - 电力电子
 weight: 44
 draft: false
+cmsTitle: "【中文】段夏怡"
 ---
 
 硕士研究生三年级，研究方向为电力电子。

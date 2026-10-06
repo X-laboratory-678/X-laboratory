@@ -7,6 +7,7 @@ aliases:
 description: Online grid monitoring and data-informed anomaly and fault diagnosis.
 weight: 30
 draft: false
+cmsTitle: "【英文】Grid Monitoring & Fault Diagnosis"
 ---
 
 This area concerns online monitoring and fault identification in distribution grids.

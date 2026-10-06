@@ -13,6 +13,7 @@ researchInterests:
   - Fault diagnosis
 weight: 41
 draft: false
+cmsTitle: "【英文】仲家祺"
 ---
 
 Year 3 master's student. Research direction: fault diagnosis.

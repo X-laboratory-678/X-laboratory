@@ -11,6 +11,7 @@ relatedPublication: ""
 relatedProject: example-project-alpha
 featured: false
 draft: true
+cmsTitle: "【英文】Example Project Update"
 ---
 
 Placeholder news body used to validate a project relationship.

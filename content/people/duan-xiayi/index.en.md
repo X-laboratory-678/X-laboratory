@@ -13,6 +13,7 @@ researchInterests:
   - Power electronics
 weight: 44
 draft: false
+cmsTitle: "【英文】段夏怡"
 ---
 
 Year 3 master's student. Research direction: power electronics.

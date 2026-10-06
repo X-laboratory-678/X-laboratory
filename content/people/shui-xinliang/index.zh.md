@@ -13,6 +13,7 @@ researchInterests:
   - 强化学习与重卡
 weight: 42
 draft: false
+cmsTitle: "【中文】水新亮"
 ---
 
 硕士研究生三年级，研究方向为强化学习与重卡。
