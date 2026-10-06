@@ -41,7 +41,7 @@ Do not introduce the following without an explicit requirement and an approved a
 
 - Prefer Hugo's native content, template, asset, taxonomy, and multilingual features.
 - Use Page Bundles for content-related images, documents, and other resources.
-- Keep existing media in its Page Bundle. The approved Pages CMS pilot may store newly uploaded profile portraits in `static/uploads` through the separate `photoUpload` field; validate the file and generate its URL with Hugo `relURL` so Project Pages subpaths work. Do not migrate existing bundle files as part of this exception.
+- Keep existing media in its Page Bundle. The production Pages CMS configuration permits new People portraits in `static/uploads` through the separate `photoUpload` field; validate the file and generate its URL with Hugo `relURL` so Project Pages subpaths work. Do not migrate existing bundle files as part of this exception.
 - Use Partials for reusable template components.
 - Do not prematurely extract the site into an independent Hugo theme.
 - Generate internal URLs with Hugo URL and page reference helpers.
