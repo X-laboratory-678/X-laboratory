@@ -10,7 +10,6 @@ category: master
 cohort: year2
 status: current
 photo: portrait.jpg
-photoUpload: /uploads/pages-cms-pilot-test.png
 photoAlt: Portrait of Zhang Xindi
 researchInterests:
   - Fault diagnosis
