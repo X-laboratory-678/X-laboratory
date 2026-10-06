@@ -5,9 +5,9 @@ Official website source for **X-Laboratory** at Shanghai University of Electric 
 - Live site: <https://x-laboratory-678.github.io/X-laboratory/>
 - Repository: <https://github.com/X-laboratory-678/X-laboratory>
 - Production branch: `main`
-- Status: Sveltia CMS editorial workflow configured; external OAuth and GitHub rules remain to be enabled
+- Status: Pages CMS is live on main; /admin/ links to it, with the legacy Worker editor retained for rollback.
 
-The public site is a bilingual, content-driven Hugo website deployed automatically to GitHub Project Pages. Sveltia CMS provides a GitHub-authenticated editorial interface over the existing Markdown bundles; the CMS adds no content database, site application server, or Node frontend build pipeline.
+The public site is a bilingual, content-driven Hugo website deployed automatically to GitHub Project Pages. Pages CMS edits existing Markdown bundles through the repository-scoped GitHub App; content remains in Git, with no content database, site application server, or Node frontend build pipeline.
 
 ## Technology
 
@@ -51,9 +51,9 @@ data/                  Controlled IDs, labels, categories, and ordering
 i18n/                  Shared interface translations
 ```
 
-The content repository includes schemas for Grants, Opportunities, Events, Resources, and Materials. Sveltia CMS manages existing content types, including bilingual Research pages (editing only); it keeps controlled vocabularies and site settings outside the editor. Projects with `projectType: tool` also populate the Tools directory. See `docs/missing-information.md` for facts still needed from the laboratory.
+The content repository includes schemas for Grants, Opportunities, Events, Resources, and Materials. Pages CMS manages existing records in ten collections, including bilingual Research pages (editing only), while controlled vocabularies and site settings remain outside the editor. Creating, renaming, and deleting records are disabled. Existing Page Bundle images remain read-only except for the optional People portrait upload to `static/uploads/`. Projects with `projectType: tool` also populate the Tools directory. See `docs/missing-information.md` for facts still needed from the laboratory.
 
-The CMS is served at `/admin/`. Before sign-in is available, deploy the Sveltia OAuth Worker and configure the GitHub repository rulesets using [the CMS setup guide](docs/cms-setup.md). Every entry requires both English and Chinese files and goes through a pull request.
+The CMS landing page is served at `/admin/` and links to Pages CMS on `main`. Authorized GitHub users can sign in; maintainers can invite email collaborators through Pages CMS. Saving to `main` creates a commit directly and triggers the bilingual audit, Hugo build, site audit, and GitHub Pages deployment. A failed build leaves the commit on `main` while production remains on its last successful deployment. See [the CMS setup guide](docs/cms-setup.md).
 
 Grants and Opportunities now have bilingual public directories with honest empty states. Draft example bundles exercise their layouts locally but are excluded from production; they are not evidence of funding or recruitment.
 
@@ -107,16 +107,11 @@ The local production configuration intentionally uses a reserved `example.invali
 The supported deployment flow is:
 
 ```text
-CMS content change → pull request
-→ bilingual bundle audit
+Pages CMS save to main
+→ GitHub Actions bilingual bundle audit
 → pinned Hugo strict build and generated-site audit
-→ content owner review
-→ merge to main
-→ GitHub Actions installs the pinned Hugo Extended release
-→ strict production build with the Pages-provided base URL
-→ scripts/audit-site.py
 → Pages artifact upload
-→ automatic GitHub Pages deployment (main branch only)
+→ automatic GitHub Pages deployment
 ```
 
 Do not create a `gh-pages` branch or manually upload `public/`. The current site has no custom domain or `CNAME`.
@@ -124,7 +119,8 @@ Do not create a `gh-pages` branch or manually upload `public/`. The current site
 ## Documentation
 
 - [Routine maintenance](docs/maintenance.md)
-- [CMS setup and repository protection](docs/cms-setup.md)
+- [CMS setup and repository publishing](docs/cms-setup.md)
+- [Pages CMS image and media scope](docs/pages-cms-media-pilot.md)
 - [Project handover](docs/handover.md)
 - [Contribution guide](CONTRIBUTING.md)
 - [Content models](docs/content-models.md)
