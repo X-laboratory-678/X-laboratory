@@ -243,6 +243,7 @@ content:
         label: 发表日期
         required: false
         type: date
+        default: ""
         options:
           time: false
       - name: publicationType
@@ -666,6 +667,7 @@ content:
         label: 最后修改日期
         required: false
         type: date
+        default: ""
         options:
           time: false
       - name: summary
@@ -969,12 +971,14 @@ content:
         label: 申请截止时间（中国标准时间）
         required: false
         type: date
+        default: ""
         options:
           time: true
       - name: startDate
         label: 预计开始日期
         required: false
         type: date
+        default: ""
         options:
           time: false
       - name: fundingType
@@ -1122,6 +1126,7 @@ content:
         label: 结束时间（中国标准时间）
         required: false
         type: date
+        default: ""
         options:
           time: true
       - name: location
@@ -1412,6 +1417,7 @@ content:
         label: 发布日期
         required: false
         type: date
+        default: ""
         options:
           time: false
       - name: summary
