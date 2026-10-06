@@ -138,7 +138,7 @@ These decisions define the initial architecture. A future change that conflicts 
 
 **Consequences:** The directories are stable, base-path-safe Hugo routes with localized explanatory copy. New records still require the relevant schema, provenance, permissions, and build validation before publication; the empty states can be replaced by real Page Bundles without changing the top-level URLs.
 
-## ADR-018 — Add Sveltia CMS as a GitHub Editorial Interface
+## ADR-018 — Add Sveltia CMS as a GitHub Editorial Interface (Superseded by ADR-019)
 
 **Decision:** Use Sveltia CMS at `/admin/` to create, edit, and delete existing bilingual content bundles stored in Git. Configure collections for People, Publications, Projects and Tools, Research (edit-only), News, Grants, Opportunities, Events, Resources, and Materials. Use the GitHub backend with editorial workflow so CMS edits become pull requests. Require paired English and Chinese files, the content-pair audit, the strict Hugo build, generated-site audit, and owner review before changes reach `main`. Keep controlled vocabularies, site settings, and new content types outside the CMS.
 
@@ -153,3 +153,11 @@ These decisions define the initial architecture. A future change that conflicts 
 **Reason:** Pages CMS currently configures one fixed media destination for an image field and does not derive an upload directory from the selected entry. A separate field and destination allow a safe upload pilot without moving or rewriting existing content assets.
 
 **Consequences:** The new field must reference an existing file under `static/uploads`, must have `photoAlt`, and must use the same path in both language files. Keep other image fields read-only until they receive an equivalent rendering and validation path. This is an additive media exception; it does not authorize bulk migration of existing Page Bundle assets.
+
+## ADR-019 — Use Pages CMS for Existing Content
+
+**Decision:** Use the hosted Pages CMS app at the link on /admin/ to edit existing bilingual records in the X-laboratory-678/X-laboratory repository. The repository-scoped GitHub App reads and writes the selected repository. The production link opens main, where each save creates a commit and triggers the existing bilingual audit, strict Hugo build, generated-site audit, and Pages deployment. Keep the Cloudflare Worker editor available as a rollback during an observation period.
+
+**Reason:** Pages CMS provides a hosted form-based editor with email collaborators while keeping Markdown Page Bundles as the source of truth. The pilot verified editing existing records, preserving translated fields, and uploading an optional People portrait without relocating existing page-bundle images.
+
+**Consequences:** The CMS configuration is .pages.yml. Existing records are editable across ten collections, but create, rename, and delete operations are disabled to protect stable bundles and bilingual pairs. Stable IDs and translation keys are read-only. Only People portraits can be uploaded to static/uploads; other image fields remain read-only. English and Chinese records are separate entries and must be updated separately. A save to main commits before the workflow runs. A failed build or audit does not remove that commit, so a maintainer must fix or revert it; the live site remains at the last successful deployment. The former Sveltia config remains for reference and is not active.
