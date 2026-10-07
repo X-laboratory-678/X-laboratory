@@ -17,10 +17,11 @@
     {{- $categories = uniq $categories -}}
     {{- $tags = uniq $tags -}}
     <article class="misc-document materials-page book-posts">
-      <header class="misc-document__header section">
+      <header class="misc-document__header section" data-cms-file="{{ .File.Path }}">
         <div class="container stack">
-          <h1>{{ .Title }}</h1>
-          <div class="prose">{{ .Content }}</div>
+          <h1 data-cms-field="title">{{ .Title }}</h1>
+          <div class="prose" data-cms-field="body">{{ .Content }}</div>
+          <button type="button" data-cms-add="materials" hidden>＋ 添加学习材料</button>
         </div>
       </header>
 
@@ -52,10 +53,10 @@
   {{- else -}}
     {{- $directory := site.GetPage "/materials" -}}
     <article class="misc-document material-detail">
-      <header class="misc-document__header section">
+      <header class="misc-document__header section" data-cms-file="{{ .File.Path }}">
         <div class="container stack">
           {{- with $directory }}<a class="text-link text-link--back" href="{{ .RelPermalink }}">{{ i18n "back_to_materials" }}</a>{{ end }}
-          <h1>{{ .Title }}</h1>
+          <h1 data-cms-field="title">{{ .Title }}</h1>
           {{- if not .Date.IsZero }}<time class="material-entry__date" datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date | time.Format ":date_long" }}</time>{{ end }}
           {{- with .Params.summary }}<p class="material-entry__summary">{{ . }}</p>{{ end }}
         </div>

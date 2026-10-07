@@ -3,10 +3,11 @@
   {{- range where site.RegularPages "Section" "projects" -}}
     {{- if and (eq .Params.projectType "tool") (or (not hugo.IsProduction) (not .Draft)) -}}{{- $tools = $tools | append . -}}{{- end -}}
   {{- end -}}
-  <header class="directory-header section">
+  <header class="directory-header section" data-cms-file="{{ .File.Path }}">
     <div class="container stack">
-      <h1>{{ .Title }}</h1>
-      <div class="prose">{{ .Content }}</div>
+      <h1 data-cms-field="title">{{ .Title }}</h1>
+      <div class="prose" data-cms-field="body">{{ .Content }}</div>
+      <button type="button" data-cms-add="projects" hidden>＋ 添加工具</button>
     </div>
   </header>
   <section class="research-record-directory section" aria-labelledby="tools-list-heading">

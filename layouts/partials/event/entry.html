@@ -1,7 +1,7 @@
 {{- $page := . -}}
-<article class="event-entry">
+<article class="event-entry" data-cms-entry="{{ $page.File.Path }}" data-cms-type="events">
   {{- if not $page.Date.IsZero }}{{ partial "event/time-range.html" (dict "page" $page "class" "event-entry__date") }}{{ end -}}
-  <h3><a href="{{ $page.RelPermalink }}">{{ $page.Title }}</a></h3>
+  <h3><a href="{{ $page.RelPermalink }}" data-cms-field="title">{{ $page.Title }}</a></h3>
   {{- with $page.Params.paperTitle }}<p class="event-entry__topic">{{ . }}</p>{{ end -}}
   <dl class="event-entry__facts">
     {{- with $page.Params.speaker }}<div><dt>{{ i18n "event_speaker" }}</dt><dd>{{ . }}</dd></div>{{ end -}}
@@ -11,7 +11,7 @@
     {{- with $page.Params.location }}<div><dt>{{ i18n "event_location" }}</dt><dd>{{ . }}</dd></div>{{ end -}}
     {{- with $page.Params.affiliation }}<div><dt>{{ i18n "event_affiliation" }}</dt><dd>{{ . }}</dd></div>{{ end -}}
   </dl>
-  {{- with $page.Params.summary }}<p class="event-entry__summary">{{ . }}</p>{{ end -}}
+  {{- with $page.Params.summary }}<p class="event-entry__summary" data-cms-field="summary">{{ . }}</p>{{ end -}}
   {{- with $page.Params.externalSpeakers }}<p class="event-entry__summary">{{ i18n "event_external_speakers" }}: {{ delimit . ", " }}</p>{{ end -}}
   {{- if or $page.Params.paperUrl $page.Params.slides $page.Params.video $page.Params.website $page.Params.link }}
     <nav class="event-entry__links" aria-label="{{ i18n "event_materials" }}">

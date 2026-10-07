@@ -4,9 +4,10 @@
 {{- $pages = sort $pages "Title" "asc" -}}
 {{- $pages = sort $pages "Params.weight" "asc" -}}
 {{- with first 3 $pages }}
-  <section class="section" aria-labelledby="projects-heading">
+  <section class="section" aria-labelledby="projects-heading" data-cms-file="{{ $.File.Path }}">
     <div class="container">
-      {{ partial "section-header.html" (dict "config" $.Params.sections.projects "id" "projects-heading") }}
+      {{ partial "section-header.html" (dict "page" $ "config" $.Params.sections.projects "field" "sections.projects" "id" "projects-heading") }}
+      <button type="button" data-cms-add="projects" hidden>＋ 添加项目或工具</button>
       <div class="grid card-grid">
         {{- range . }}{{ partial "cards/project.html" . }}{{ end }}
       </div>

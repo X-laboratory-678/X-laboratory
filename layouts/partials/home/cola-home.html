@@ -31,18 +31,18 @@
 {{- $yearLabel := printf "%s %d" (i18n "home_year") $feedYear -}}
 {{- if eq site.Language.Lang "zh" -}}{{- $yearLabel = printf "%d%s" $feedYear (i18n "home_year") -}}{{- end -}}
 
-<div class="cola-home">
+<div class="cola-home" data-cms-file="{{ .File.Path }}" data-cms-type="home">
   <header class="cola-home__intro">
     <h1 id="home-title">{{ i18n "home_welcome" (dict "Lab" site.Params.labName) }}</h1>
-    <p>{{ $hero.description }}</p>
+    <p data-cms-field="hero.description">{{ $hero.description }}</p>
   </header>
 
   <aside class="cola-notice cola-notice--info book-hint info" aria-label="{{ i18n "home_notice_label" }}">
-    <p>{{ .Params.notices.recruitment }}</p>
+    <p data-cms-field="notices.recruitment">{{ .Params.notices.recruitment }}</p>
   </aside>
 
   <aside class="cola-notice cola-notice--warning book-hint danger" aria-label="{{ i18n "home_update_label" }}">
-    <p>{{ .Params.notices.update }}</p>
+    <p data-cms-field="notices.update">{{ .Params.notices.update }}</p>
   </aside>
 
   <section class="cola-news" aria-labelledby="home-news-heading">
@@ -164,7 +164,7 @@
     {{- end -}}
   </section>
 
-  <section class="cola-contact" aria-labelledby="home-contact-heading">
+  <section class="cola-contact" aria-labelledby="home-contact-heading" data-cms-settings="site-info">
     <h2 id="home-contact-heading">
       <svg class="cola-section-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
         <rect x="3" y="4" width="18" height="16" rx="1" />
@@ -178,11 +178,11 @@
         {{- with $contact.pi -}}
           <p><a href="{{ .RelPermalink }}">{{ .Title }}</a><br>{{ i18n "contact_principal_investigator" }}</p>
         {{- end -}}
-        <p>{{ site.Params.labName }}<br>{{ site.Params.departmentName }}<br>{{ site.Params.universityName }}</p>
+        <p><span data-cms-settings-field="labName">{{ site.Params.labName }}</span><br><span data-cms-settings-field="departmentName">{{ site.Params.departmentName }}</span><br><span data-cms-settings-field="universityName">{{ site.Params.universityName }}</span></p>
         <p class="cola-contact__address">{{ $contact.address }}</p>
         <ul>
-          <li><svg class="cola-inline-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3" y="5" width="18" height="14" rx="1" /><path d="m4 7 8 6 8-6" /></svg> <a href="mailto:{{ $config.publicEmail }}">{{ $config.publicEmail }}</a></li>
-          {{- with $config.publicPhone.display -}}<li><svg class="cola-inline-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 4h3l1.5 4-2 1.5c1 2.2 2.8 4 5 5l1.5-2 4 1.5v3c0 1-0.8 2-1.8 2C11.8 19.5 4.5 12.2 4.5 5.8 4.5 4.8 5.3 4 7 4Z" /></svg> <a href="tel:{{ $config.publicPhone.tel }}">{{ . }}</a></li>{{- end -}}
+          <li><svg class="cola-inline-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3" y="5" width="18" height="14" rx="1" /><path d="m4 7 8 6 8-6" /></svg> <a href="mailto:{{ $config.publicEmail }}" data-cms-settings-field="contact.publicEmail">{{ $config.publicEmail }}</a></li>
+          {{- with $config.publicPhone.display -}}<li><svg class="cola-inline-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 4h3l1.5 4-2 1.5c1 2.2 2.8 4 5 5l1.5-2 4 1.5v3c0 1-0.8 2-1.8 2C11.8 19.5 4.5 12.2 4.5 5.8 4.5 4.8 5.3 4 7 4Z" /></svg> <a href="tel:{{ $config.publicPhone.tel }}" data-cms-settings-field="contact.publicPhone.display">{{ . }}</a></li>{{- end -}}
         </ul>
       </div>
       <div class="cola-contact__map">

@@ -7,9 +7,10 @@
 {{- $faculty = sort $faculty "Params.weight" "asc" -}}
 {{- $preview := $pi | append $faculty -}}
 {{- with first 4 $preview }}
-  <section class="section section--tinted" aria-labelledby="people-heading">
+  <section class="section section--tinted" aria-labelledby="people-heading" data-cms-file="{{ $.File.Path }}">
     <div class="container">
-      {{ partial "section-header.html" (dict "config" $.Params.sections.people "id" "people-heading") }}
+      {{ partial "section-header.html" (dict "page" $ "config" $.Params.sections.people "field" "sections.people" "id" "people-heading") }}
+      <button type="button" data-cms-add="people" hidden>＋ 添加成员</button>
       <div class="grid person-grid">
         {{- range . }}{{ partial "person/preview.html" . }}{{ end }}
       </div>

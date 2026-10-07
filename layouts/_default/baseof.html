@@ -2,7 +2,7 @@
 <!doctype html>
 <html lang="{{ site.Language.Locale }}" dir="{{ site.Language.Direction | default "ltr" }}">
   {{ partial "head.html" . }}
-  <body dir="{{ site.Language.Direction | default "ltr" }}">
+  <body dir="{{ site.Language.Direction | default "ltr" }}" {{ with .File }}data-cms-page="{{ .Path }}"{{ end }}>
     <a class="skip-link" href="#main-content">{{ i18n "skip_to_content" }}</a>
     <input type="checkbox" class="hidden toggle" id="menu-control" aria-label="{{ i18n "open_menu" }}">
     <input type="checkbox" class="hidden toggle" id="toc-control" aria-hidden="true">
@@ -18,12 +18,12 @@
             <label for="menu-control" class="book-menu-toggle" role="button" tabindex="0" aria-controls="primary-navigation" aria-expanded="false">
               <img src="{{ "icons/menu.svg" | relURL }}" class="book-icon" width="24" height="24" alt="{{ i18n "open_menu" }}">
             </label>
-            <h3>{{ if .IsHome }}{{ i18n "nav_home" }}{{ else }}{{ .Title }}{{ end }}</h3>
+            <h3 data-cms-global="navigation" data-cms-file="{{ with .File }}{{ .Path }}{{ end }}" data-cms-field="title">{{ if .IsHome }}{{ i18n "nav_home" }}{{ else }}{{ .Title }}{{ end }}</h3>
             <label for="toc-control" class="book-toc-toggle"></label>
           </div>
         </header>
 
-        <article id="main-content" class="markdown" tabindex="-1">
+        <article id="main-content" class="markdown" tabindex="-1" {{ with .File }}data-cms-entry="{{ .Path }}"{{ end }}>
           {{ block "main" . }}{{ end }}
         </article>
 

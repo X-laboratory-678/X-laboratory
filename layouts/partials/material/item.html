@@ -1,10 +1,10 @@
 {{- $page := . -}}
-<article class="material-entry book-post">
+<article class="material-entry book-post" data-cms-entry="{{ $page.File.Path }}" data-cms-type="materials">
   <header class="material-entry__header">
     {{- if not $page.Date.IsZero -}}<time class="material-entry__date" datetime="{{ $page.Date.Format "2006-01-02" }}">{{ $page.Date | time.Format ":date_long" }}</time>{{- end -}}
-    <h3><a href="{{ $page.RelPermalink }}">{{ $page.Title }}</a></h3>
+    <h3><a href="{{ $page.RelPermalink }}" data-cms-field="title">{{ $page.Title }}</a></h3>
   </header>
-  {{- with $page.Params.summary -}}<p class="material-entry__summary">{{ . }}</p>{{- end -}}
+  {{- with $page.Params.summary -}}<p class="material-entry__summary" data-cms-field="summary">{{ . }}</p>{{- end -}}
   {{- if or $page.Params.categories $page.Params.tags -}}
     <ul class="material-entry__taxonomy" aria-label="{{ i18n "materials_categories_and_tags" }}">
       {{- range $page.Params.categories -}}<li>{{ . }}</li>{{- end -}}

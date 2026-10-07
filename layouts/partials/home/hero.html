@@ -1,16 +1,16 @@
 {{- $hero := .Params.hero -}}
-<section class="home-hero" aria-labelledby="home-title">
+<section class="home-hero" aria-labelledby="home-title" data-cms-file="{{ .File.Path }}">
   <div class="container--wide home-hero__layout">
     <div class="home-hero__copy stack">
-      {{- with $hero.eyebrow }}<p class="eyebrow">{{ site.Params.universityName }} · {{ . }}</p>{{ end }}
-      <h1 id="home-title">{{ $hero.title }}</h1>
-      <p class="home-hero__description">{{ $hero.description }}</p>
+      {{- with $hero.eyebrow }}<p class="eyebrow" data-cms-field="hero.eyebrow">{{ site.Params.universityName }} · {{ . }}</p>{{ end }}
+      <h1 id="home-title" data-cms-field="hero.title">{{ $hero.title }}</h1>
+      <p class="home-hero__description" data-cms-field="hero.description">{{ $hero.description }}</p>
       <div class="cluster">
         {{- with site.GetPage $hero.primarycta.pageref }}
-          <a class="button" href="{{ .RelPermalink }}">{{ $hero.primarycta.label }}</a>
+          <a class="button" href="{{ .RelPermalink }}" data-cms-field="hero.primarycta.label">{{ $hero.primarycta.label }}</a>
         {{- end }}
         {{- with site.GetPage $hero.secondarycta.pageref }}
-          <a class="button button--secondary" href="{{ .RelPermalink }}">{{ $hero.secondarycta.label }}</a>
+          <a class="button button--secondary" href="{{ .RelPermalink }}" data-cms-field="hero.secondarycta.label">{{ $hero.secondarycta.label }}</a>
         {{- end }}
       </div>
     </div>

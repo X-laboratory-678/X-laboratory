@@ -1,6 +1,6 @@
 {{- $page := . -}}
-<article class="record-card resource-entry">
+<article class="record-card resource-entry" data-cms-entry="{{ $page.File.Path }}" data-cms-type="resources">
   <p class="eyebrow">{{ partial "resource/type-label.html" $page }}</p>
-  <h2><a href="{{ $page.RelPermalink }}">{{ $page.Title }}</a></h2>
-  <p>{{ $page.Params.summary }}</p>
+  <h2><a href="{{ $page.RelPermalink }}" data-cms-field="title">{{ $page.Title }}</a></h2>
+  <p data-cms-field="summary">{{ $page.Params.summary }}</p>
 </article>

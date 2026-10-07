@@ -1,9 +1,9 @@
 {{ define "main" }}
-  <header class="directory-header section">
+  <header class="directory-header section" data-cms-file="{{ .File.Path }}">
     <div class="container stack">
       <p class="eyebrow">{{ i18n "nav_research" }}</p>
-      <h1>{{ .Title }}</h1>
-      <div class="prose">{{ .Content }}</div>
+      <h1 data-cms-field="title">{{ .Title }}</h1>
+      <div class="prose" data-cms-field="body">{{ .Content }}</div>
     </div>
   </header>
   <section class="research-directory section" aria-labelledby="research-directory-heading">

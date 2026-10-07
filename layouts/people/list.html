@@ -10,9 +10,10 @@
   -}}
 
   <div class="people-directory people-board members-board">
-    <header class="people-directory__intro container stack">
-      <h1>{{ .Title }}</h1>
-      <div class="prose">{{ .Content }}</div>
+    <header class="people-directory__intro container stack" data-cms-file="{{ .File.Path }}">
+      <h1 data-cms-field="title">{{ .Title }}</h1>
+      <div class="prose" data-cms-field="body">{{ .Content }}</div>
+      <button type="button" data-cms-add="people" hidden>＋ 添加成员</button>
     </header>
 
     {{- range $groups -}}

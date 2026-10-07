@@ -11,15 +11,15 @@
 {{- end -}}
 <div class="person-portrait person-portrait--{{ $variant }}">
   {{- if $photoURL -}}
-    <img src="{{ $photoURL }}" width="480" height="600" loading="lazy" alt="{{ $page.Params.photoAlt }}">
+    <img src="{{ $photoURL }}" width="480" height="600" loading="lazy" alt="{{ $page.Params.photoAlt }}" data-cms-field="photo">
   {{- else if $photo -}}
     {{- if eq $photo.MediaType.SubType "svg" -}}
-      <img src="{{ $photo.RelPermalink }}" width="480" height="600" loading="lazy" alt="{{ $page.Params.photoAlt }}">
+      <img src="{{ $photo.RelPermalink }}" width="480" height="600" loading="lazy" alt="{{ $page.Params.photoAlt }}" data-cms-field="photo">
     {{- else -}}
       {{- $portrait := $photo.Fill "480x600 Center webp q82" -}}
-      <img src="{{ $portrait.RelPermalink }}" width="{{ $portrait.Width }}" height="{{ $portrait.Height }}" loading="lazy" alt="{{ $page.Params.photoAlt }}">
+      <img src="{{ $portrait.RelPermalink }}" width="{{ $portrait.Width }}" height="{{ $portrait.Height }}" loading="lazy" alt="{{ $page.Params.photoAlt }}" data-cms-field="photo">
     {{- end -}}
   {{- else -}}
-    <div class="person-portrait__fallback" aria-hidden="true"><span>X</span></div>
+    <div class="person-portrait__fallback" aria-hidden="true" data-cms-field="photo"><span>X</span></div>
   {{- end -}}
 </div>
