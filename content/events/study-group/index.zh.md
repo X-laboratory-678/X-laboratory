@@ -8,6 +8,7 @@ eventType: recurring
 status: upcoming
 date: 2000-01-01
 draft: false
+cmsTitle: "【中文】学习小组"
 ---
 
 学习小组的日期、主题、参与者和公开材料确认后，将在此列出经过核实的活动记录。

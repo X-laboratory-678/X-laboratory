@@ -8,6 +8,7 @@ eventType: recurring
 status: upcoming
 date: 2000-01-01
 draft: false
+cmsTitle: "【英文】X-Laboratory Seminar Series"
 ---
 
 Verified seminars will be listed here when the date, speaker, affiliation, title, and public link are confirmed.

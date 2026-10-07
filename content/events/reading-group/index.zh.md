@@ -8,6 +8,7 @@ eventType: recurring
 status: upcoming
 date: 2000-01-01
 draft: false
+cmsTitle: "【中文】论文研读小组"
 ---
 
 论文研读活动的日期、主题、报告人和公开材料确认后，将在此列出经过核实的活动记录。

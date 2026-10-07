@@ -1,0 +1,105 @@
+name: Pages CMS bilingual content actions
+
+on:
+  workflow_dispatch:
+    inputs:
+      payload:
+        description: Pages CMS action payload
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  content:
+    name: Prepare and validate bilingual content
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pages: read
+    outputs:
+      action: ${{ steps.context.outputs.action }}
+      deploy: ${{ steps.deployment.outputs.deploy }}
+    steps:
+      - name: Check out the Pages CMS branch
+        uses: actions/checkout@v7
+        with:
+          ref: ${{ github.ref }}
+
+      - name: Configure GitHub Pages
+        id: pages
+        uses: actions/configure-pages@v6
+
+      - name: Set up pinned Hugo Extended
+        uses: ./.github/actions/setup-hugo
+
+      - name: Inspect and validate the Pages CMS action
+        id: context
+        env:
+          PAGES_CMS_PAYLOAD: ${{ inputs.payload }}
+        run: ruby scripts/pages-cms-content.rb inspect >> "$GITHUB_OUTPUT"
+
+      - name: Create bilingual draft pair
+        if: steps.context.outputs.action == 'create-bilingual-draft'
+        env:
+          PAGES_CMS_PAYLOAD: ${{ inputs.payload }}
+        run: ruby scripts/pages-cms-content.rb create
+
+      - name: Validate and publish bilingual pair
+        if: steps.context.outputs.action == 'publish-bilingual'
+        env:
+          PAGES_CMS_PAYLOAD: ${{ inputs.payload }}
+        run: ruby scripts/pages-cms-content.rb publish
+
+      - name: Build and audit before committing
+        uses: ./.github/actions/build-and-audit
+        with:
+          base_url: ${{ steps.pages.outputs.base_url }}
+
+      - name: Commit and push the validated pair
+        env:
+          ACTION_NAME: ${{ steps.context.outputs.action }}
+          ENGLISH_PATH: ${{ steps.context.outputs.english_path }}
+          CHINESE_PATH: ${{ steps.context.outputs.chinese_path }}
+          RECORD_SLUG: ${{ steps.context.outputs.slug }}
+          BRANCH_NAME: ${{ github.ref_name }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- "$ENGLISH_PATH" "$CHINESE_PATH"
+          git commit -m "$ACTION_NAME: $RECORD_SLUG"
+          git push origin "HEAD:$BRANCH_NAME"
+
+      - name: Upload the verified production site
+        if: steps.context.outputs.action == 'publish-bilingual' && github.ref == 'refs/heads/main'
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: ./public
+
+      - name: Mark production deployment
+        id: deployment
+        if: steps.context.outputs.action == 'publish-bilingual' && github.ref == 'refs/heads/main'
+        shell: bash
+        run: echo "deploy=true" >> "$GITHUB_OUTPUT"
+
+  deploy:
+    name: Deploy verified bilingual release
+    if: needs.content.outputs.deploy == 'true'
+    needs: content
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy verified site artifact
+        id: deployment
+        uses: actions/deploy-pages@v5
+

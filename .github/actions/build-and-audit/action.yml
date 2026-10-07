@@ -1,0 +1,32 @@
+name: Build and audit Hugo site
+description: Run the bilingual content audit, strict production build, and generated-site audit.
+inputs:
+  base_url:
+    description: GitHub Pages base URL from actions/configure-pages.
+    required: true
+runs:
+  using: composite
+  steps:
+    - name: Audit bilingual CMS entry bundles
+      shell: bash
+      run: python scripts/audit-content-pairs.py
+
+    - name: Build with the GitHub Pages base URL
+      shell: bash
+      env:
+        PAGES_BASE_URL: ${{ inputs.base_url }}
+      run: |
+        pages_base_url="${PAGES_BASE_URL%/}/"
+        hugo \
+          --gc \
+          --minify \
+          --cleanDestinationDir \
+          --environment production \
+          --panicOnWarning \
+          --printPathWarnings \
+          --baseURL "$pages_base_url"
+
+    - name: Audit generated site
+      shell: bash
+      run: python scripts/audit-site.py public
+
