@@ -242,16 +242,30 @@ def generate_draft_pair(context)
 end
 
 def apply_draft_metadata(path, collection, slug, title, language)
-  source, match, data = frontmatter(path)
-  data["title"] = title
-  data["cmsTitle"] = "【#{language == 'en' ? '英文' : '中文'}】#{title}"
-  data["translationKey"] = "#{COLLECTIONS.fetch(collection).fetch('prefix')}#{slug}"
-  data["id"] = slug if collection_config(collection).fetch("fields", []).any? { |field| field["name"] == "id" }
-  data["draft"] = true
-  body = "\n"
-  yaml = YAML.dump(data, line_width: -1).sub(/\A---\s*\n/, "")
-  replacement = "---\n#{yaml}---\n#{body}"
+  source, match, = frontmatter(path)
+  lines = match[1].split(/\r?\n/)
+  set_yaml_field(lines, "title", JSON.generate(title))
+  if collection_config(collection).fetch("fields", []).any? { |field| field["name"] == "id" }
+    set_yaml_field(lines, "id", slug)
+  end
+  set_yaml_field(lines, "translationKey", JSON.generate("#{COLLECTIONS.fetch(collection).fetch('prefix')}#{slug}"))
+  marker = language == "en" ? "英文" : "中文"
+  set_yaml_field(lines, "cmsTitle", JSON.generate("【#{marker}】#{title}"))
+  set_yaml_field(lines, "draft", "true")
+  replacement = "---\n#{lines.join("\n")}\n---\n\n"
   File.write(path, source.sub(match[0], replacement), mode: "w:UTF-8")
+end
+
+def set_yaml_field(lines, name, value)
+  key = Regexp.escape(name)
+  replacement = "#{name}: #{value}"
+  index = lines.index { |line| line.match?(/\A#{key}:[ \t]*/) }
+  if index
+    lines[index] = replacement
+  else
+    title_index = lines.index { |line| line.start_with?("title:") }
+    lines.insert(title_index ? title_index + 1 : 0, replacement)
+  end
 end
 
 def publish_pair(context)
@@ -267,7 +281,72 @@ def publish_pair(context)
   puts "Both language files passed validation and are ready to publish."
 end
 
+def audit_configuration
+  expected = COLLECTIONS.keys.sort
+  configured = repository_config
+  configured_names = configured.map { |entry| entry["name"] }.sort
+  fail_with(".pages.yml must define exactly the ten managed collections") unless configured_names == expected
+
+  expected_create = COLLECTIONS.select { |_name, config| config["create"] }.keys.sort
+  configured_create = []
+  configured.each do |entry|
+    name = entry.fetch("name")
+    fail_with("#{name} must keep built-in create, rename, and delete disabled") unless
+      entry.dig("operations", "create") == false &&
+      entry.dig("operations", "rename") == false &&
+      entry.dig("operations", "delete") == false
+    fail_with("#{name} must use cmsTitle as its list label") unless entry.dig("view", "primary") == "cmsTitle"
+    cms_title = entry.fetch("fields", []).find { |field| field["name"] == "cmsTitle" }
+    fail_with("#{name} must keep cmsTitle hidden and read-only") unless
+      cms_title && cms_title["hidden"] == true && cms_title["readonly"] == true
+
+    actions = entry.fetch("actions", [])
+    by_name = actions.to_h { |action| [action["name"], action] }
+    publish = by_name["publish-bilingual"]
+    fail_with("#{name} is missing the paired publish action") unless
+      publish && publish["scope"] == "entry" && publish["workflow"] == "pages-cms-content.yml" && publish["ref"] == "current"
+
+    create = by_name["create-bilingual-draft"]
+    if COLLECTIONS.fetch(name).fetch("create")
+      fail_with("#{name} is missing the bilingual draft creation action") unless
+        create && create["scope"] == "collection" && create["workflow"] == "pages-cms-content.yml" && create["ref"] == "current"
+      configured_create << name
+      archetype = "archetypes/#{name}.md"
+      fail_with("#{archetype} is missing") unless File.file?(archetype)
+      fail_with("#{archetype} must create drafts") unless File.read(archetype, encoding: "UTF-8").match?(/^draft:\s*true\s*$/)
+    elsif create
+      fail_with("Research must not expose draft creation")
+    end
+  end
+  fail_with("draft creation must be enabled in exactly nine collections") unless configured_create.sort == expected_create
+  fail_with("the Pages CMS workflow file is missing") unless File.file?(".github/workflows/pages-cms-content.yml")
+
+  checked = 0
+  configured.each do |entry|
+    section = entry.fetch("name")
+    root = Pathname("content/#{section}")
+    next unless root.directory?
+    Dir.glob(root.join("**/index.en.md").to_s).sort.each do |english|
+      directory = File.dirname(english)
+      next if File.expand_path(directory) == File.expand_path(root.to_s)
+      chinese = File.join(directory, "index.zh.md")
+      next unless File.file?(chinese)
+      _, _, en_data = frontmatter(english)
+      _, _, zh_data = frontmatter(chinese)
+      unless en_data["cmsTitle"].to_s.start_with?("【英文】") && zh_data["cmsTitle"].to_s.start_with?("【中文】")
+        fail_with("#{directory} must have distinct 【英文】 and 【中文】 CMS list labels")
+      end
+      checked += 1
+    end
+  end
+  puts "Pages CMS configuration audit passed (10 collections, 9 create actions, #{checked} labeled bilingual records)."
+end
+
 command = ARGV.fetch(0, "")
+if command == "audit-config"
+  audit_configuration
+  exit 0
+end
 context = current_action_context
 case command
 when "inspect"

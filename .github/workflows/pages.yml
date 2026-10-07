@@ -34,6 +34,13 @@ jobs:
       - name: Set up pinned Hugo Extended
         uses: ./.github/actions/setup-hugo
 
+      - name: Validate Pages CMS actions and bilingual behavior
+        run: |
+          ruby -c scripts/pages-cms-content.rb
+          ruby -c scripts/test-pages-cms-content.rb
+          ruby scripts/pages-cms-content.rb audit-config
+          ruby scripts/test-pages-cms-content.rb
+
       - name: Build and audit the generated site
         uses: ./.github/actions/build-and-audit
         with:
@@ -60,3 +67,5 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v5
+
+
