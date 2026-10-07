@@ -28,6 +28,10 @@ $RECYCLE.BIN/
 !.env.example
 *.local
 
+# Node tooling dependencies
+node_modules/
+**/.wrangler/
+
 # Temporary and backup files
 *.tmp
 *.temp
