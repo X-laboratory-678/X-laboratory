@@ -3,6 +3,7 @@ import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { spawnSync } from 'node:child_process';
 import YAML from 'yaml';
+import { onRequest as previewMiddleware } from '../../functions/_middleware.js';
 
 const workerPath = resolve('src/index.js');
 const editorPath = resolve('public/editor/index.html');
@@ -51,6 +52,27 @@ assert.ok(wrangler.includes('"/preview/*"'), 'preview requests must be handled b
 assert.ok(wrangler.includes('PREVIEW_SITE_PATH'), 'preview base path must be configured');
 const worker = readFileSync(workerPath, 'utf8');
 assert.ok(worker.includes("await requireSession(request, env, 'editor')"), 'preview and content APIs must require an editor session');
-assert.ok(worker.includes('CF-Access-Client-Secret'), 'draft previews must use the Access service token');
+assert.ok(worker.includes('PREVIEW_SHARED_SECRET'), 'draft previews must require the shared server secret');
+assert.ok(worker.includes('X-XLab-Preview-Secret'), 'the authenticated Worker must add the preview header');
+
+const previewSecret = 'a'.repeat(32);
+const previewRequest = (provided) => new Request('https://preview.example.test/', {
+  headers: provided ? { 'X-XLab-Preview-Secret': provided } : {},
+});
+const runPreview = (branch, secret, provided) => previewMiddleware({
+  env: { CF_PAGES_BRANCH: branch, PREVIEW_SHARED_SECRET: secret },
+  request: previewRequest(provided),
+  next: async () => new Response('site content'),
+});
+const productionPreview = await runPreview('main', '', '');
+const missingSecret = await runPreview('draft', '', '');
+const wrongSecret = await runPreview('draft', previewSecret, 'wrong');
+const authorizedPreview = await runPreview('draft', previewSecret, previewSecret);
+assert.equal(productionPreview.status, 200, 'the production branch must remain public');
+assert.equal(missingSecret.status, 404, 'preview must fail closed when its secret is missing');
+assert.equal(wrongSecret.status, 404, 'preview must reject an incorrect secret');
+assert.equal(authorizedPreview.status, 200, 'preview must allow the Worker secret');
+assert.equal(authorizedPreview.headers.get('cache-control'), 'private, no-store');
+assert.equal(authorizedPreview.headers.get('x-robots-tag'), 'noindex, nofollow');
 
 console.log('Worker syntax, editor scripts, CMS schema, migrations, and preview protection checks passed.');

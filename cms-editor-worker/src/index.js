@@ -563,7 +563,7 @@ async function previewRoute(request, env, url) {
     const workspace = await env.DB.prepare("SELECT id, branch_name, state FROM cms_workspaces WHERE id = ? AND state IN ('draft', 'publishing')").bind(workspaceId).first();
     if (!workspace) throw new HttpError(404, '草稿预览不存在或已发布。');
     if (!env.PAGES_PREVIEW_DOMAIN || !/^[a-z0-9-]+\.pages\.dev$/i.test(env.PAGES_PREVIEW_DOMAIN)) throw new HttpError(503, '预览站点尚未配置，请联系维护者完成 Cloudflare Pages 设置。');
-    if (!env.CF_ACCESS_CLIENT_ID || !env.CF_ACCESS_CLIENT_SECRET) throw new HttpError(503, '预览访问保护尚未配置，请联系维护者完成 Cloudflare Access 设置。');
+    if (!env.PREVIEW_SHARED_SECRET || env.PREVIEW_SHARED_SECRET.length < 32) throw new HttpError(503, '预览访问保护尚未配置，请联系维护者完成 Cloudflare Pages 设置。');
     branchId = workspaceId;
     origin = 'https://' + previewBranchAlias(workspace.branch_name) + '.' + env.PAGES_PREVIEW_DOMAIN;
     upstreamPath = requestedPath.startsWith(sitePath) ? requestedPath.slice(sitePath.length - 1) : requestedPath;
@@ -572,8 +572,7 @@ async function previewRoute(request, env, url) {
   const upstreamUrl = new URL(upstreamPath + url.search, origin);
   const headers = new Headers({ Accept: request.headers.get('Accept') || '*/*', 'User-Agent': 'x-laboratory-editor-preview' });
   if (workspaceId !== 'live') {
-    headers.set('CF-Access-Client-Id', env.CF_ACCESS_CLIENT_ID);
-    headers.set('CF-Access-Client-Secret', env.CF_ACCESS_CLIENT_SECRET);
+    headers.set('X-XLab-Preview-Secret', env.PREVIEW_SHARED_SECRET);
   }
   let upstream;
   try { upstream = await fetch(upstreamUrl, { method: request.method, headers, redirect: 'manual' }); }

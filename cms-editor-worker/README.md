@@ -10,12 +10,12 @@
 
 ## 维护者部署
 
-1. Cloudflare Pages 项目 `x-laboratory-preview` 已连接 `X-laboratory-678/X-laboratory`，生产分支为 `main`，构建输出目录为 `public`，`HUGO_VERSION=0.164.0`。当前构建命令先运行 `scripts/audit-content-pairs.py`，再按分支执行 Hugo 构建，最后运行 `scripts/audit-site.py public`；生产构建使用 GitHub Pages 的正式 URL，非生产分支使用预览环境并包含草稿。项目域名是 `x-laboratory-preview.pages.dev`，该值已写入 `wrangler.toml` 的 `PAGES_PREVIEW_DOMAIN`。Cloudflare Pages 只生成后台草稿预览，正式网站继续由 GitHub Pages 发布；Pages 预览部署已启用 Cloudflare Access 保护。`PREVIEW_SITE_PATH` 必须与 GitHub Pages 子路径一致（当前为 `/X-laboratory/`）。
-2. 在 Cloudflare Access 中保护该 Pages 项目的预览域名；为 Worker 创建专用 Service Token，并增加匹配 Service Token 的允许策略。只把该 token 的 Client ID、Secret 作为 Worker secrets 写入 `CF_ACCESS_CLIENT_ID` 和 `CF_ACCESS_CLIENT_SECRET`。不要把凭据放在仓库变量、前端文件或聊天消息中。
+1. Cloudflare Pages 项目 `x-laboratory-preview` 已连接 `X-laboratory-678/X-laboratory`，生产分支为 `main`，构建输出目录为 `public`，`HUGO_VERSION=0.164.0`。构建会先运行 `scripts/audit-content-pairs.py`，再按分支执行 Hugo 构建，最后运行 `scripts/audit-site.py public`；非生产分支使用预览环境并包含草稿。项目域名是 `x-laboratory-preview.pages.dev`，该值已写入 `wrangler.toml` 的 `PAGES_PREVIEW_DOMAIN`。正式网站继续由 GitHub Pages 发布；`functions/_middleware.js` 保护 Pages 的全部预览静态资源。`PREVIEW_SITE_PATH` 必须与 GitHub Pages 子路径一致（当前为 `/X-laboratory/`）。
+2. 生成一个独立的高熵随机预览密钥，在 Cloudflare Pages 项目的 Preview 环境和编辑 Worker 的加密 Secrets 中分别设为 `PREVIEW_SHARED_SECRET`。不要把密钥写入仓库或前端文件。非 `main` 分支缺少密钥或请求头不匹配时，Pages Function 会返回 404；编辑 Worker 只在确认编辑者已登录后才附加 `X-XLab-Preview-Secret` 请求头。确认保护已部署并通过验证后，再移除 Pages 预览域名上的 Cloudflare Access 层。
 3. 配置 Worker 的 D1 数据库 `x-lab-cms-editor`，按顺序应用 `migrations/0001_initial.sql` 和 `migrations/0002_visual_cms.sql`。迁移会保留已有账号表和会话表，再增加共享草稿工作区、草稿索引和回收站表。
-4. 配置 Worker secrets：`PASSWORD_PEPPER`、`GITHUB_APP_ID`、`GITHUB_APP_PRIVATE_KEY`、`GITHUB_WEBHOOK_SECRET`、管理员 GitHub OAuth 的 `ADMIN_GITHUB_CLIENT_ID` 和 `ADMIN_GITHUB_CLIENT_SECRET`，以及预览代理用的两个 Access Service Token secrets。GitHub App 只安装到目标仓库；安装权限至少要能读内容、写内容/创建 PR、读取检查，并接收 `check_suite`、`deployment_status` webhook。OAuth callback 为 `https://<worker-host>/auth/github/callback`。
+4. 配置 Worker secrets：`PASSWORD_PEPPER`、`GITHUB_APP_ID`、`GITHUB_APP_PRIVATE_KEY`、`GITHUB_WEBHOOK_SECRET`、管理员 GitHub OAuth 的 `ADMIN_GITHUB_CLIENT_ID` 和 `ADMIN_GITHUB_CLIENT_SECRET`，以及 Pages 预览代理用的 `PREVIEW_SHARED_SECRET`。GitHub App 只安装到目标仓库；安装权限至少要能读内容、写内容/创建 PR、读取检查，并接收 `check_suite`、`deployment_status` webhook。OAuth callback 为 `https://<worker-host>/auth/github/callback`。
 5. 确认 `wrangler.toml` 中的 D1 ID、仓库、生产站点和预览路径正确，运行 `npm ci`、`npm run check`、`npm run db:migrate:remote`，然后 `npm run deploy`。执行完再用管理员 GitHub 登录后台创建第一个编辑账号，私下交付一次性设置链接。
-6. 在测试分支验证分支预览、Access 保护和 PR 合并前检查；确认新后台能编辑和恢复内容后，再把后台链接交给实验室成员。正式站的原 GitHub Pages 发布流程继续保留。
+6. 在测试分支验证分支预览、Pages Function 保护和 PR 合并前检查；确认新后台能编辑和恢复内容后，再把后台链接交给实验室成员。正式站的原 GitHub Pages 发布流程继续保留。
 
 ### 必需的 Worker 变量与 secrets
 
@@ -24,7 +24,7 @@
 - `PASSWORD_PEPPER`：新生成的随机密码学密钥。
 - `GITHUB_APP_ID`、`GITHUB_APP_PRIVATE_KEY`、`GITHUB_WEBHOOK_SECRET`：目标仓库 GitHub App 的凭据。
 - `ADMIN_GITHUB_CLIENT_ID`、`ADMIN_GITHUB_CLIENT_SECRET`：仅用于 GitHub 管理员登录的 OAuth App。
-- `CF_ACCESS_CLIENT_ID`、`CF_ACCESS_CLIENT_SECRET`：仅用于 Worker 代理受保护的 Pages 预览。
+- `PREVIEW_SHARED_SECRET`：Pages 项目 Preview 环境与编辑 Worker 必须设置相同的高熵随机密钥，仅用于 Worker 到 Pages Function 的服务器间认证。
 
 不要复用曾在聊天、截图或公开日志中出现的令牌。若上述 secrets 缺失，相关功能应报错关闭，而不是绕过保护。
 
@@ -37,4 +37,4 @@ npm run db:migrate:local
 npm run dev
 ```
 
-本地运行完整登录、GitHub PR 和 Access 预览仍需 Cloudflare 与 GitHub 配置。任何生产部署都应先在隔离分支验证；不要直接测试写入 `main`。
+本地运行完整登录、GitHub PR 和预览代理仍需 Cloudflare 与 GitHub 配置。任何生产部署都应先在隔离分支验证；不要直接测试写入 `main`。
