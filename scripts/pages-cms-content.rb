@@ -238,7 +238,6 @@ def generate_draft_pair(context)
     }
 
     staged_paths.each do |final_path, staged_path|
-      FileUtils.mkdir_p(File.dirname(staged_path))
       output, status = Open3.capture2e("hugo", "new", "content", "--kind", collection, staged_path)
       puts output unless output.empty?
       unless status.success? && File.file?(staged_path)
