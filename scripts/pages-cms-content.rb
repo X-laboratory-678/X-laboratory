@@ -6,6 +6,7 @@ require "fileutils"
 require "json"
 require "open3"
 require "pathname"
+require "tmpdir"
 require "yaml"
 
 REPOSITORY_OWNER = "X-laboratory-678"
@@ -228,15 +229,28 @@ def generate_draft_pair(context)
 
   inputs = payload.fetch("inputs")
   titles = { en_path => inputs.fetch("title_en").strip, zh_path => inputs.fetch("title_zh").strip }
-  [[en_path, "en"], [zh_path, "zh"]].each do |path, language|
-    FileUtils.mkdir_p(File.dirname(path))
-    output, status = Open3.capture2e("hugo", "new", "content", "--kind", collection, path)
-    puts output unless output.empty?
-    unless status.success? && File.file?(path)
-      FileUtils.rm_f([en_path, zh_path])
-      fail_with("Hugo could not create #{path} from archetypes/#{collection}.md")
+  staging_parent = File.join("content", collection)
+  FileUtils.mkdir_p(staging_parent)
+  Dir.mktmpdir(".pages-cms-#{slug}-", staging_parent) do |staging|
+    staged_paths = {
+      en_path => File.join(staging, "english", "index.en.md"),
+      zh_path => File.join(staging, "chinese", "index.zh.md")
+    }
+
+    staged_paths.each do |final_path, staged_path|
+      FileUtils.mkdir_p(File.dirname(staged_path))
+      output, status = Open3.capture2e("hugo", "new", "content", "--kind", collection, staged_path)
+      puts output unless output.empty?
+      unless status.success? && File.file?(staged_path)
+        fail_with("Hugo could not create a bilingual draft from archetypes/#{collection}.md")
+      end
+      apply_draft_metadata(staged_path, collection, slug, titles.fetch(final_path), File.basename(staged_path).split(".")[1])
     end
-    apply_draft_metadata(path, collection, slug, titles.fetch(path), language)
+
+    staged_paths.each do |final_path, staged_path|
+      FileUtils.mkdir_p(File.dirname(final_path))
+      FileUtils.mv(staged_path, final_path)
+    end
   end
   puts "Created bilingual draft pair for #{collection}/#{slug}."
 end
