@@ -6,7 +6,7 @@ require "fileutils"
 require "json"
 require "open3"
 require "pathname"
-require "tmpdir"
+require "securerandom"
 require "yaml"
 
 REPOSITORY_OWNER = "X-laboratory-678"
@@ -231,25 +231,29 @@ def generate_draft_pair(context)
   titles = { en_path => inputs.fetch("title_en").strip, zh_path => inputs.fetch("title_zh").strip }
   staging_parent = File.join("content", collection)
   FileUtils.mkdir_p(staging_parent)
-  Dir.mktmpdir(".pages-cms-#{slug}-", staging_parent) do |staging|
-    staged_paths = {
-      en_path => File.join(staging, "english", "index.en.md"),
-      zh_path => File.join(staging, "chinese", "index.zh.md")
-    }
+  staging_id = SecureRandom.hex(8)
+  staged_paths = {
+    en_path => File.join(staging_parent, "pages-cms-stage-#{slug}-#{staging_id}-en", "index.en.md"),
+    zh_path => File.join(staging_parent, "pages-cms-stage-#{slug}-#{staging_id}-zh", "index.zh.md")
+  }
 
+  begin
     staged_paths.each do |final_path, staged_path|
       output, status = Open3.capture2e("hugo", "new", "content", "--kind", collection, staged_path)
       puts output unless output.empty?
       unless status.success? && File.file?(staged_path)
         fail_with("Hugo could not create a bilingual draft from archetypes/#{collection}.md")
       end
-      apply_draft_metadata(staged_path, collection, slug, titles.fetch(final_path), File.basename(staged_path).split(".")[1])
+      language = File.basename(staged_path).split(".")[1]
+      apply_draft_metadata(staged_path, collection, slug, titles.fetch(final_path), language)
     end
 
     staged_paths.each do |final_path, staged_path|
       FileUtils.mkdir_p(File.dirname(final_path))
       FileUtils.mv(staged_path, final_path)
     end
+  ensure
+    staged_paths.each_value { |staged_path| FileUtils.rm_rf(File.dirname(staged_path)) }
   end
   puts "Created bilingual draft pair for #{collection}/#{slug}."
 end
