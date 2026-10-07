@@ -8,6 +8,7 @@ eventType: recurring
 status: upcoming
 date: 2000-01-01
 draft: false
+cmsTitle: "【英文】Study Group"
 ---
 
 Verified study group sessions will be listed here when the date, topic, participants, and public materials are confirmed.

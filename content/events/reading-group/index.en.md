@@ -8,6 +8,7 @@ eventType: recurring
 status: upcoming
 date: 2000-01-01
 draft: false
+cmsTitle: "【英文】Reading Group"
 ---
 
 Verified reading group sessions will be listed here when the date, topic, presenter, and public materials are confirmed.

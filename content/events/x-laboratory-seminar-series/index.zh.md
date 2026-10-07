@@ -8,6 +8,7 @@ eventType: recurring
 status: upcoming
 date: 2000-01-01
 draft: false
+cmsTitle: "【中文】X-Laboratory 学术报告系列"
 ---
 
 学术报告的日期、报告人、所属机构、题目和公开链接确认后，将在此列出经过核实的活动记录。
