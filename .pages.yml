@@ -23,6 +23,38 @@ content:
       create: false
       rename: false
       delete: false
+    actions:
+      - name: create-bilingual-draft
+        label: 创建双语草稿
+        workflow: pages-cms-content.yml
+        ref: current
+        scope: collection
+        confirm:
+          title: 创建中英文草稿？
+          message: 将按稳定 ID 和对应 Hugo 模板新建一对草稿。
+          button: 创建草稿
+        fields:
+          - name: slug
+            label: 稳定英文 ID（小写英文、数字和连字符）
+            type: text
+            required: true
+          - name: title_en
+            label: 英文标题
+            type: text
+            required: true
+          - name: title_zh
+            label: 中文标题
+            type: text
+            required: true
+      - name: publish-bilingual
+        label: 发布中英文版本
+        workflow: pages-cms-content.yml
+        ref: current
+        scope: entry
+        confirm:
+          title: 发布中英文版本？
+          message: 两种语言会一起校验、构建并发布。
+          button: 发布
     view:
       layout: tree
       primary: cmsTitle
@@ -180,6 +212,38 @@ content:
       create: false
       rename: false
       delete: false
+    actions:
+      - name: create-bilingual-draft
+        label: 创建双语草稿
+        workflow: pages-cms-content.yml
+        ref: current
+        scope: collection
+        confirm:
+          title: 创建中英文草稿？
+          message: 将按稳定 ID 和对应 Hugo 模板新建一对草稿。
+          button: 创建草稿
+        fields:
+          - name: slug
+            label: 稳定英文 ID（小写英文、数字和连字符）
+            type: text
+            required: true
+          - name: title_en
+            label: 英文标题
+            type: text
+            required: true
+          - name: title_zh
+            label: 中文标题
+            type: text
+            required: true
+      - name: publish-bilingual
+        label: 发布中英文版本
+        workflow: pages-cms-content.yml
+        ref: current
+        scope: entry
+        confirm:
+          title: 发布中英文版本？
+          message: 两种语言会一起校验、构建并发布。
+          button: 发布
     view:
       layout: tree
       primary: cmsTitle
@@ -427,6 +491,38 @@ content:
       create: false
       rename: false
       delete: false
+    actions:
+      - name: create-bilingual-draft
+        label: 创建双语草稿
+        workflow: pages-cms-content.yml
+        ref: current
+        scope: collection
+        confirm:
+          title: 创建中英文草稿？
+          message: 将按稳定 ID 和对应 Hugo 模板新建一对草稿。
+          button: 创建草稿
+        fields:
+          - name: slug
+            label: 稳定英文 ID（小写英文、数字和连字符）
+            type: text
+            required: true
+          - name: title_en
+            label: 英文标题
+            type: text
+            required: true
+          - name: title_zh
+            label: 中文标题
+            type: text
+            required: true
+      - name: publish-bilingual
+        label: 发布中英文版本
+        workflow: pages-cms-content.yml
+        ref: current
+        scope: entry
+        confirm:
+          title: 发布中英文版本？
+          message: 两种语言会一起校验、构建并发布。
+          button: 发布
     view:
       layout: tree
       primary: cmsTitle
@@ -606,6 +702,16 @@ content:
       create: false
       rename: false
       delete: false
+    actions:
+      - name: publish-bilingual
+        label: 发布中英文版本
+        workflow: pages-cms-content.yml
+        ref: current
+        scope: entry
+        confirm:
+          title: 发布中英文版本？
+          message: 两种语言会一起校验、构建并发布。
+          button: 发布
     view:
       layout: tree
       primary: cmsTitle
@@ -673,6 +779,38 @@ content:
       create: false
       rename: false
       delete: false
+    actions:
+      - name: create-bilingual-draft
+        label: 创建双语草稿
+        workflow: pages-cms-content.yml
+        ref: current
+        scope: collection
+        confirm:
+          title: 创建中英文草稿？
+          message: 将按稳定 ID 和对应 Hugo 模板新建一对草稿。
+          button: 创建草稿
+        fields:
+          - name: slug
+            label: 稳定英文 ID（小写英文、数字和连字符）
+            type: text
+            required: true
+          - name: title_en
+            label: 英文标题
+            type: text
+            required: true
+          - name: title_zh
+            label: 中文标题
+            type: text
+            required: true
+      - name: publish-bilingual
+        label: 发布中英文版本
+        workflow: pages-cms-content.yml
+        ref: current
+        scope: entry
+        confirm:
+          title: 发布中英文版本？
+          message: 两种语言会一起校验、构建并发布。
+          button: 发布
     view:
       layout: tree
       primary: cmsTitle
@@ -811,6 +949,38 @@ content:
       create: false
       rename: false
       delete: false
+    actions:
+      - name: create-bilingual-draft
+        label: 创建双语草稿
+        workflow: pages-cms-content.yml
+        ref: current
+        scope: collection
+        confirm:
+          title: 创建中英文草稿？
+          message: 将按稳定 ID 和对应 Hugo 模板新建一对草稿。
+          button: 创建草稿
+        fields:
+          - name: slug
+            label: 稳定英文 ID（小写英文、数字和连字符）
+            type: text
+            required: true
+          - name: title_en
+            label: 英文标题
+            type: text
+            required: true
+          - name: title_zh
+            label: 中文标题
+            type: text
+            required: true
+      - name: publish-bilingual
+        label: 发布中英文版本
+        workflow: pages-cms-content.yml
+        ref: current
+        scope: entry
+        confirm:
+          title: 发布中英文版本？
+          message: 两种语言会一起校验、构建并发布。
+          button: 发布
     view:
       layout: tree
       primary: cmsTitle
@@ -959,6 +1129,38 @@ content:
       create: false
       rename: false
       delete: false
+    actions:
+      - name: create-bilingual-draft
+        label: 创建双语草稿
+        workflow: pages-cms-content.yml
+        ref: current
+        scope: collection
+        confirm:
+          title: 创建中英文草稿？
+          message: 将按稳定 ID 和对应 Hugo 模板新建一对草稿。
+          button: 创建草稿
+        fields:
+          - name: slug
+            label: 稳定英文 ID（小写英文、数字和连字符）
+            type: text
+            required: true
+          - name: title_en
+            label: 英文标题
+            type: text
+            required: true
+          - name: title_zh
+            label: 中文标题
+            type: text
+            required: true
+      - name: publish-bilingual
+        label: 发布中英文版本
+        workflow: pages-cms-content.yml
+        ref: current
+        scope: entry
+        confirm:
+          title: 发布中英文版本？
+          message: 两种语言会一起校验、构建并发布。
+          button: 发布
     view:
       layout: tree
       primary: cmsTitle
@@ -1113,6 +1315,38 @@ content:
       create: false
       rename: false
       delete: false
+    actions:
+      - name: create-bilingual-draft
+        label: 创建双语草稿
+        workflow: pages-cms-content.yml
+        ref: current
+        scope: collection
+        confirm:
+          title: 创建中英文草稿？
+          message: 将按稳定 ID 和对应 Hugo 模板新建一对草稿。
+          button: 创建草稿
+        fields:
+          - name: slug
+            label: 稳定英文 ID（小写英文、数字和连字符）
+            type: text
+            required: true
+          - name: title_en
+            label: 英文标题
+            type: text
+            required: true
+          - name: title_zh
+            label: 中文标题
+            type: text
+            required: true
+      - name: publish-bilingual
+        label: 发布中英文版本
+        workflow: pages-cms-content.yml
+        ref: current
+        scope: entry
+        confirm:
+          title: 发布中英文版本？
+          message: 两种语言会一起校验、构建并发布。
+          button: 发布
     view:
       layout: tree
       primary: cmsTitle
@@ -1294,6 +1528,38 @@ content:
       create: false
       rename: false
       delete: false
+    actions:
+      - name: create-bilingual-draft
+        label: 创建双语草稿
+        workflow: pages-cms-content.yml
+        ref: current
+        scope: collection
+        confirm:
+          title: 创建中英文草稿？
+          message: 将按稳定 ID 和对应 Hugo 模板新建一对草稿。
+          button: 创建草稿
+        fields:
+          - name: slug
+            label: 稳定英文 ID（小写英文、数字和连字符）
+            type: text
+            required: true
+          - name: title_en
+            label: 英文标题
+            type: text
+            required: true
+          - name: title_zh
+            label: 中文标题
+            type: text
+            required: true
+      - name: publish-bilingual
+        label: 发布中英文版本
+        workflow: pages-cms-content.yml
+        ref: current
+        scope: entry
+        confirm:
+          title: 发布中英文版本？
+          message: 两种语言会一起校验、构建并发布。
+          button: 发布
     view:
       layout: tree
       primary: cmsTitle
@@ -1447,6 +1713,38 @@ content:
       create: false
       rename: false
       delete: false
+    actions:
+      - name: create-bilingual-draft
+        label: 创建双语草稿
+        workflow: pages-cms-content.yml
+        ref: current
+        scope: collection
+        confirm:
+          title: 创建中英文草稿？
+          message: 将按稳定 ID 和对应 Hugo 模板新建一对草稿。
+          button: 创建草稿
+        fields:
+          - name: slug
+            label: 稳定英文 ID（小写英文、数字和连字符）
+            type: text
+            required: true
+          - name: title_en
+            label: 英文标题
+            type: text
+            required: true
+          - name: title_zh
+            label: 中文标题
+            type: text
+            required: true
+      - name: publish-bilingual
+        label: 发布中英文版本
+        workflow: pages-cms-content.yml
+        ref: current
+        scope: entry
+        confirm:
+          title: 发布中英文版本？
+          message: 两种语言会一起校验、构建并发布。
+          button: 发布
     view:
       layout: tree
       primary: cmsTitle
