@@ -1,0 +1,535 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>实验室内容编辑器 · X-Laboratory</title>
+  <style>
+    :root { color-scheme: light; font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif; color: #182536; background: #f4f7fb; font-synthesis: none; }
+    * { box-sizing: border-box; }
+    body { margin: 0; min-width: 320px; min-height: 100vh; }
+    button, input, select, textarea { font: inherit; }
+    button { cursor: pointer; }
+    .shell { min-height: 100vh; }
+    .topbar { height: 68px; background: #fff; border-bottom: 1px solid #e0e6ee; display: flex; align-items: center; justify-content: space-between; padding: 0 28px; gap: 20px; }
+    .brand { font-size: 17px; font-weight: 720; letter-spacing: -.02em; }
+    .brand small { display: block; color: #758297; font-size: 11px; font-weight: 500; letter-spacing: .08em; margin-top: 2px; }
+    .identity { display: flex; align-items: center; gap: 12px; color: #67768a; font-size: 14px; }
+    .button { border: 1px solid #d6dee9; background: #fff; color: #34455a; border-radius: 9px; padding: 9px 14px; font-size: 14px; font-weight: 620; }
+    .button:hover { background: #f5f8fc; }
+    .button.primary { border-color: #1769aa; background: #1769aa; color: #fff; }
+    .button.primary:hover { background: #0f568f; }
+    .button.danger { color: #af3342; border-color: #f0cbd0; }
+    .button.small { padding: 6px 10px; font-size: 12px; }
+    .button:disabled { opacity: .55; cursor: wait; }
+    .layout { display: grid; grid-template-columns: 250px minmax(0, 1fr); min-height: calc(100vh - 68px); }
+    .sidebar { background: #fff; border-right: 1px solid #e0e6ee; padding: 22px 15px; }
+    .nav-label { color: #8793a3; text-transform: uppercase; font-size: 11px; letter-spacing: .1em; padding: 0 10px 8px; }
+    .nav-item { width: 100%; border: 0; background: transparent; text-align: left; padding: 10px; border-radius: 8px; margin: 2px 0; color: #4b5a6d; }
+    .nav-item:hover, .nav-item.active { background: #eaf3fb; color: #125f9e; }
+    .sidebar-foot { margin: 26px 10px 0; border-top: 1px solid #ebeff4; padding-top: 15px; color: #8793a3; font-size: 12px; line-height: 1.6; }
+    main { min-width: 0; padding: 30px clamp(18px, 4vw, 56px); }
+    .page-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; margin-bottom: 24px; }
+    h1 { margin: 0; font-size: clamp(24px, 3vw, 31px); letter-spacing: -.03em; }
+    h2 { margin: 0 0 14px; font-size: 18px; }
+    .subhead { color: #728096; margin: 7px 0 0; line-height: 1.55; }
+    .panel { background: white; border: 1px solid #dfe6ef; border-radius: 13px; box-shadow: 0 3px 12px #13284408; padding: 20px; margin-bottom: 18px; }
+    .toolbar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; }
+    .toolbar-left, .toolbar-right { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+    .entry-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(225px, 1fr)); gap: 10px; margin-top: 17px; }
+    .entry-card { width: 100%; border: 1px solid #e1e7ef; background: #fff; border-radius: 10px; padding: 14px; text-align: left; color: inherit; }
+    .entry-card:hover { border-color: #79add5; background: #fafdff; }
+    .entry-card strong { display: block; font-size: 14px; word-break: break-word; }
+    .entry-card span { display: block; color: #77869a; font-size: 12px; margin-top: 6px; }
+    .select, input[type=text], input[type=password], input[type=url], input[type=number], input[type=date], input[type=datetime-local], textarea, select { width: 100%; border: 1px solid #cfd9e5; border-radius: 8px; padding: 10px 11px; background: #fff; color: #182536; outline: none; }
+    .select:focus, input:focus, textarea:focus, select:focus { border-color: #4c96cc; box-shadow: 0 0 0 3px #2683c21c; }
+    select[multiple] { min-height: 126px; }
+    textarea { resize: vertical; min-height: 96px; line-height: 1.55; }
+    .fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px 20px; }
+    .field { min-width: 0; }
+    .field.full { grid-column: 1 / -1; }
+    .field label { display: block; color: #34465c; font-weight: 620; font-size: 13px; margin-bottom: 7px; }
+    .required { color: #c44855; margin-left: 4px; }
+    .hint { font-size: 12px; color: #8290a0; line-height: 1.45; margin: 6px 0 0; }
+    .locale-tabs { display: flex; border-bottom: 1px solid #e3e9f0; gap: 8px; margin-bottom: 20px; }
+    .locale-tab { border: 0; background: transparent; padding: 10px 12px; color: #708095; border-bottom: 2px solid transparent; }
+    .locale-tab.active { color: #14649f; border-color: #247eb7; font-weight: 650; }
+    .footer-actions { display: flex; justify-content: space-between; align-items: center; gap: 12px; border-top: 1px solid #e7ecf2; margin-top: 22px; padding-top: 18px; }
+    .notice { padding: 12px 14px; border-radius: 9px; background: #eef6fd; color: #24577c; line-height: 1.55; margin: 12px 0; }
+    .notice.error { background: #fff0f1; color: #9b2734; }
+    .notice.success { background: #edf9f2; color: #28734c; }
+    .empty { color: #77869a; padding: 24px 8px; text-align: center; line-height: 1.7; }
+    .login-wrap { min-height: calc(100vh - 68px); display: grid; place-items: center; padding: 24px; }
+    .login-card { width: min(100%, 430px); background: white; border: 1px solid #dfe6ef; border-radius: 16px; padding: 30px; box-shadow: 0 12px 40px #13284410; }
+    .login-card h1 { font-size: 25px; }
+    .login-card .field { margin-top: 16px; }
+    .login-card .button { width: 100%; margin-top: 13px; }
+    .separator { text-align: center; color: #9aa5b3; margin: 15px 0; font-size: 12px; }
+    .user-table { width: 100%; border-collapse: collapse; }
+    .user-table th, .user-table td { border-bottom: 1px solid #edf0f4; padding: 12px 9px; text-align: left; vertical-align: middle; font-size: 13px; }
+    .user-table th { color: #748297; font-size: 11px; text-transform: uppercase; letter-spacing: .05em; }
+    .status { display: inline-block; border-radius: 999px; padding: 4px 9px; font-size: 11px; background: #edf6ef; color: #318052; }
+    .status.pending { background: #fff7e8; color: #94631a; }
+    .status.inactive { background: #f1f2f4; color: #717987; }
+    .job-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; padding: 12px 0; border-top: 1px solid #edf0f4; }
+    .job-row:first-of-type { border-top: 0; }
+    .job-detail { color: #758398; font-size: 12px; margin-top: 4px; }
+    .modal-link { width: 100%; margin-top: 8px; font-size: 12px; }
+    .muted { color: #77869a; }
+    .hidden { display: none !important; }
+    @media (max-width: 820px) { .layout { grid-template-columns: 1fr; } .sidebar { border-right: 0; border-bottom: 1px solid #e0e6ee; padding: 12px 14px; display: flex; flex-wrap: wrap; gap: 2px; } .nav-label, .sidebar-foot { display: none; } .nav-item { width: auto; } main { padding-top: 22px; } }
+    @media (max-width: 600px) { .topbar { padding: 0 16px; } .fields { grid-template-columns: 1fr; } .field.full { grid-column: auto; } .panel { padding: 15px; } .user-table th:nth-child(3), .user-table td:nth-child(3) { display: none; } .footer-actions { align-items: flex-start; flex-direction: column; } }
+  </style>
+</head>
+<body>
+  <div id="app"></div>
+  <script>
+  (() => {
+    'use strict';
+    const app = document.querySelector('#app');
+    const state = { session: null, schema: null, collection: null, entry: null, locale: 'zh', entryData: null, uploads: [], notice: null, related: new Map(), saving: false, route: 'content', inviteToken: '' };
+    const labels = { people: '人员', publications: '论文', projects: '项目与工具', research: '研究方向', news: '新闻', grants: '资助项目', opportunities: '招募机会', events: '活动', resources: '研究资源', materials: '学习材料' };
+    const finalStates = new Set(['published', 'checks_failed', 'deployment_failed', 'merge_blocked', 'failed']);
+
+    const el = (tag, attrs = {}, children = []) => {
+      const node = document.createElement(tag);
+      for (const [key, value] of Object.entries(attrs)) {
+        if (key === 'class') node.className = value;
+        else if (key === 'text') node.textContent = value;
+        else if (key === 'value') node.value = value;
+        else if (key === 'checked') node.checked = Boolean(value);
+        else if (key === 'disabled') node.disabled = Boolean(value);
+        else if (key.startsWith('on') && typeof value === 'function') node.addEventListener(key.slice(2).toLowerCase(), value);
+        else if (value !== undefined && value !== null) node.setAttribute(key, String(value));
+      }
+      for (const child of (Array.isArray(children) ? children : [children])) if (child !== null && child !== undefined) node.append(child.nodeType ? child : document.createTextNode(String(child)));
+      return node;
+    };
+    const button = (text, fn, kind = '') => el('button', { class: 'button ' + kind, type: 'button', text, onclick: fn });
+    const notice = (message, type = '') => { state.notice = { message, type }; render(); };
+    const showNotice = () => state.notice ? el('div', { class: 'notice ' + state.notice.type, text: state.notice.message, role: 'status' }) : null;
+    async function api(path, options = {}) {
+      const headers = { Accept: 'application/json', ...(options.body ? { 'Content-Type': 'application/json' } : {}), ...(options.headers || {}) };
+      if (options.method && options.method !== 'GET' && state.session?.csrf) headers['X-CSRF-Token'] = state.session.csrf;
+      const response = await fetch(path, { credentials: 'same-origin', ...options, headers });
+      const data = response.headers.get('content-type')?.includes('application/json') ? await response.json() : {};
+      if (!response.ok) throw new Error(data.error || '请求失败（' + response.status + '）。');
+      return data;
+    }
+    function makeField(label, required, control, hint = '', full = false) {
+      const wrap = el('div', { class: 'field' + (full ? ' full' : '') });
+      const title = el('label', {}, [label, required ? el('span', { class: 'required', text: '*' }) : null]);
+      wrap.append(title, control);
+      if (hint) wrap.append(el('p', { class: 'hint', text: hint }));
+      return wrap;
+    }
+    function loginScreen(inviteToken = '') {
+      state.inviteToken = inviteToken || state.inviteToken || '';
+      inviteToken = state.inviteToken;
+      app.replaceChildren(el('header', { class: 'topbar' }, [el('div', { class: 'brand' }, ['X-Laboratory', el('small', { text: 'CONTENT EDITOR' })])]), el('main', { class: 'login-wrap' }));
+      const card = el('section', { class: 'login-card' });
+      if (inviteToken) {
+        card.append(el('h1', { text: '设置编辑账号密码' }), el('p', { class: 'subhead', text: '设置一个新的强密码。密码在此设备的浏览器中进行密钥派生，不会作为明文保存。' }));
+        const password = el('input', { type: 'password', autocomplete: 'new-password', minlength: '12', required: 'true' });
+        const confirm = el('input', { type: 'password', autocomplete: 'new-password', minlength: '12', required: 'true' });
+        card.append(makeField('新密码（至少 12 位）', true, password), makeField('再次输入新密码', true, confirm));
+        const submit = button('设置密码', async () => {
+          if (password.value.length < 12) return notice('密码至少需要 12 位。', 'error');
+          if (password.value !== confirm.value) return notice('两次输入的密码不一致。', 'error');
+          submit.disabled = true;
+          try {
+            const salt = crypto.getRandomValues(new Uint8Array(16));
+            const derivedKey = await derivePassword(password.value, salt, 310000);
+            const result = await api('/api/auth/setup/complete', { method: 'POST', body: JSON.stringify({ token: inviteToken, salt: toBase64(salt), derivedKey: toBase64(derivedKey) }) });
+            history.replaceState({}, '', location.pathname);
+            state.inviteToken = '';
+            state.session = result;
+            await enterApp();
+          } catch (error) { submit.disabled = false; notice(error.message, 'error'); }
+        }, 'primary');
+        card.append(submit, el('p', { class: 'hint', text: '设置链接只能使用一次，并会在 30 分钟后失效。' }));
+      } else {
+        card.append(el('h1', { text: '编辑账号登录' }), el('p', { class: 'subhead', text: '使用实验室分配的个人编辑账号。没有账号时请联系管理员。' }));
+        const username = el('input', { type: 'text', autocomplete: 'username', required: 'true', maxlength: '32' });
+        const password = el('input', { type: 'password', autocomplete: 'current-password', required: 'true' });
+        card.append(makeField('用户名', true, username), makeField('密码', true, password));
+        const submit = button('登录编辑器', async () => {
+          if (!username.value.trim() || !password.value) return notice('请输入用户名和密码。', 'error');
+          submit.disabled = true;
+          try {
+            const name = username.value.trim().toLowerCase();
+            const challenge = await api('/api/auth/login/challenge', { method: 'POST', body: JSON.stringify({ username: name }) });
+            const derivedKey = await derivePassword(password.value, fromBase64(challenge.salt), challenge.iterations);
+            const result = await api('/api/auth/login', { method: 'POST', body: JSON.stringify({ username: name, derivedKey: toBase64(derivedKey) }) });
+            state.session = result;
+            await enterApp();
+          } catch (error) { submit.disabled = false; notice(error.message, 'error'); }
+        }, 'primary');
+        card.append(submit, el('div', { class: 'separator', text: '实验室管理员' }), el('a', { class: 'button', href: '/auth/github/start', text: '使用 GitHub 管理员账号登录', style: 'text-align:center;text-decoration:none' }));
+      }
+      card.append(showNotice());
+      app.querySelector('main').append(card);
+    }
+    async function derivePassword(password, salt, iterations) {
+      const key = await crypto.subtle.importKey('raw', new TextEncoder().encode(password), 'PBKDF2', false, ['deriveBits']);
+      return new Uint8Array(await crypto.subtle.deriveBits({ name: 'PBKDF2', salt, iterations, hash: 'SHA-256' }, key, 256));
+    }
+    function toBase64(bytes) { let raw = ''; bytes.forEach((byte) => { raw += String.fromCharCode(byte); }); return btoa(raw); }
+    function fromBase64(text) { return Uint8Array.from(atob(text), (char) => char.charCodeAt(0)); }
+    function begin() {
+      const invitation = new URL(location.href).searchParams.get('invite');
+      if (invitation) return loginScreen(invitation);
+      api('/api/session').then(async (session) => {
+        if (!session.authenticated) return loginScreen();
+        state.session = session;
+        await enterApp();
+      }).catch((error) => loginScreen());
+    }
+    async function enterApp() {
+      state.notice = null;
+      if (state.session.role === 'editor') {
+        try { state.schema = await api('/api/schema'); }
+        catch (error) { state.session = null; state.inviteToken = ''; state.notice = { message: error.message, type: 'error' }; return loginScreen(); }
+        if (!state.collection) state.collection = state.schema.collections[0]?.name || null;
+      }
+      render();
+      if (state.session.role === 'editor' && state.collection) loadCollection(state.collection);
+      if (state.session.role === 'admin') loadUsers();
+    }
+    function render() {
+      if (!state.session) return loginScreen(state.inviteToken);
+      const header = el('header', { class: 'topbar' }, [
+        el('div', { class: 'brand' }, ['X-Laboratory', el('small', { text: state.session.role === 'admin' ? 'ACCOUNT ADMINISTRATION' : 'CONTENT EDITOR' })]),
+        el('div', { class: 'identity' }, [el('span', { text: state.session.username }), button('退出登录', logout, 'small')])
+      ]);
+      const nav = el('aside', { class: 'sidebar' });
+      if (state.session.role === 'editor') {
+        nav.append(el('div', { class: 'nav-label', text: '内容栏目' }));
+        for (const collection of state.schema.collections) nav.append(el('button', { class: 'nav-item' + (state.route === 'content' && state.collection === collection.name ? ' active' : ''), text: labels[collection.name] || collection.label, onclick: () => { state.route = 'content'; state.entry = null; state.collection = collection.name; state.notice = null; render(); loadCollection(collection.name); } }));
+      } else nav.append(el('div', { class: 'nav-label', text: '管理' }), el('button', { class: 'nav-item active', text: '编辑账号', onclick: () => { state.route = 'users'; loadUsers(); } }));
+      nav.append(el('div', { class: 'sidebar-foot', text: state.session.role === 'editor' ? '中英文内容分别维护。只有通过构建和内容审计的修改才会自动合并发布。' : '管理员可以创建、停用编辑账号或发起一次性密码设置/重置链接。' }));
+      const main = el('main');
+      if (state.notice) main.append(showNotice());
+      if (state.session.role === 'admin') renderUsersPage(main);
+      else if (state.route === 'jobs') renderJobsPage(main);
+      else if (state.entryData) renderEntryPage(main);
+      else renderCollectionPage(main);
+      app.replaceChildren(el('div', { class: 'shell' }, [header, el('div', { class: 'layout' }, [nav, main]) ]));
+    }
+    async function loadCollection(name) {
+      if (!name || state.session.role !== 'editor') return;
+      try {
+        const data = await api('/api/content?collection=' + encodeURIComponent(name));
+        if (state.collection !== name || state.route !== 'content' || state.entryData) return;
+        state.entries = data.entries || [];
+        state.canCreate = data.canCreate;
+        render();
+      } catch (error) { notice(error.message, 'error'); }
+    }
+    function renderCollectionPage(main) {
+      const collection = state.schema.collections.find((item) => item.name === state.collection);
+      main.append(el('div', { class: 'page-head' }, [el('div', {}, [el('h1', { text: labels[state.collection] || collection?.label || '内容' }), el('p', { class: 'subhead', text: '编辑中英文页面内容、关联信息和图片。' })]), button('我的发布记录', () => { state.route = 'jobs'; render(); }, '')]));
+      const panel = el('section', { class: 'panel' });
+      panel.append(el('div', { class: 'toolbar' }, [el('div', {}, [el('h2', { text: '内容条目' }), el('span', { class: 'muted', text: String(state.entries?.length || 0) + ' 项' })]), state.canCreate ? button('＋ 新建条目', createEntry, 'primary') : el('span', { class: 'muted', text: '此栏目仅支持编辑已有条目' })]));
+      if (!state.entries?.length) panel.append(el('div', { class: 'empty', text: '当前栏目还没有条目。' }));
+      else {
+        const list = el('div', { class: 'entry-list' });
+        for (const entry of state.entries) {
+          const locales = ['zh', 'en'].filter((locale) => entry.locales?.[locale]).join(' · ') || '空白';
+          list.append(el('button', { class: 'entry-card', onclick: () => openEntry(entry.id) }, [el('strong', { text: entry.id }), el('span', { text: '语言：' + locales })]));
+        }
+        panel.append(list);
+      }
+      main.append(panel, renderRecentJobs());
+    }
+    async function createEntry() {
+      const collection = state.schema.collections.find((item) => item.name === state.collection);
+      const slug = window.prompt('新条目的稳定 ID（小写英文字母、数字和连字符）');
+      if (slug === null) return;
+      const id = slug.trim().toLowerCase();
+      if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(id)) return notice('ID 格式无效。', 'error');
+      try {
+        const entry = await api('/api/entry?collection=' + encodeURIComponent(collection.name) + '&id=' + encodeURIComponent(id));
+        if (entry.locales.en.sha || entry.locales.zh.sha) return notice('这个 ID 已经存在。', 'error');
+        state.entry = id;
+        state.entryData = entry;
+        state.uploads = [];
+        state.locale = 'zh';
+        render();
+      } catch (error) { notice(error.message, 'error'); }
+    }
+    async function openEntry(id) {
+      try {
+        const data = await api('/api/entry?collection=' + encodeURIComponent(state.collection) + '&id=' + encodeURIComponent(id));
+        state.entry = id;
+        state.entryData = data;
+        state.uploads = [];
+        state.locale = 'zh';
+        state.notice = null;
+        render();
+      } catch (error) { notice(error.message, 'error'); }
+    }
+    function initialValue(field, locale) {
+      const data = state.entryData.locales[locale];
+      const other = state.entryData.locales[locale === 'zh' ? 'en' : 'zh'];
+      if (field.name === 'body') return data.body || '';
+      if (field.i18n !== true) {
+        const englishValue = state.entryData.locales.en.fields?.[field.name];
+        if (englishValue !== undefined && englishValue !== null && englishValue !== '') return englishValue;
+      }
+      const raw = data.fields?.[field.name];
+      if (field.i18n !== true && (raw === undefined || raw === null || raw === '') && other.fields?.[field.name] !== undefined) return other.fields[field.name];
+      if (raw !== undefined && raw !== null) return raw;
+      if ('default' in field) return field.default;
+      if (field.widget === 'boolean') return false;
+      if (field.widget === 'list' || (field.widget === 'select' && field.multiple) || (field.widget === 'relation' && field.multiple)) return [];
+      return '';
+    }
+    function renderEntryPage(main) {
+      const collection = state.schema.collections.find((item) => item.name === state.collection);
+      const isNew = !state.entryData.locales.en.sha && !state.entryData.locales.zh.sha;
+      main.append(el('div', { class: 'page-head' }, [el('div', {}, [el('h1', { text: isNew ? '新建条目' : '编辑条目' }), el('p', { class: 'subhead', text: (labels[state.collection] || collection.label) + ' · ' + state.entry })]), button('← 返回栏目', () => { state.entryData = null; state.entry = null; state.notice = null; render(); loadCollection(state.collection); })]));
+      const panel = el('section', { class: 'panel' });
+      const locales = el('div', { class: 'locale-tabs' });
+      for (const [code, name] of [['zh', '中文'], ['en', 'English']]) locales.append(el('button', { class: 'locale-tab' + (state.locale === code ? ' active' : ''), text: name, onclick: () => { state.locale = code; render(); } }));
+      panel.append(locales);
+      const form = el('div', { class: 'fields' });
+      for (const field of collection.fields || []) {
+        if (!field.name || field.widget === 'hidden') continue;
+        const full = field.widget === 'markdown' || field.widget === 'list' || field.widget === 'relation' && field.multiple;
+        const control = buildControl(field, state.locale);
+        form.append(makeField(field.label || field.name, field.required === true, control, field.hint || '', full));
+      }
+      panel.append(form);
+      panel.append(el('div', { class: 'notice' }, ['中英文内容分别保存。标记为双语共用的字段会同步；其它文本字段保持各自语言。']));
+      const status = el('span', { class: 'muted', text: state.saving ? '正在创建 PR…' : '保存后会触发构建和内容审计。' });
+      panel.append(el('div', { class: 'footer-actions' }, [status, el('div', { class: 'toolbar-right' }, [button('取消', () => { state.entryData = null; state.entry = null; render(); loadCollection(state.collection); }), button('提交并检查', () => submitEntry(), 'primary')])]));
+      main.append(panel);
+    }
+    function setValueForLocale(locale, field, value) {
+      const file = state.entryData.locales[locale];
+      const isBody = field.name === 'body';
+      if (isBody) file.body = value;
+      else {
+        if (!file.fields || typeof file.fields !== 'object') file.fields = {};
+        file.fields[field.name] = value;
+      }
+      if (!isBody && field.i18n !== true) {
+        const other = state.entryData.locales[locale === 'zh' ? 'en' : 'zh'];
+        if (field.name === 'body') other.body = value;
+        else { if (!other.fields) other.fields = {}; other.fields[field.name] = value; }
+      }
+    }
+    function buildControl(field, locale) {
+      const value = initialValue(field, locale);
+      const update = (next) => setValueForLocale(locale, field, next);
+      if (field.widget === 'boolean') {
+        const input = el('input', { type: 'checkbox', checked: value, onchange: (event) => update(event.target.checked) });
+        const label = el('label', { style: 'display:flex;align-items:center;gap:9px;font-weight:500;margin-top:11px' }, [input, '启用']);
+        return label;
+      }
+      if (field.widget === 'select' || field.widget === 'relation') {
+        const select = el('select', { multiple: Boolean(field.multiple), onchange: (event) => update(field.multiple ? [...event.target.selectedOptions].map((item) => item.value) : event.target.value) });
+        if (!field.required && !field.multiple) select.append(el('option', { value: '', text: '请选择' }));
+        if (field.widget === 'select') {
+          for (const option of field.options || []) {
+            const optionValue = typeof option === 'object' ? option.value : option;
+            const optionLabel = typeof option === 'object' ? option.label : option;
+            const node = el('option', { value: optionValue, text: optionLabel });
+            node.selected = Array.isArray(value) ? value.includes(optionValue) : value === optionValue;
+            select.append(node);
+          }
+        } else {
+          const ref = field.collection;
+          if (ref) ensureRelated(ref).then((ids) => {
+            if (!select.isConnected) return;
+            for (const id of ids) {
+              const option = el('option', { value: id, text: id });
+              option.selected = Array.isArray(value) ? value.includes(id) : value === id;
+              select.append(option);
+            }
+          }).catch(() => {});
+        }
+        select.value = field.multiple ? undefined : String(value || '');
+        if (field.multiple && Array.isArray(value)) [...select.options].forEach((option) => { option.selected = value.includes(option.value); });
+        return select;
+      }
+      if (field.widget === 'list' && (field.fields || []).length) {
+        const textarea = el('textarea', { rows: '7', spellcheck: 'false', placeholder: '按 JSON 数组填写结构化项目', value: JSON.stringify(Array.isArray(value) ? value : [], null, 2) });
+        textarea.addEventListener('change', () => {
+          try { const parsed = JSON.parse(textarea.value || '[]'); if (!Array.isArray(parsed)) throw new Error('请填写数组'); update(parsed); textarea.setCustomValidity(''); }
+          catch { textarea.setCustomValidity('JSON 格式不正确，需要一个数组。'); textarea.reportValidity(); }
+        });
+        return textarea;
+      }
+      if (field.widget === 'list') {
+        const textarea = el('textarea', { rows: '5', placeholder: '每行一项', value: (Array.isArray(value) ? value : []).join('\n') });
+        textarea.addEventListener('input', () => update(textarea.value.split(/\r?\n/).filter((item) => item.length)));
+        return textarea;
+      }
+      if (field.widget === 'image') {
+        const group = el('div');
+        const input = el('input', { type: 'text', value: String(value || ''), placeholder: '图片文件名或现有图片路径', oninput: (event) => update(event.target.value) });
+        const file = el('input', { type: 'file', accept: 'image/png,image/jpeg,image/gif,image/webp', style: 'margin-top:8px' });
+        file.addEventListener('change', async () => {
+          const image = file.files?.[0];
+          if (!image) return;
+          if (image.size > 4_000_000) { file.value = ''; return notice('图片不能超过 4 MB。', 'error'); }
+          if (!['image/png', 'image/jpeg', 'image/gif', 'image/webp'].includes(image.type)) { file.value = ''; return notice('请上传 PNG、JPEG、GIF 或 WebP 图片。', 'error'); }
+          const bytes = new Uint8Array(await image.arrayBuffer());
+          const ext = { 'image/png': 'png', 'image/jpeg': 'jpg', 'image/gif': 'gif', 'image/webp': 'webp' }[image.type];
+          const name = crypto.randomUUID() + '.' + ext;
+          const upload = { name, mime: image.type, data: toBase64(bytes) };
+          const previous = input.value;
+          state.uploads = state.uploads.filter((item) => item.name !== name && item.name !== previous).concat(upload);
+          input.value = name;
+          update(name);
+          notice('图片已加入本次提交，将随内容 PR 上传。', 'success');
+        });
+        group.append(input, file);
+        return group;
+      }
+      if (field.widget === 'markdown' || field.widget === 'text') {
+        const textarea = el('textarea', { rows: field.widget === 'markdown' ? '16' : '5', value: String(value || ''), placeholder: field.widget === 'markdown' ? '支持 Markdown' : '' });
+        textarea.addEventListener('input', () => update(textarea.value));
+        return textarea;
+      }
+      let type = 'text';
+      if (field.widget === 'number') type = 'number';
+      else if (field.widget === 'datetime') type = field.type === 'date' ? 'date' : 'datetime-local';
+      let displayValue = value ?? '';
+      if (field.widget === 'datetime' && typeof displayValue === 'string') displayValue = field.type === 'date' ? displayValue.slice(0, 10) : displayValue.replace(/(?:Z|[+-]\d{2}:\d{2})$/, '').slice(0, 16);
+      if (displayValue instanceof Date) displayValue = displayValue.toISOString().slice(0, 10);
+      const input = el('input', { type, value: displayValue, readonly: field.name === 'id' ? 'true' : undefined, step: field.value_type === 'float' ? 'any' : undefined, oninput: (event) => update(field.widget === 'number' && event.target.value ? Number(event.target.value) : event.target.value) });
+      return input;
+    }
+    async function ensureRelated(name) {
+      if (state.related.has(name)) return state.related.get(name);
+      const promise = api('/api/content?collection=' + encodeURIComponent(name)).then((data) => (data.entries || []).map((item) => item.id));
+      state.related.set(name, promise);
+      return promise;
+    }
+    async function submitEntry() {
+      if (state.saving) return;
+      const collection = state.schema.collections.find((item) => item.name === state.collection);
+      const locales = {};
+      for (const locale of ['en', 'zh']) locales[locale] = { fields: state.entryData.locales[locale].fields || {}, body: state.entryData.locales[locale].body || '' };
+      const baseShas = { en: state.entryData.locales.en.sha || null, zh: state.entryData.locales.zh.sha || null };
+      state.saving = true; render();
+      try {
+        const result = await api('/api/publish', { method: 'POST', body: JSON.stringify({ collection: collection.name, id: state.entry, locales, baseShas, uploads: state.uploads }) });
+        state.saving = false;
+        state.entryData = null; state.entry = null; state.uploads = [];
+        notice('已创建内容 PR #' + result.job.pullNumber + '。构建检查通过后会自动合并并部署。', 'success');
+        const link = el('a', { href: result.job.url, target: '_blank', rel: 'noopener noreferrer', text: '查看 GitHub PR' });
+        setTimeout(() => { const n = app.querySelector('.notice.success'); if (n) n.append(' ', link); }, 0);
+        loadCollection(state.collection);
+        watchJob(result.job.id);
+      } catch (error) { state.saving = false; notice(error.message, 'error'); }
+    }
+    function renderRecentJobs() {
+      const panel = el('section', { class: 'panel' }, [el('h2', { text: '最近发布' })]);
+      api('/api/publish-jobs').then((data) => {
+        const jobs = data.jobs || [];
+        if (panel.isConnected) {
+          if (!jobs.length) panel.append(el('div', { class: 'empty', text: '还没有发布记录。' }));
+          for (const job of jobs.slice(0, 5)) panel.append(jobRow(job));
+        }
+      }).catch(() => {});
+      return panel;
+    }
+    function jobRow(job) {
+      const labelsByState = { checks_pending: '检查中', awaiting_required_check: '等待检查', checks_failed: '检查未通过', merged_deploying: '已合并 · 部署中', published: '已发布', deployment_failed: '部署失败', merge_blocked: '未能合并', failed: '提交失败', creating: '处理中' };
+      const status = el('span', { class: 'status' + (['checks_failed', 'deployment_failed', 'failed', 'merge_blocked'].includes(job.state) ? ' inactive' : ['checks_pending', 'awaiting_required_check', 'merged_deploying'].includes(job.state) ? ' pending' : ''), text: labelsByState[job.state] || job.state });
+      return el('div', { class: 'job-row' }, [el('div', {}, [el('strong', { text: (labels[job.collection] || job.collection) + ' · ' + job.entry_id }), el('div', { class: 'job-detail', text: job.message || '' })]), status]);
+    }
+    async function loadUsers() {
+      try { state.users = (await api('/api/admin/users')).users || []; state.notice = null; render(); }
+      catch (error) { notice(error.message, 'error'); }
+    }
+    function renderUsersPage(main) {
+      main.append(el('div', { class: 'page-head' }, [el('div', {}, [el('h1', { text: '编辑账号' }), el('p', { class: 'subhead', text: 'GitHub 管理员登录仅用于账号管理；编辑者使用本地账号。' })])]));
+      const create = el('section', { class: 'panel' });
+      create.append(el('h2', { text: '创建编辑账号' }));
+      const form = el('div', { class: 'toolbar' });
+      const username = el('input', { type: 'text', maxlength: '32', placeholder: '用户名，例如 k', style: 'max-width:300px' });
+      form.append(username, button('创建并生成设置链接', async () => {
+        try {
+          const result = await api('/api/admin/users', { method: 'POST', body: JSON.stringify({ username: username.value }) });
+          username.value = '';
+          await loadUsers();
+          showInvite(result.inviteUrl, '账号 ' + result.username + ' 已创建');
+        } catch (error) { notice(error.message, 'error'); }
+      }, 'primary'));
+      create.append(form, el('p', { class: 'hint', text: '账号 k 已预置为待设置状态。这里不会设置或保存聊天中曾提及的弱密码。请把一次性链接私下交给账号本人。' }));
+      const tablePanel = el('section', { class: 'panel' });
+      tablePanel.append(el('h2', { text: '账号列表' }));
+      if (!state.users?.length) tablePanel.append(el('div', { class: 'empty', text: '正在读取账号…' }));
+      else {
+        const table = el('table', { class: 'user-table' });
+        table.append(el('thead', {}, el('tr', {}, ['用户名', '状态', '有效会话', '操作'].map((text) => el('th', { text })))));
+        const body = el('tbody');
+        for (const user of state.users) {
+          const status = !user.active ? el('span', { class: 'status inactive', text: '已停用' }) : user.password_set ? el('span', { class: 'status', text: '已设置' }) : el('span', { class: 'status pending', text: '待设置密码' });
+          const actions = el('div', { class: 'toolbar-left' });
+          actions.append(button(user.password_set ? '重置密码' : '设置密码', () => userAction(user.username, 'invite'), 'small'));
+          actions.append(button(user.active ? '停用' : '启用', () => userAction(user.username, user.active ? 'disable' : 'enable'), 'small' + (user.active ? ' danger' : '')));
+          body.append(el('tr', {}, [el('td', { text: user.username }), el('td', {}, status), el('td', { text: String(user.active_sessions || 0) }), el('td', {}, actions)]));
+        }
+        table.append(body); tablePanel.append(el('div', { style: 'overflow:auto' }, table));
+      }
+      main.append(create, tablePanel);
+    }
+    async function userAction(username, action) {
+      try {
+        if (action === 'disable' && !window.confirm('停用 ' + username + '？现有登录会立即失效。')) return;
+        const result = await api('/api/admin/users/' + encodeURIComponent(username) + '/' + action, { method: 'POST', body: '{}' });
+        await loadUsers();
+        if (result.inviteUrl) showInvite(result.inviteUrl, '一次性链接已生成');
+      } catch (error) { notice(error.message, 'error'); }
+    }
+    function showInvite(url, title) {
+      const box = el('section', { class: 'panel' }, [el('h2', { text: title }), el('p', { class: 'subhead', text: '链接仅显示在此处，不会由系统发送。请通过可信的私密方式交给本人。' })]);
+      const input = el('input', { type: 'text', value: url, readonly: 'true', class: 'modal-link' });
+      box.append(input, button('复制一次性链接', async () => { try { await navigator.clipboard.writeText(url); notice('链接已复制。', 'success'); } catch { input.select(); document.execCommand('copy'); notice('链接已复制。', 'success'); } }, 'primary'));
+      const existing = app.querySelector('.invite-box');
+      if (existing) existing.remove();
+      box.classList.add('invite-box');
+      app.querySelector('main')?.prepend(box);
+    }
+    function renderJobsPage(main) {
+      main.append(el('div', { class: 'page-head' }, [el('div', {}, [el('h1', { text: '我的发布记录' }), el('p', { class: 'subhead', text: '构建失败的 PR 不会自动合并。合并后会继续显示 Pages 部署状态。' })]), button('← 返回内容', () => { state.route = 'content'; render(); loadCollection(state.collection); })]));
+      const panel = el('section', { class: 'panel' }, [el('h2', { text: '发布记录' })]);
+      api('/api/publish-jobs').then((data) => {
+        const jobs = data.jobs || [];
+        if (panel.isConnected) {
+          if (!jobs.length) panel.append(el('div', { class: 'empty', text: '还没有发布记录。' }));
+          for (const job of jobs) panel.append(jobRow(job));
+        }
+      }).catch((error) => { if (panel.isConnected) panel.append(el('div', { class: 'notice error', text: error.message })); });
+      main.append(panel);
+    }
+    function watchJob(id) {
+      const poll = async () => {
+        try {
+          const data = await api('/api/publish/' + encodeURIComponent(id));
+          if (data.job.state === 'checks_pending' || data.job.state === 'merged_deploying') {
+            setTimeout(poll, 8000);
+            return;
+          }
+          if (document.visibilityState === 'visible' && state.session) { state.notice = { message: data.job.message || '发布状态已更新。', type: finalStates.has(data.job.state) && data.job.state !== 'published' ? 'error' : 'success' }; render(); }
+        } catch { setTimeout(poll, 15000); }
+      };
+      setTimeout(poll, 8000);
+    }
+    async function logout() {
+      try { await api('/api/auth/logout', { method: 'POST', body: '{}' }); } catch { }
+      state.session = null; state.schema = null; state.notice = null; history.replaceState({}, '', location.pathname); loginScreen();
+    }
+    begin();
+  })();
+  </script>
+</body>
+</html>
+

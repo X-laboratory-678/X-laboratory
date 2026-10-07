@@ -1,0 +1,20 @@
+name = "x-lab-cms-editor"
+main = "src/index.js"
+compatibility_date = "2026-10-04"
+
+[assets]
+directory = "./public"
+binding = "ASSETS"
+run_worker_first = ["/api/*", "/auth/*", "/webhooks/*", "/health"]
+
+[[d1_databases]]
+binding = "DB"
+database_name = "x-lab-cms-editor"
+database_id = "7b75d8aa-3d32-4dc8-8297-8166325c3e71"
+migrations_dir = "migrations"
+
+[vars]
+REPOSITORY = "X-laboratory-678/X-laboratory"
+MAIN_BRANCH = "main"
+ADMIN_GITHUB_USERS = "X-laboratory-678"
+PUBLIC_SITE_URL = "https://x-laboratory-678.github.io/X-laboratory/"

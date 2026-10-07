@@ -1,0 +1,42 @@
+name: CMS editor validation
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'cms-editor-worker/**'
+      - 'static/editor/**'
+      - 'static/zh/editor/**'
+      - 'static/admin/config.yml'
+      - '.github/workflows/cms-editor-worker.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'cms-editor-worker/**'
+      - 'static/editor/**'
+      - 'static/zh/editor/**'
+      - 'static/admin/config.yml'
+      - '.github/workflows/cms-editor-worker.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: CMS editor validation
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install pinned dependencies
+        working-directory: cms-editor-worker
+        run: npm ci --no-audit --no-fund
+      - name: Validate Worker, editor page, CMS schema, and D1 migration
+        working-directory: cms-editor-worker
+        run: npm run check
+
