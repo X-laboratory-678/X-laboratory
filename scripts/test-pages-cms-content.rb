@@ -46,7 +46,7 @@ end
 def read_metadata(path)
   source = File.read(path, encoding: "UTF-8")
   match = source.match(/\A---\r?\n(.*?)\r?\n---/m)
-  YAML.safe_load(match.fetch(1), permitted_classes: [Date, DateTime, Time], aliases: true)
+  YAML.safe_load(match[1], permitted_classes: [Date, DateTime, Time], aliases: true)
 end
 
 def run_action(directory, mode, event)
