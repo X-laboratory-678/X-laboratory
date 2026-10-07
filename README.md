@@ -5,9 +5,9 @@ Official website source for **X-Laboratory** at Shanghai University of Electric 
 - Live site: <https://x-laboratory-678.github.io/X-laboratory/>
 - Repository: <https://github.com/X-laboratory-678/X-laboratory>
 - Production branch: `main`
-- Status: Pages CMS is live on main; /admin/ links to it, with the legacy Worker editor retained for rollback.
+- Status: Pages CMS remains the live `/admin/` editor while the visual Worker CMS is piloted. Do not switch editors until the pilot, protected preview, and deployment checks pass.
 
-The public site is a bilingual, content-driven Hugo website deployed automatically to GitHub Project Pages. Pages CMS edits existing Markdown bundles through the repository-scoped GitHub App; content remains in Git, with no content database, site application server, or Node frontend build pipeline.
+The public site is a bilingual, content-driven Hugo website deployed automatically to GitHub Project Pages. The visual CMS is a separate Cloudflare Worker with D1-backed accounts and audit records; it edits the existing Markdown and YAML source in Git and does not change the public site's Hugo architecture.
 
 ## Technology
 
@@ -18,6 +18,7 @@ The public site is a bilingual, content-driven Hugo website deployed automatical
 - Native CSS
 - Minimal native JavaScript ES Modules
 - GitHub Actions and GitHub Pages
+- Cloudflare Worker and D1 for the visual editor only
 
 English is published at `/`; Simplified Chinese is published at `/zh/`. The live Project Pages base path is `/X-laboratory/`, and templates derive it dynamically rather than hard-coding it.
 
@@ -51,9 +52,9 @@ data/                  Controlled IDs, labels, categories, and ordering
 i18n/                  Shared interface translations
 ```
 
-The content repository includes schemas for Grants, Opportunities, Events, Resources, and Materials. Pages CMS manages existing records in ten collections, including bilingual Research pages (editing only), while controlled vocabularies and site settings remain outside the editor. Creating, renaming, and deleting records are disabled. Existing Page Bundle images remain read-only except for the optional People portrait upload to `static/uploads/`. Projects with `projectType: tool` also populate the Tools directory. See `docs/missing-information.md` for facts still needed from the laboratory.
+The content repository includes ten collections, bilingual page bundles, controlled vocabularies, and shared site settings. During the pilot, Pages CMS remains the current `/admin/` editor. The visual CMS adds click-to-edit previews, personal editor accounts, draft branches, and a recoverable trash area; it is intended to replace routine editing only after protected previews and publish checks pass. Stable IDs, page bundle paths, translation keys, and relationships remain system-managed. Research directions remain maintainer-managed. Existing Page Bundle images remain read-only except for People portraits. Projects with `projectType: tool` also populate the Tools directory. See `docs/missing-information.md` for facts still needed from the laboratory.
 
-The CMS landing page is served at `/admin/` and links to Pages CMS on `main`. Authorized GitHub users can sign in; maintainers can invite email collaborators through Pages CMS. Saving to `main` creates a commit directly and triggers the bilingual audit, Hugo build, site audit, and GitHub Pages deployment. A failed build leaves the commit on `main` while production remains on its last successful deployment. See [the CMS setup guide](docs/cms-setup.md).
+When the visual CMS is deployed, editors will sign in at the Worker `/editor/` address with their own username and password. They can click page content, save a shared draft, preview it while signed in, then request publication. A GitHub PR runs the bilingual audit, strict Hugo build, and site audit before the Worker can merge it to `main`; GitHub Pages then deploys production. Pages CMS remains available to maintainers as the fallback. See [the CMS setup guide](docs/cms-setup.md).
 
 Grants and Opportunities now have bilingual public directories with honest empty states. Draft example bundles exercise their layouts locally but are excluded from production; they are not evidence of funding or recruitment.
 
@@ -107,14 +108,15 @@ The local production configuration intentionally uses a reserved `example.invali
 The supported deployment flow is:
 
 ```text
-Pages CMS save to main
-→ GitHub Actions bilingual bundle audit
-→ pinned Hugo strict build and generated-site audit
-→ Pages artifact upload
+Visual CMS shared draft branch
+→ GitHub pull request
+→ bilingual content audit and pinned Hugo build
+→ generated-site audit
+→ checked merge to main
 → automatic GitHub Pages deployment
 ```
 
-Do not create a `gh-pages` branch or manually upload `public/`. The current site has no custom domain or `CNAME`.
+Until the visual CMS pilot is deployed, Pages CMS remains the active editor and saves directly to `main`. Do not create a `gh-pages` branch or manually upload `public/`. The current site has no custom domain or `CNAME`.
 
 ## Documentation
 

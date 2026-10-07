@@ -9,17 +9,17 @@
 {{- $label := i18n (printf "nav_%s" $entry.Identifier) | default $entry.Name -}}
 {{- $matchesPage := $page.IsMenuCurrent "main" $entry -}}
 {{- $active := or $matchesPage ($page.HasMenuCurrent "main" $entry) -}}
-<li{{ if $active }} class="active"{{ end }}>
+<li{{ if $active }} class="active"{{ end }} data-cms-navigation-id="{{ $entry.Identifier }}">
   {{- if $children -}}
-    <strong>{{ $label }}</strong>
+    <strong data-cms-navigation-label="{{ $entry.Identifier }}">{{ $label }}</strong>
     <ul>
       {{- range $children -}}
         {{- partial "navigation/menu-item.html" (dict "page" $page "entry" .) -}}
       {{- end -}}
     </ul>
   {{- else if $entry.URL -}}
-    <a href="{{ $entry.URL }}"{{ if $matchesPage }} aria-current="page"{{ end }}>{{ $label }}</a>
+    <a href="{{ $entry.URL }}" data-cms-navigation-label="{{ $entry.Identifier }}"{{ if $matchesPage }} aria-current="page"{{ end }}>{{ $label }}</a>
   {{- else -}}
-    <span>{{ $label }}</span>
+    <span data-cms-navigation-label="{{ $entry.Identifier }}">{{ $label }}</span>
   {{- end -}}
 </li>

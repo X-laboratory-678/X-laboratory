@@ -8,9 +8,10 @@
     {{- else if eq .Params.type "visiting-scholar" -}}{{- $visiting = $visiting | append . -}}
     {{- else -}}{{- $current = $current | append . -}}{{- end -}}
   {{- end -}}
-  <header class="directory-header section">
+  <header class="directory-header section" data-cms-file="{{ .File.Path }}">
     <div class="container stack">
-      <h1>{{ .Title }}</h1>
+      <h1 data-cms-field="title">{{ .Title }}</h1>
+      <button type="button" data-cms-add="opportunities" hidden>＋ 添加招募机会</button>
     </div>
   </header>
   <div class="record-directory section">
@@ -22,7 +23,7 @@
       {{- if $visiting }}<section aria-labelledby="visiting-opportunities-heading"><div class="record-directory__heading"><h2 id="visiting-opportunities-heading">{{ i18n "visiting_opportunities" }}</h2><span>{{ len $visiting }}</span></div><div class="record-list">{{ range $visiting }}{{ partial "opportunity/item.html" . }}{{ end }}</div></section>{{ end }}
       <section aria-labelledby="opportunity-guidance-heading">
         <h2 id="opportunity-guidance-heading">{{ i18n "funding_and_applications" }}</h2>
-        <div class="prose">{{ .Content }}</div>
+        <div class="prose" data-cms-field="body">{{ .Content }}</div>
         <div class="cluster">
           <a class="button button--secondary" href="{{ site.Params.admissions.officialUrl }}" rel="external">{{ i18n "join_admissions_link" }}</a>
           {{- with site.GetPage "/contact" }}<a class="text-link" href="{{ .RelPermalink }}">{{ i18n "contact_view_page" }}</a>{{ end }}

@@ -3,11 +3,12 @@
   {{- if not hugo.IsProduction }}{{- $pages = .Pages -}}{{- end -}}
   {{- $pages = sort $pages "Title" "asc" -}}
   {{- $pages = sort $pages "Date" "desc" -}}
-  <header class="directory-header section">
+  <header class="directory-header section" data-cms-file="{{ .File.Path }}">
     <div class="container stack">
       <p class="eyebrow">{{ i18n "nav_news" }}</p>
-      <h1>{{ .Title }}</h1>
-      <div class="prose">{{ .Content }}</div>
+      <h1 data-cms-field="title">{{ .Title }}</h1>
+      <div class="prose" data-cms-field="body">{{ .Content }}</div>
+      <button type="button" data-cms-add="news" hidden>＋ 添加新闻</button>
     </div>
   </header>
   <section class="news-directory section" aria-labelledby="latest-news-heading">

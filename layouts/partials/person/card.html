@@ -1,11 +1,11 @@
 {{- $page := .page -}}
 {{- $variant := .variant | default "standard" -}}
-<article class="person-card person-card--{{ $variant }}">
+<article class="person-card person-card--{{ $variant }}" data-cms-entry="{{ $page.File.Path }}" data-cms-type="people">
   {{ partial "person/portrait.html" (dict "page" $page "variant" $variant) }}
   <div class="person-card__content stack" style="--stack-space: var(--space-3)">
     <div>
-      <h3><a href="{{ $page.RelPermalink }}">{{ $page.Title }}</a></h3>
-      <p class="person-card__role">{{ $page.Params.role }}</p>
+      <h3><a href="{{ $page.RelPermalink }}" data-cms-field="title">{{ $page.Title }}</a></h3>
+      <p class="person-card__role" data-cms-field="role">{{ $page.Params.role }}</p>
     </div>
     {{- with $page.Params.researchInterests }}
       <ul class="person-interests person-interests--card">

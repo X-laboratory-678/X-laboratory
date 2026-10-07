@@ -1,68 +1,28 @@
-# Pages CMS Access and Publishing
+# X-Laboratory 内容后台
 
-Pages CMS is the active content editor for the X-Laboratory website.
+## 当前状态
 
-## Open the editor
+正式网站仍由 GitHub Pages 发布。新可视化后台正在独立分支试点；在受保护预览、内容编辑和发布检查全部验收前，`/admin/` 仍然使用 Pages CMS。不要在两个后台同时编辑同一条内容。
 
-- Admin landing page: https://x-laboratory-678.github.io/X-laboratory/admin/
-- Pages CMS on the production branch: https://app.pagescms.org/x-laboratory-678/x-laboratory/main
+## 可视化后台试点完成后的使用方式
 
-Sign in with GitHub, or use the email invitation sent by a repository maintainer. Confirm that the repository header says `X-laboratory-678/X-laboratory`. The official Pages CMS GitHub App is installed for this repository only.
+- 编辑人员打开 Cloudflare Worker 地址 `/editor/`，用自己的用户名和密码登录。
+- 管理员用获准的 GitHub 账号登录同一后台，负责创建、停用和重置编辑账号。
+- 在“可视化网站”里直接点击网页上的文字、图片或内容卡片，系统会打开对应的中文/英文记录或网站设置。左侧栏目可用于查找条目。
+- 按中文、英文标签切换语言。稳定 ID、翻译标识和文件路径由系统管理；编辑者不需要改代码或服务器设置。
+- 按“保存并预览”保存到所有编辑者共用的草稿版本。草稿预览需要先登录后台；完成后回到“草稿与回收站”发布。
+- 删除会先进入回收站。编辑者可提交恢复；永久清理只能由管理员发起，并同样经过网站检查。
 
-## Editor access
+可编辑范围包含首页、安全开放的站点和导航文字、联系信息、成员分类，以及人员、论文、项目与工具、新闻、资助项目、招募机会、活动、研究资源和学习材料。研究方向使用受控词表，仍由维护者管理。后台不开放 CSS、模板、源代码、部署配置或凭据。
 
-A GitHub user with repository write access can edit the repository, including site code and workflows. Give that access only to trusted maintainers.
+## 发布与回退
 
-For editors without GitHub accounts, a maintainer can invite them by email in Pages CMS. Pages CMS collaborators can edit content and media in the invited repository, but cannot change `.pages.yml`, manage collaborators, or access other repositories.
+每次发布都使用专用草稿分支创建 GitHub PR。GitHub Actions 必须通过双语页面包审计、严格 Hugo 生产构建和生成站点审计；Worker 只在这些检查全部成功时合并到 `main`。GitHub Pages 随后发布合并后的内容。检查失败时 PR 不合并，草稿留在分支和后台供编辑者修正。
 
-## Collections and language labels
+Cloudflare Pages 仅用于草稿预览，不替代正式 GitHub Pages。预览部署须开启 Cloudflare Access 保护；Worker 使用单独的 Access Service Token 代理预览，使编辑人员沿用后台登录态。不要把预览域名、Service Token 或 Worker secrets 放到网站内容、公开仓库文件或聊天记录中。
 
-Pages CMS has ten collections: People, Publications, Projects and Tools, Research, News, Grants, Opportunities, Events, Resources, and Materials. Each item appears with a `【英文】` or `【中文】` marker. The English and Chinese files remain separate entries in the same page bundle.
+试点期间 Pages CMS 保留为维护者回退入口：<https://app.pagescms.org/x-laboratory-678/x-laboratory/main>。切换正式入口前，维护者需要确认编辑器预览已保护，双语更改能正确构建，发布 PR 检查后可合并并部署。若新后台异常，暂时使用 Pages CMS，并请维护者暂停新后台发布，避免同一内容被两边同时改写。
 
-Research directions are maintained with their controlled vocabulary by a maintainer. Creating a Research entry is disabled.
+## 维护者配置
 
-## Create a bilingual draft
-
-For People, Publications, Projects and Tools, News, Grants, Opportunities, Events, Resources, or Materials:
-
-1. Open the collection and choose **创建双语草稿**.
-2. Enter a lowercase English ID using letters, numbers, and hyphens, plus an English title and a Chinese title.
-3. Confirm. The action uses the matching Hugo archetype to create `index.en.md` and `index.zh.md` in one page bundle.
-4. Edit both language entries. Fill in every field marked required; keep the ID, translation key, bundle path, and relationships unchanged.
-
-The two new files start as drafts and do not appear on the public website. IDs cannot be reused. Renaming and deleting records remain disabled.
-
-## Publish both languages
-
-When both drafts are complete:
-
-1. Open either language entry and choose **发布中英文版本**.
-2. Confirm the action.
-3. The workflow checks that both files exist, their IDs and translation keys match, both are drafts, language labels are correct, and required fields are filled.
-4. It then runs the bilingual file audit, a strict production Hugo build using the GitHub Pages base path, and the generated-site audit.
-5. Only after all checks pass does it commit both files. On `main`, the workflow deploys the exact site artifact it just verified.
-
-If a check fails, no commit or deployment is made, so both files remain drafts. Read the failed GitHub Actions run and ask a maintainer for help.
-
-Use the production `main` branch for changes intended for the live site. Testing on another branch will commit to that branch; publishing there does not deploy to the production website.
-
-## Edit existing records
-
-Pages CMS saves edits to the currently selected branch. On `main`, each save continues to run the existing bilingual check, strict Hugo build, site audit, and deployment workflow. Edit the matching English and Chinese entries when the change applies to both languages.
-
-Existing page-bundle images remain read-only. People portraits can be uploaded to `static/uploads/`; use the same uploaded image path in both language files and provide suitable alt text. Other image fields remain read-only.
-
-A failed existing-record check does not remove the content commit from `main`; the live website stays on the last successful deployment. Record the failed run and ask a maintainer to fix or revert it.
-
-## Safe editing rules
-
-- Do not change stable IDs, translation keys, filenames, or existing relationships.
-- Do not put passwords, API tokens, private keys, webhook secrets, or one-time setup links in website content.
-- Confirm permission before publishing a person's photo and provide descriptive alt text.
-- Ask a maintainer if a required value is unclear or a publishing check fails.
-
-## Legacy editor
-
-The Cloudflare Worker editor at https://x-lab-cms-editor.fangx6531.workers.dev/editor/ is a maintainer-only fallback during the observation period. Editors should use Pages CMS and must not edit the same record in both systems.
-
-The previous Sveltia CMS configuration remains in `static/admin/config.yml` for reference; it is not the current `/admin/` entry.
+详细 Worker、D1、GitHub App、Access 和 secret 配置步骤见 [`cms-editor-worker/README.md`](../cms-editor-worker/README.md)。安装权限应仅限目标仓库。任何令牌或私钥只保存为 Cloudflare Worker Secret；聊天、截图、示例 Markdown 和公开文档中都不能放入凭据。过去出现在聊天或截图中的令牌不得重用。

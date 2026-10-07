@@ -1,7 +1,7 @@
-<article class="project-card">
+<article class="project-card" data-cms-entry="{{ .File.Path }}" data-cms-type="projects">
   {{- with partial "project/period.html" . }}<p class="project-card__meta">{{ i18n "project_period" }} · {{ . }}</p>{{ end }}
-  <h3><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
-  {{- with .Params.summary }}<p class="project-card__summary">{{ . }}</p>{{ end }}
+  <h3><a href="{{ .RelPermalink }}" data-cms-field="title">{{ .Title }}</a></h3>
+  {{- with .Params.summary }}<p class="project-card__summary" data-cms-field="summary">{{ . }}</p>{{ end }}
   {{- with .Params.researchAreas }}
     <ul class="project-card__areas" aria-label="{{ i18n "research_areas" }}">
       {{- range . }}<li>{{ partial "research/area-link.html" (dict "site" site "id" .) }}</li>{{ end -}}

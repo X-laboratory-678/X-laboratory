@@ -1,15 +1,15 @@
 {{- $page := .page | default . -}}
 {{- $headingLevel := .headingLevel | default 3 -}}
-<article class="news-item">
+<article class="news-item" data-cms-entry="{{ $page.File.Path }}" data-cms-type="news">
   <p class="news-item__meta">
     {{- partial "news/date.html" $page }}
     <span aria-hidden="true"> · </span>
     <span>{{ partial "news/category-label.html" $page.Params.category }}</span>
   </p>
   {{- if eq $headingLevel 2 -}}
-    <h2><a href="{{ $page.RelPermalink }}">{{ $page.Title }}</a></h2>
+    <h2><a href="{{ $page.RelPermalink }}" data-cms-field="title">{{ $page.Title }}</a></h2>
   {{- else -}}
-    <h3><a href="{{ $page.RelPermalink }}">{{ $page.Title }}</a></h3>
+    <h3><a href="{{ $page.RelPermalink }}" data-cms-field="title">{{ $page.Title }}</a></h3>
   {{- end -}}
-  {{- with $page.Params.summary }}<p class="news-item__summary">{{ . }}</p>{{ end }}
+  {{- with $page.Params.summary }}<p class="news-item__summary" data-cms-field="summary">{{ . }}</p>{{ end }}
 </article>

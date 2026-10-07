@@ -1,8 +1,8 @@
 {{ define "main" }}
   <div class="container">
-    <article class="foundation-message">
-      <h1>{{ .Title }}</h1>
-      <div class="prose">{{ .Content }}</div>
+    <article class="foundation-message" data-cms-entry="{{ .File.Path }}" data-cms-type="{{ .Section }}">
+      <h1 data-cms-field="title">{{ .Title }}</h1>
+      <div class="prose" data-cms-field="body">{{ .Content }}</div>
     </article>
   </div>
 {{ end }}

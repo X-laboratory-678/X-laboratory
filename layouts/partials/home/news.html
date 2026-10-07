@@ -2,9 +2,10 @@
 {{- $pages = where $pages "Draft" false -}}
 {{- $pages = $pages.ByDate.Reverse -}}
 {{- with first 5 $pages }}
-  <section class="section" aria-labelledby="news-heading">
+  <section class="section" aria-labelledby="news-heading" data-cms-file="{{ $.File.Path }}">
     <div class="container">
-      {{ partial "section-header.html" (dict "config" $.Params.sections.news "id" "news-heading") }}
+      {{ partial "section-header.html" (dict "page" $ "config" $.Params.sections.news "field" "sections.news" "id" "news-heading") }}
+      <button type="button" data-cms-add="news" hidden>＋ 添加新闻</button>
       <ol class="editorial-list">
         {{- range . }}<li>{{ partial "news/item.html" (dict "page" . "headingLevel" 3) }}</li>{{ end }}
       </ol>

@@ -1,4 +1,4 @@
-<nav>
+<nav data-cms-global="site-settings">
   <h2 class="book-brand">
     <a class="flex align-center" href="{{ site.Home.RelPermalink }}">
       <img src="{{ "brand/x-laboratory-mark.svg" | relURL }}" alt="{{ site.Params.labName }}" width="64" height="64">
@@ -42,7 +42,7 @@
     </li>
   </ul>
 
-  <ul class="book-menu-list">
+  <ul class="book-menu-list" data-cms-settings="navigation">
     {{- range site.Menus.main -}}
       {{- if ne .Params.enabled false -}}
         {{- partial "navigation/menu-item.html" (dict "page" $ "entry" .) -}}
