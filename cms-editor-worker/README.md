@@ -10,7 +10,7 @@
 
 ## 维护者部署
 
-1. Cloudflare Pages 项目 `x-laboratory-preview` 已连接 `X-laboratory-678/X-laboratory`，生产分支为 `main`，构建输出目录为 `public`，`HUGO_VERSION=0.164.0`。构建会先运行 `scripts/audit-content-pairs.py`，再按分支执行 Hugo 构建，最后运行 `scripts/audit-site.py public`；非生产分支使用预览环境并包含草稿。项目域名是 `x-laboratory-preview.pages.dev`，该值已写入 `wrangler.toml` 的 `PAGES_PREVIEW_DOMAIN`。正式网站继续由 GitHub Pages 发布；`functions/_middleware.js` 保护 Pages 的全部预览静态资源。`PREVIEW_SITE_PATH` 必须与 GitHub Pages 子路径一致（当前为 `/X-laboratory/`）。
+1. Cloudflare Pages 项目 `x-laboratory-preview` 已连接 `X-laboratory-678/X-laboratory`，生产分支为 `main`，构建输出目录为 `public``。项目构建命令使用 `bash scripts/build-cloudflare-pages.sh`：所有分支运行双语配对检查；`main` 运行严格 Hugo 构建和完整站点审计，预览分支构建草稿供编辑者检查。示例内容和未完成草稿不应阻止预览构建，但仍须通过 `main` 的完整发布检查。项目域名是 `x-laboratory-preview.pages.dev`，该值已写入 `wrangler.toml` 的 `PAGES_PREVIEW_DOMAIN`。正式网站继续由 GitHub Pages 发布；`functions/_middleware.js` 保护 Pages 的全部预览静态资源。`PREVIEW_SITE_PATH` 必须与 GitHub Pages 子路径一致（当前为 `/X-laboratory/`）。
 2. 生成一个独立的高熵随机预览密钥，在 Cloudflare Pages 项目的 Preview 环境和编辑 Worker 的加密 Secrets 中分别设为 `PREVIEW_SHARED_SECRET`。不要把密钥写入仓库或前端文件。非 `main` 分支缺少密钥或请求头不匹配时，Pages Function 会返回 404；编辑 Worker 只在确认编辑者已登录后才附加 `X-XLab-Preview-Secret` 请求头。确认保护已部署并通过验证后，再移除 Pages 预览域名上的 Cloudflare Access 层。
 3. 配置 Worker 的 D1 数据库 `x-lab-cms-editor`，按顺序应用 `migrations/0001_initial.sql` 和 `migrations/0002_visual_cms.sql`。迁移会保留已有账号表和会话表，再增加共享草稿工作区、草稿索引和回收站表。
 4. 配置 Worker secrets：`PASSWORD_PEPPER`、`GITHUB_APP_ID`、`GITHUB_APP_PRIVATE_KEY`、`GITHUB_WEBHOOK_SECRET`、管理员 GitHub OAuth 的 `ADMIN_GITHUB_CLIENT_ID` 和 `ADMIN_GITHUB_CLIENT_SECRET`，以及 Pages 预览代理用的 `PREVIEW_SHARED_SECRET`。GitHub App 只安装到目标仓库；安装权限至少要能读内容、写内容/创建 PR、读取检查，并接收 `check_suite`、`deployment_status` webhook。OAuth callback 为 `https://<worker-host>/auth/github/callback`。
